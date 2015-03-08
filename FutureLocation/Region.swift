@@ -19,7 +19,7 @@ public class Region {
     
     internal let clRegion : CLRegion
     
-    internal var regionPromise  : StreamPromise<RegionState>
+    public var regionPromise  : StreamPromise<RegionState>
     
     public var identifier : String {
         return self.clRegion.identifier

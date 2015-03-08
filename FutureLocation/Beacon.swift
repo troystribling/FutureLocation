@@ -9,9 +9,6 @@
 import Foundation
 import CoreLocation
 
-public protocol BeaconWrappable {    
-}
-
 public class Beacon {
     
     private let clbeacon        : CLBeacon

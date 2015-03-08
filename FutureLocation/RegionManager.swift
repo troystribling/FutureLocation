@@ -18,8 +18,8 @@ public protocol RegionManagerWrappable {
     var regions : [WrappedRegion] {get}
     
     func region(identifier:String) -> WrappedRegion?
-    func startMonitoringForRegion(region:WrappedRegion)
-    func stopMonitoringForRegion(region:WrappedRegion)
+    func wrappedStartMonitoringForRegion(region:WrappedRegion)
+    func wrappedStopMonitoringForRegion(region:WrappedRegion)
     
 }
 
@@ -58,7 +58,7 @@ public class RegionManagerImpl<Wrapper where Wrapper:RegionManagerWrappable,
         let authoriztaionFuture = self.authorize(manager, authorization:authorization)
         authoriztaionFuture.onSuccess {status in
             self.regionMonitorStatus[region.identifier] = true
-            manager.startMonitoringForRegion(region)
+            manager.wrappedStartMonitoringForRegion(region)
         }
         authoriztaionFuture.onFailure {error in
             region.regionPromise.failure(error)
@@ -72,26 +72,26 @@ public class RegionManagerImpl<Wrapper where Wrapper:RegionManagerWrappable,
     
     public func stopMonitoringForRegion(manager:Wrapper, region:Wrapper.WrappedRegion) {
         self.regionMonitorStatus.removeValueForKey(region.identifier)
-        manager.stopMonitoringForRegion(region)
+        manager.wrappedStopMonitoringForRegion(region)
     }
     
     public func resumeMonitoringAllRegions(manager:Wrapper) {
         for region in manager.regions {
             self.regionMonitorStatus[region.identifier] = true
-            manager.startMonitoringForRegion(region)
+            manager.wrappedStartMonitoringForRegion(region)
         }
     }
     
     public func pauseMonitoringAllRegions(manager:Wrapper) {
         for region in manager.regions {
             self.regionMonitorStatus[region.identifier] = false
-            manager.stopMonitoringForRegion(region)
+            manager.wrappedStopMonitoringForRegion(region)
         }
     }
     
     public func stopMonitoringAllRegions(manager:Wrapper) {
         for region in manager.regions {
-            manager.stopMonitoringForRegion(region)
+            manager.wrappedStopMonitoringForRegion(region)
         }
     }
     
@@ -142,13 +142,14 @@ public class RegionManager : LocationManager, RegionManagerWrappable {
         }
     }
     
-    public func startMonitoringForRegion(region:Region) {
+    public func wrappedStartMonitoringForRegion(region:Region) {
         self.configuredRegions[region.clRegion] = region
         self.clLocationManager.startMonitoringForRegion(region.clRegion)
     }
     
-    public func stopMonitoringForRegion(egion:Region) {
-        
+    public func wrappedStopMonitoringForRegion(region:Region) {
+        self.configuredRegions.removeValueForKey(region.clRegion)
+        self.clLocationManager.stopMonitoringForRegion(region.clRegion)
     }
 
     // RegionManagerWrappable
@@ -170,83 +171,68 @@ public class RegionManager : LocationManager, RegionManagerWrappable {
         super.init()
     }
     
+    public func isMonitoringRegion(identifier:String) -> Bool {
+        return self.regionImpl.isMonitoringRegion(identifier)
+    }
+
     // control
-//    public func startMonitoringForRegion(authorization:CLAuthorizationStatus, region:Region) -> FutureStream<RegionState> {
-//        return self.regionImpl.startUpdatingLocation(self, capacity: <#Int?#>, authorization: <#CLAuthorizationStatus#>)
-//        let authoriztaionFuture = self.authorize(authorization)
-//        authoriztaionFuture.onSuccess {status in
-//            self.regionMonitorStatus[region.identifier] = true
-//            self.configuredRegions[region.clRegion] = region
-//            self.clLocationManager.startMonitoringForRegion(region.clRegion)
-//        }
-//        authoriztaionFuture.onFailure {error in
-//            region.regionPromise.failure(error)
-//        }
-//        return region.regionPromise.future
-//    }
-//
-//    public func startMonitoringForRegion(region:Region) -> FutureStream<RegionState> {
-//        return self.startMonitoringForRegion(CLAuthorizationStatus.AuthorizedAlways, region:region)
-//    }
-//
-//    public func stopMonitoringForRegion(region:Region) {
-//        self.regionMonitorStatus.removeValueForKey(region.identifier)
-//        self.configuredRegions.removeValueForKey(region.clRegion)
-//        self.clLocationManager.stopMonitoringForRegion(region.clRegion)
-//    }
-//    
-//    public func resumeMonitoringAllRegions() {
-//        for region in self.regions {
-//            self.regionMonitorStatus[region.identifier] = true
-//            self.clLocationManager.startMonitoringForRegion(region.clRegion)
-//        }
-//    }
-//    
-//    public func pauseMonitoringAllRegions() {
-//        for region in self.regions {
-//            self.regionMonitorStatus[region.identifier] = false
-//            self.clLocationManager.stopMonitoringForRegion(region.clRegion)
-//        }
-//    }
-//
+    public func startMonitoringForRegion(authorization:CLAuthorizationStatus, region:Region) -> FutureStream<RegionState> {
+        return self.regionImpl.startMonitoringForRegion(self, authorization:authorization, region:region)
+    }
+
+    public func startMonitoringForRegion(region:Region) -> FutureStream<RegionState> {
+        return self.regionImpl.startMonitoringForRegion(self, authorization:CLAuthorizationStatus.AuthorizedAlways, region:region)
+    }
+
+    public func stopMonitoringForRegion(region:Region) {
+        self.regionImpl.stopMonitoringForRegion(self, region:region)
+    }
+    
+    public func resumeMonitoringAllRegions() {
+        self.regionImpl.resumeMonitoringAllRegions(self)
+    }
+    
+    public func pauseMonitoringAllRegions() {
+        self.regionImpl.pauseMonitoringAllRegions(self)
+    }
+
     public func stopMonitoringAllRegions() {
-        for region in self.regions {
-            self.stopMonitoringForRegion(region)
-        }
+        self.regionImpl.stopMonitoringAllRegions(self)
     }
 
     // CLLocationManagerDelegate
     public func locationManager(_:CLLocationManager!, didEnterRegion region:CLRegion!) {
         Logger.debug("RegionManager#didEnterRegion: \(region.identifier)")
         if let bcregion = self.configuredRegions[region] {
-            bcregion.regionPromise.success(.Inside)
+           self.regionImpl.didEnterRegion(bcregion)
         }
     }
     
     public func locationManager(_:CLLocationManager!, didExitRegion region:CLRegion!) {
         Logger.debug("RegionManager#didExitRegion: \(region.identifier)")
         if let bcregion = self.configuredRegions[region] {
-            bcregion.regionPromise.success(.Outside)
+            self.regionImpl.didExitRegion(bcregion)
         }
     }
     
     public func locationManager(_:CLLocationManager!, didDetermineState state:CLRegionState, forRegion region:CLRegion!) {
         Logger.debug("RegionManager#didDetermineState: \(region.identifier)")
         if let bcregion = self.configuredRegions[region] {
+            self.regionImpl.didDetermineState(state, forRegion:bcregion)
         }
     }
     
     public func locationManager(_:CLLocationManager!, monitoringDidFailForRegion region:CLRegion!, withError error:NSError!) {
         Logger.debug("RegionManager#monitoringDidFailForRegion: \(region.identifier)")
         if let bcregion = self.configuredRegions[region] {
-            bcregion.regionPromise.failure(error)
+            self.regionImpl.monitoringDidFailForRegion(bcregion, withError:error)
         }
     }
     
     public func locationManager(_:CLLocationManager!, didStartMonitoringForRegion region:CLRegion!) {
         Logger.debug("RegionManager#didStartMonitoringForRegion: \(region.identifier)")
         if let bcregion = self.configuredRegions[region] {
-            bcregion.regionPromise.success(.Start)
+            self.regionImpl.didStartMonitoringForRegion(bcregion)
         }
     }
 }

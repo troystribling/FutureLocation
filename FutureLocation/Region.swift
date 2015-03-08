@@ -17,13 +17,15 @@ public enum RegionState {
 
 public class Region {
     
-    internal let clRegion : CLRegion
-    
+    // RegionWrappable
     public var regionPromise  : StreamPromise<RegionState>
     
     public var identifier : String {
         return self.clRegion.identifier
     }
+    // RegionWrappable
+    
+    internal let clRegion : CLRegion
     
     public var notifyOnEntry : Bool {
         get {

@@ -91,7 +91,7 @@ public class RegionManagerImpl<Wrapper where Wrapper:RegionManagerWrappable,
     
     public func stopMonitoringAllRegions(manager:Wrapper) {
         for region in manager.regions {
-            manager.wrappedStopMonitoringForRegion(region)
+            self.stopMonitoringForRegion(manager, region:region)
         }
     }
     
@@ -151,15 +151,18 @@ public class RegionManager : LocationManager, RegionManagerWrappable {
         self.configuredRegions.removeValueForKey(region.clRegion)
         self.clLocationManager.stopMonitoringForRegion(region.clRegion)
     }
-
     // RegionManagerWrappable
     
-    internal var configuredRegions       : [CLRegion:Region] = [:]
+    internal var configuredRegions : [CLRegion:Region] = [:]
     
     public var maximumRegionMonitoringDistance : CLLocationDistance {
         return self.clLocationManager.maximumRegionMonitoringDistance
     }
-    
+
+    public var isMonitoring : Bool {
+        return self.regionImpl.isMonitoring
+    }
+
     public class var sharedInstance : RegionManager {
         struct Static {
             static let instance = RegionManager()

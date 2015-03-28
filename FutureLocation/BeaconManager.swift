@@ -28,7 +28,8 @@ public protocol BeaconRegionWrappable {
     
     var identifier     : String                         {get}
     var beaconPromise  : StreamPromise<[WrappedBeacon]> {get}
-    
+ 
+    func peripheralDataWithMeasuredPower(measuredPower:Int?) -> [NSObject:AnyObject]
 }
 
 public protocol BeaconWrappable {
@@ -105,7 +106,7 @@ public class BeaconManagerImpl<Wrapper where
     
     public func stopRangingAllBeacons(manager:Wrapper) {
         for beaconRegion in manager.beaconRegions {
-            manager.wrappedStopRangingBeaconsInRegion(beaconRegion)
+            self.stopRangingBeaconsInRegion(manager, beaconRegion:beaconRegion)
         }
     }
     

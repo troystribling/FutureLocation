@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */; };
-		05BAEAAF1A9AA045003C0C1C /* FutureLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAAE1A9AA045003C0C1C /* FutureLocationTests.swift */; };
 		05BAEAC01A9AA212003C0C1C /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB81A9AA212003C0C1C /* Beacon.swift */; };
 		05BAEAC11A9AA212003C0C1C /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB91A9AA212003C0C1C /* BeaconManager.swift */; };
 		05BAEAC21A9AA212003C0C1C /* BeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */; };
@@ -49,12 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05BAEAA11A9AA045003C0C1C /* FutureLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FutureLocation.h; sourceTree = "<group>"; };
 		05BAEAA71A9AA045003C0C1C /* FutureLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAAD1A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		05BAEAAE1A9AA045003C0C1C /* FutureLocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureLocationTests.swift; sourceTree = "<group>"; };
 		05BAEAB81A9AA212003C0C1C /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
 		05BAEAB91A9AA212003C0C1C /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 		05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRegion.swift; sourceTree = "<group>"; };
@@ -151,8 +151,8 @@
 		05BAEAAB1A9AA045003C0C1C /* FutureLocationTests */ = {
 			isa = PBXGroup;
 			children = (
-				05BAEAAE1A9AA045003C0C1C /* FutureLocationTests.swift */,
 				05BAEAAC1A9AA045003C0C1C /* Supporting Files */,
+				0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */,
 			);
 			path = FutureLocationTests;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05BAEAAF1A9AA045003C0C1C /* FutureLocationTests.swift in Sources */,
+				0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +536,7 @@
 				05BAEAB41A9AA045003C0C1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		05BAEAB51A9AA045003C0C1C /* Build configuration list for PBXNativeTarget "FutureLocationTests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +545,7 @@
 				05BAEAB71A9AA045003C0C1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

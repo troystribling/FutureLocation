@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF11AC889AD00861D0A /* RegionManagerTests.swift */; };
+		05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF31AC8949300861D0A /* BeaconManagerTests.swift */; };
 		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */; };
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05250BF11AC889AD00861D0A /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManagerTests.swift; sourceTree = "<group>"; };
+		05250BF31AC8949300861D0A /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManagerTests.swift; sourceTree = "<group>"; };
 		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 			children = (
 				05BAEAAC1A9AA045003C0C1C /* Supporting Files */,
 				0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */,
+				05250BF11AC889AD00861D0A /* RegionManagerTests.swift */,
+				05250BF31AC8949300861D0A /* BeaconManagerTests.swift */,
 			);
 			path = FutureLocationTests;
 			sourceTree = "<group>";
@@ -355,7 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */,
 				0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */,
+				05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,8 +19,8 @@ public protocol LocationManagerWrappable {
     
     func requestWhenInUseAuthorization()
     func requestAlwaysAuthorization()
-    func startUpdatingLocation()
-    func stopUpdatingLocation()
+    func wrappedStartUpdatingLocation()
+    func wrappedStartMonitoringSignificantLocationChanges()
     
 }
 
@@ -49,7 +49,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
         }
         let authoriztaionFuture = self.authorize(locationManager, currentAuthorization:currentAuthorization, requestedAuthorization:requestedAuthorization)
         authoriztaionFuture.onSuccess {status in
-            locationManager.startUpdatingLocation()
+            locationManager.wrappedStartUpdatingLocation()
         }
         authoriztaionFuture.onFailure {error in
             self.locationUpdatePromise!.failure(error)
@@ -57,15 +57,35 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
         return self.locationUpdatePromise!.future
     }
     
-    public func stopUpdatingLocation(locationManager:Wrapper) {
-        self.locationUpdatePromise  = nil
-        locationManager.stopUpdatingLocation()
+    public func startMonitoringSignificantLocationChanges(locationManager:Wrapper, currentAuthorization:CLAuthorizationStatus, requestedAuthorization:CLAuthorizationStatus, capacity:Int? = nil) -> FutureStream<[Wrapper.WrappedCLLocation]> {
+        if let capacity = capacity {
+            self.locationUpdatePromise = StreamPromise<[Wrapper.WrappedCLLocation]>(capacity:capacity)
+        } else {
+            self.locationUpdatePromise = StreamPromise<[Wrapper.WrappedCLLocation]>()
+        }
+        let authoriztaionFuture = self.authorize(locationManager, currentAuthorization:currentAuthorization, requestedAuthorization:requestedAuthorization)
+        authoriztaionFuture.onSuccess {status in
+            locationManager.wrappedStartMonitoringSignificantLocationChanges()
+        }
+        authoriztaionFuture.onFailure {error in
+            self.locationUpdatePromise!.failure(error)
+        }
+        return self.locationUpdatePromise!.future
     }
-    
+
+    public func stopUpdatingLocation() {
+        self.locationUpdatePromise  = nil
+    }
+
+    public func stopMonitoringSignificantLocationChanges() {
+        self.locationUpdatePromise  = nil
+    }
+
     // CLLocationManagerDelegate
     public func didUpdateLocations(locations:[Wrapper.WrappedCLLocation]) {
         Logger.debug("LocationManagerImpl#didUpdateLocations")
         if let locationUpdatePromise = self.locationUpdatePromise {
+            println("didUpdateLocations LOG")
             locationUpdatePromise.success(locations)
         }
     }
@@ -157,6 +177,22 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
         return CLLocationManager.locationServicesEnabled()
     }
     
+    public class func significantLocationChangeMonitoringAvailable() -> Bool {
+        return CLLocationManager.significantLocationChangeMonitoringAvailable()
+    }
+
+    public class func deferredLocationUpdatesAvailable() -> Bool {
+        return CLLocationManager.deferredLocationUpdatesAvailable()
+    }
+
+    public class func headingAvailable() -> Bool {
+        return CLLocationManager.deferredLocationUpdatesAvailable()
+    }
+    
+    public class func isMonitoringAvailableForClass(regionClass:AnyClass!) -> Bool {
+        return CLLocationManager.isMonitoringAvailableForClass(regionClass)
+    }
+
     public func requestWhenInUseAuthorization() {
         self.clLocationManager.requestWhenInUseAuthorization()
     }
@@ -166,12 +202,20 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
     }
     
     
-    public func startUpdatingLocation() {
+    public func wrappedStartUpdatingLocation() {
         self.clLocationManager.startUpdatingLocation()
     }
     
-    public func stopUpdatingLocation() {
+    public func wrappedStopUpdatingLocation() {
         self.clLocationManager.stopUpdatingLocation()
+    }
+    
+    public func wrappedStartMonitoringSignificantLocationChanges() {
+        self.clLocationManager.startMonitoringSignificantLocationChanges()
+    }
+    
+    public func wrappedStopMonitoringSignificantLocationChanges() {
+        self.clLocationManager.stopMonitoringSignificantLocationChanges()
     }
 
     // LocationManagerImpl
@@ -237,6 +281,24 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
 
     public func startUpdatingLocation(capacity:Int, authorization:CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
         return self.impl.startUpdatingLocation(self, currentAuthorization:LocationManager.authorizationStatus(), requestedAuthorization:authorization, capacity:capacity)
+    }
+
+    public func stopUpdatingLocation() {
+        self.impl.stopUpdatingLocation()
+        self.clLocationManager.stopUpdatingLocation()
+    }
+    
+    public func startMonitoringSignificantLocationChanges(authorization:CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
+        return self.impl.startUpdatingLocation(self, currentAuthorization:LocationManager.authorizationStatus(), requestedAuthorization:authorization, capacity:nil)
+    }
+    
+    public func startMonitoringSignificantLocationChanges(capacity:Int, authorization:CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
+        return self.impl.startUpdatingLocation(self, currentAuthorization:LocationManager.authorizationStatus(), requestedAuthorization:authorization, capacity:capacity)
+    }
+    
+    public func stopMonitoringSignificantLocationChanges() {
+        self.impl.stopMonitoringSignificantLocationChanges()
+        self.clLocationManager.stopMonitoringSignificantLocationChanges()
     }
     
     // CLLocationManagerDelegate

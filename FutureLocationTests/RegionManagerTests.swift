@@ -42,7 +42,7 @@ class RegionManagerTests: XCTestCase {
             }
         }
         
-        func startUpdatingLocation() {
+        func wrappedStartUpdatingLocation() {
             if let responseAuthorization = self.responseAuthorization {
                 if let error = self.error {
                     self.impl.didFailWithError(error)
@@ -52,7 +52,14 @@ class RegionManagerTests: XCTestCase {
             }
         }
         
-        func stopUpdatingLocation() {
+        func wrappedStartMonitoringSignificantLocationChanges() {
+            if let responseAuthorization = self.responseAuthorization {
+                if let error = self.error {
+                    self.impl.didFailWithError(error)
+                } else {
+                    self.impl.didUpdateLocations([CLLocationMock(), CLLocationMock()])
+                }
+            }
         }
     }
 

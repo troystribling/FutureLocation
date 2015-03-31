@@ -15,6 +15,9 @@
 		05BC8B231AC9A11D00F5B8A4 /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */; };
 		05BC8B381AC9A19200F5B8A4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B371AC9A19200F5B8A4 /* CoreLocation.framework */; };
 		05BC8B391AC9A19700F5B8A4 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; };
+		05BC8B3B1ACA657F00F5B8A4 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; };
+		05BC8B3C1ACA657F00F5B8A4 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +49,28 @@
 			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
 			remoteInfo = FutureLocation;
 		};
+		05BC8B3D1ACA657F00F5B8A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05BC8B2C1AC9A16E00F5B8A4 /* FutureLocation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
+			remoteInfo = FutureLocation;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		05BC8B3F1ACA658000F5B8A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				05BC8B3C1ACA657F00F5B8A4 /* FutureLocation.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05BC8B071AC9A11D00F5B8A4 /* Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Location.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +85,7 @@
 		05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		05BC8B2C1AC9A16E00F5B8A4 /* FutureLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FutureLocation.xcodeproj; path = ../../FutureLocation.xcodeproj; sourceTree = "<group>"; };
 		05BC8B371AC9A19200F5B8A4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05BC8B3B1ACA657F00F5B8A4 /* FutureLocation.framework in Frameworks */,
 				05BC8B391AC9A19700F5B8A4 /* FutureLocation.framework in Frameworks */,
 				05BC8B381AC9A19200F5B8A4 /* CoreLocation.framework in Frameworks */,
 			);
@@ -107,10 +133,11 @@
 			isa = PBXGroup;
 			children = (
 				05BC8B0C1AC9A11D00F5B8A4 /* AppDelegate.swift */,
+				05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */,
 				05BC8B0E1AC9A11D00F5B8A4 /* ViewController.swift */,
-				05BC8B101AC9A11D00F5B8A4 /* Main.storyboard */,
 				05BC8B131AC9A11D00F5B8A4 /* Images.xcassets */,
 				05BC8B151AC9A11D00F5B8A4 /* LaunchScreen.xib */,
+				05BC8B101AC9A11D00F5B8A4 /* Main.storyboard */,
 				05BC8B0A1AC9A11D00F5B8A4 /* Supporting Files */,
 			);
 			path = Location;
@@ -160,11 +187,13 @@
 				05BC8B031AC9A11D00F5B8A4 /* Sources */,
 				05BC8B041AC9A11D00F5B8A4 /* Frameworks */,
 				05BC8B051AC9A11D00F5B8A4 /* Resources */,
+				05BC8B3F1ACA658000F5B8A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				05BC8B361AC9A18200F5B8A4 /* PBXTargetDependency */,
+				05BC8B3E1ACA657F00F5B8A4 /* PBXTargetDependency */,
 			);
 			name = Location;
 			productName = Location;
@@ -275,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BC8B0F1AC9A11D00F5B8A4 /* ViewController.swift in Sources */,
+				05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */,
 				05BC8B0D1AC9A11D00F5B8A4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +329,11 @@
 			isa = PBXTargetDependency;
 			name = FutureLocation;
 			targetProxy = 05BC8B351AC9A18200F5B8A4 /* PBXContainerItemProxy */;
+		};
+		05BC8B3E1ACA657F00F5B8A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FutureLocation;
+			targetProxy = 05BC8B3D1ACA657F00F5B8A4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -407,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -417,6 +453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Location/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

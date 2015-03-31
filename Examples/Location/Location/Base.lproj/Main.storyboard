@@ -17,70 +17,102 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBV-BB-pTb">
-                                <rect key="frame" x="192" y="41" width="94" height="25"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBV-BB-pTb">
+                                <rect key="frame" x="20" y="113" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="527 Valencia St." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPk-GR-cdU">
-                                <rect key="frame" x="189" y="289" width="214" height="21"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="San Francisco" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wM8-Xn-GNQ">
-                                <rect key="frame" x="187" y="318" width="214" height="25"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vrq-ax-Yvm">
-                                <rect key="frame" x="176" y="359" width="214" height="25"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="37.764387" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ym-OS-eVE">
-                                <rect key="frame" x="289" y="41" width="131" height="25"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="37.764387" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEO-bZ-Vs5">
+                                <rect key="frame" x="20" y="145" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Longitude:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZ2-E8-agT">
-                                <rect key="frame" x="173" y="72" width="108" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZ2-E8-agT">
+                                <rect key="frame" x="229" y="135" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-122.421642" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OC8-c8-NjX">
-                                <rect key="frame" x="289" y="72" width="131" height="25"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cka-Tf-YVc">
-                                <rect key="frame" x="176" y="181" width="188" height="30"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cka-Tf-YVc">
+                                <rect key="frame" x="20" y="274" width="560" height="51"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="32"/>
                                 <state key="normal" title="Get Address">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.09967242372" green="0.6979025136" blue="0.34602870769999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="getAddress:" destination="vXZ-lx-hvc" eventType="touchDown" id="6p3-gk-GWF"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MG2-QZ-9nS">
+                                <rect key="frame" x="20" y="186" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-122.421642" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xn4-50-rRp">
+                                <rect key="frame" x="20" y="217" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="527 Valencia St." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cPk-GR-cdU">
+                                <rect key="frame" x="20" y="350" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Francisco" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64z-cO-m69">
+                                <rect key="frame" x="20" y="383" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZQq-Sq-o2e">
+                                <rect key="frame" x="20" y="416" width="560" height="33"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="27"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="161" id="O4w-dm-qJt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8ym-OS-eVE" secondAttribute="trailing" constant="164" id="Rpl-C0-KOb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="MBV-BB-pTb" secondAttribute="trailing" constant="298" id="SBw-vq-dXO"/>
-                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="160" id="dHS-6q-Rz7"/>
-                            <constraint firstItem="MBV-BB-pTb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="21" id="gkc-cc-opN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Cka-Tf-YVc" secondAttribute="trailing" constant="220" id="rMe-yO-YLb"/>
-                            <constraint firstItem="8ym-OS-eVE" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="273" id="uUM-YN-Pgs"/>
-                            <constraint firstItem="MBV-BB-pTb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="176" id="w1C-qp-Kgj"/>
-                            <constraint firstItem="8ym-OS-eVE" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="21" id="z5k-ev-okt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MBV-BB-pTb" secondAttribute="trailing" constant="4" id="0pR-Gz-m9j"/>
+                            <constraint firstItem="MG2-QZ-9nS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="3PL-rD-elT"/>
+                            <constraint firstItem="64z-cO-m69" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="6NF-Bg-tiD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="64z-cO-m69" secondAttribute="trailing" constant="4" id="89c-o4-2b7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZQq-Sq-o2e" secondAttribute="trailing" constant="4" id="C85-8s-voi"/>
+                            <constraint firstItem="64z-cO-m69" firstAttribute="top" secondItem="Cka-Tf-YVc" secondAttribute="bottom" constant="58" id="Cjk-Ba-woE"/>
+                            <constraint firstItem="MBV-BB-pTb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="G3r-Zn-0Cy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cPk-GR-cdU" secondAttribute="trailing" constant="4" id="Mif-Ps-gme"/>
+                            <constraint firstItem="ZQq-Sq-o2e" firstAttribute="top" secondItem="Cka-Tf-YVc" secondAttribute="bottom" constant="91" id="Oo1-kb-w2B"/>
+                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="top" secondItem="xEO-bZ-Vs5" secondAttribute="bottom" constant="96" id="Vqq-fg-flQ"/>
+                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="top" secondItem="MBV-BB-pTb" secondAttribute="bottom" constant="128" id="dI2-E4-CJK"/>
+                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="top" secondItem="Xn4-50-rRp" secondAttribute="bottom" constant="24" id="dO4-oV-WDY"/>
+                            <constraint firstItem="Xn4-50-rRp" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="gsM-Yi-frc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MG2-QZ-9nS" secondAttribute="trailing" constant="4" id="l7a-tr-YuZ"/>
+                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="top" secondItem="MG2-QZ-9nS" secondAttribute="bottom" constant="55" id="nSv-rM-8Ak"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Xn4-50-rRp" secondAttribute="trailing" constant="4" id="p20-XR-HhD"/>
+                            <constraint firstItem="cPk-GR-cdU" firstAttribute="top" secondItem="Cka-Tf-YVc" secondAttribute="bottom" constant="25" id="qXf-5T-nB3"/>
+                            <constraint firstItem="ZQq-Sq-o2e" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="quT-ci-oZz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cka-Tf-YVc" secondAttribute="trailing" constant="4" id="sCI-ew-6sO"/>
+                            <constraint firstAttribute="centerY" secondItem="Cka-Tf-YVc" secondAttribute="centerY" constant="0.5" id="w6n-Fj-zYP"/>
+                            <constraint firstItem="xEO-bZ-Vs5" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="wGm-uX-yjN"/>
+                            <constraint firstItem="cPk-GR-cdU" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="wU3-cF-RbM"/>
+                            <constraint firstItem="Cka-Tf-YVc" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="wrf-8b-dgl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xEO-bZ-Vs5" secondAttribute="trailing" constant="4" id="zOQ-BN-Vi0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="address1Label" destination="cPk-GR-cdU" id="njx-EX-8Bv"/>
+                        <outlet property="address2Label" destination="64z-cO-m69" id="Scp-w5-UqX"/>
+                        <outlet property="address3Label" destination="ZQq-Sq-o2e" id="DjR-Ye-bHk"/>
+                        <outlet property="getAddressButton" destination="Cka-Tf-YVc" id="mW0-Cz-gL6"/>
+                        <outlet property="latituteLabel" destination="xEO-bZ-Vs5" id="yFK-RM-jJy"/>
+                        <outlet property="longitudeLabel" destination="Xn4-50-rRp" id="KWg-hG-fWk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

@@ -12,8 +12,22 @@ import FutureLocation
 
 class ViewController: UIViewController {
 
+    @IBOutlet var latituteLabel     : UILabel!
+    @IBOutlet var longitudeLabel    : UILabel!
+    @IBOutlet var address1Label     : UILabel!
+    @IBOutlet var address2Label     : UILabel!
+    @IBOutlet var address3Label     : UILabel!
+    @IBOutlet var getAddressButton  : UIButton!
+    
+    var locationFuture : FutureStream<[CLLocation]>?
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if LocationManager.locatio
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +35,7 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func getAddress(sender:AnyObject) {
+    }
 }
 

@@ -35,7 +35,11 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
     
     private var locationUpdatePromise               : StreamPromise<[Wrapper.WrappedCLLocation]>?
     private var authorizationStatusChangedPromise   = Promise<CLAuthorizationStatus>()
+    private var _isUpdating                         = false
     
+    public var isUpdating : Bool {
+        return self._isUpdating
+    }
     
     public init() {
     }
@@ -49,9 +53,11 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
         }
         let authoriztaionFuture = self.authorize(locationManager, currentAuthorization:currentAuthorization, requestedAuthorization:requestedAuthorization)
         authoriztaionFuture.onSuccess {status in
+            self._isUpdating = true
             locationManager.wrappedStartUpdatingLocation()
         }
         authoriztaionFuture.onFailure {error in
+            self._isUpdating = false
             self.locationUpdatePromise!.failure(error)
         }
         return self.locationUpdatePromise!.future
@@ -65,19 +71,23 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
         }
         let authoriztaionFuture = self.authorize(locationManager, currentAuthorization:currentAuthorization, requestedAuthorization:requestedAuthorization)
         authoriztaionFuture.onSuccess {status in
+            self._isUpdating = true
             locationManager.wrappedStartMonitoringSignificantLocationChanges()
         }
         authoriztaionFuture.onFailure {error in
+            self._isUpdating = false
             self.locationUpdatePromise!.failure(error)
         }
         return self.locationUpdatePromise!.future
     }
 
     public func stopUpdatingLocation() {
+        self._isUpdating = false
         self.locationUpdatePromise  = nil
     }
 
     public func stopMonitoringSignificantLocationChanges() {
+        self._isUpdating = false
         self.locationUpdatePromise  = nil
     }
 
@@ -85,7 +95,6 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
     public func didUpdateLocations(locations:[Wrapper.WrappedCLLocation]) {
         Logger.debug("LocationManagerImpl#didUpdateLocations")
         if let locationUpdatePromise = self.locationUpdatePromise {
-            println("didUpdateLocations LOG")
             locationUpdatePromise.success(locations)
         }
     }
@@ -164,10 +173,13 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
 
     // LocationManagerImpl
 
+    public var isUpdating : Bool {
+        return self.impl.isUpdating
+    }
+
     public var location : CLLocation! {
         return self.clLocationManager.location
     }
-    
     
     public class func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManager.authorizationStatus()
@@ -220,7 +232,7 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
 
     // LocationManagerImpl
 
-    internal var clLocationManager                  : CLLocationManager!
+    internal var clLocationManager : CLLocationManager!
     
     public var distanceFilter : CLLocationDistance {
         get {

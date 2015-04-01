@@ -12,14 +12,16 @@ import FutureLocation
 
 class ViewController: UIViewController {
 
-    @IBOutlet var latituteLabel     : UILabel!
-    @IBOutlet var longitudeLabel    : UILabel!
-    @IBOutlet var address1Label     : UILabel!
-    @IBOutlet var address2Label     : UILabel!
-    @IBOutlet var address3Label     : UILabel!
-    @IBOutlet var getAddressButton  : UIButton!
+    @IBOutlet var latituteLabel      : UILabel!
+    @IBOutlet var longitudeLabel     : UILabel!
+    @IBOutlet var address1Label      : UILabel!
+    @IBOutlet var address2Label      : UILabel!
+    @IBOutlet var address3Label      : UILabel!
+    @IBOutlet var getAddressButton   : UIButton!
+    @IBOutlet var startUpdatesButton : UIButton!
     
     var locationFuture : FutureStream<[CLLocation]>?
+    var locationManager = LocationManager()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
@@ -27,7 +29,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if LocationManager.locatio
+        self.locationManager.distanceFilter = kCLDistanceFilterNone
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,5 +40,27 @@ class ViewController: UIViewController {
 
     @IBAction func getAddress(sender:AnyObject) {
     }
+    
+    @IBAction func startUpdatingLocation(sender:AnyObject) {
+        if LocationManager.locationServicesEnabled() {
+            if self.locationManager.isUpdating {
+                self.locationManager.stopUpdatingLocation()
+                self.startUpdatesButton.setTitle("Start Updates", forState:.Normal)
+                self.startUpdatesButton.setTitleColor(UIColor(red:0.4, green:0.7, blue:0.4, alpha:1.0), forState:.Normal)
+            } else {
+                self.locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
+                self.locationFuture?.onSuccess {locations in
+                    self.startUpdatesButton.setTitle("Stop Updates", forState:.Normal)
+                    self.startUpdatesButton.setTitleColor(UIColor(red:0.7, green:0.4, blue:0.4, alpha:1.0), forState:.Normal)
+                }
+                self.locationFuture?.onFailure {error in
+                    self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
+                }
+            }
+        } else {
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services disabled"), animated:true, completion:nil)
+        }
+    }
+
 }
 

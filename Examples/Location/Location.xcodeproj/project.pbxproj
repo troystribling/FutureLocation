@@ -513,6 +513,7 @@
 				05BC8B281AC9A11D00F5B8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		05BC8B291AC9A11D00F5B8A4 /* Build configuration list for PBXNativeTarget "LocationTests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +522,7 @@
 				05BC8B2B1AC9A11D00F5B8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

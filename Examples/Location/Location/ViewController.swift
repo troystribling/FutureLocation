@@ -20,7 +20,9 @@ class ViewController: UIViewController {
     @IBOutlet var getAddressButton   : UIButton!
     @IBOutlet var startUpdatesButton : UIButton!
     
-    var locationFuture : FutureStream<[CLLocation]>?
+    var locationFuture  : FutureStream<[CLLocation]>?
+    var addressFuture   : FutureStream<[CLPlacemark]>?
+    
     var locationManager = LocationManager()
     
     required init(coder aDecoder: NSCoder) {
@@ -39,6 +41,37 @@ class ViewController: UIViewController {
 
 
     @IBAction func getAddress(sender:AnyObject) {
+        if LocationManager.locationServicesEnabled() {
+            let addressManager = LocationManager()
+             self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
+                                     addressManager.stopUpdatingLocation()
+                                     return addressManager.reverseGeocodeLocation()
+                                 }
+            self.addressFuture?.onSuccess {placemarks in
+                if let placemark = placemarks.first {
+                    if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
+                        self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
+                    } else {
+                        self.address1Label.text = "1 Main St"
+                    }
+                    if let subLocality = placemark.subLocality {
+                        self.address2Label.text = "\(placemark.subLocality)"
+                    } else {
+                        self.address2Label.text = "Meat Packing District"
+                    }
+                    if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
+                        self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"
+                    } else {
+                        self.address3Label.text = "Mt. Juliet, TN"
+                    }
+                }
+            }
+            self.addressFuture?.onFailure {error in
+                self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
+            }
+        } else {
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services disabled"), animated:true, completion:nil)
+        }
     }
     
     @IBAction func startUpdatingLocation(sender:AnyObject) {
@@ -52,6 +85,10 @@ class ViewController: UIViewController {
                 self.locationFuture?.onSuccess {locations in
                     self.startUpdatesButton.setTitle("Stop Updates", forState:.Normal)
                     self.startUpdatesButton.setTitleColor(UIColor(red:0.7, green:0.4, blue:0.4, alpha:1.0), forState:.Normal)
+                    if let location = locations.first {
+                        self.latituteLabel.text =  NSString(format: "%.6f", location.coordinate.latitude) as String
+                        self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
+                    }
                 }
                 self.locationFuture?.onFailure {error in
                     self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)

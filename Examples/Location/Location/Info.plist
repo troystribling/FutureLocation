@@ -37,8 +37,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationUsageDescription</key>
-	<string>Demo of future location</string>
+	<string>FutureLocation location demo</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Demo of future location</string>
+	<string>FutureLocation location demo</string>
 </dict>
 </plist>

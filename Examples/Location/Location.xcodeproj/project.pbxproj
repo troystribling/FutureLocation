@@ -15,7 +15,6 @@
 		05BC8B231AC9A11D00F5B8A4 /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */; };
 		05BC8B381AC9A19200F5B8A4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B371AC9A19200F5B8A4 /* CoreLocation.framework */; };
 		05BC8B391AC9A19700F5B8A4 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; };
-		05BC8B3B1ACA657F00F5B8A4 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; };
 		05BC8B3C1ACA657F00F5B8A4 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */; };
 /* End PBXBuildFile section */
@@ -93,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05BC8B3B1ACA657F00F5B8A4 /* FutureLocation.framework in Frameworks */,
 				05BC8B391AC9A19700F5B8A4 /* FutureLocation.framework in Frameworks */,
 				05BC8B381AC9A19200F5B8A4 /* CoreLocation.framework in Frameworks */,
 			);

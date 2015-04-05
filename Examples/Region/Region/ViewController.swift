@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     @IBOutlet var stateLabel            : UILabel!
     @IBOutlet var latituteLabel         : UILabel!
@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet var address1Label         : UILabel!
     @IBOutlet var address2Label         : UILabel!
     @IBOutlet var address3Label         : UILabel!
-    @IBOutlet var startMonitoringButton : UIButton!
+    @IBOutlet var startMonitoringSwitch : UISwitch!
     @IBOutlet var createRegionButton    : UIButton!
     
     var region          : CircularRegion?
@@ -36,13 +36,12 @@ class ViewController: UIViewController {
     @IBAction func createRegion(sender:AnyObject) {
         if LocationManager.locationServicesEnabled() {
             let addressManager = LocationManager()
-            self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {locations -> Future<[CLPlacemark]> in
+            self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
                 addressManager.stopUpdatingLocation()
                 if let location = locations.first {
-                    self.latituteLabel.text = "\(location.coordinate.latitude)"
-                    self.longitudeLabel.text = "\(location.coordinate.longitude)"
-                    self.startMonitoringButton.enabled = true
-                    self.startMonitoringButton.setTitleColor(UIColor(red:0.0, green:0.7, blue:0.0, alpha:1.0), forState:.Normal)
+                    self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
+                    self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
+                    self.startMonitoringSwitch.enabled = true
                     self.region = CircularRegion(center:location.coordinate, identifier:"region", capacity:10)
                 }
                 return addressManager.reverseGeocodeLocation()

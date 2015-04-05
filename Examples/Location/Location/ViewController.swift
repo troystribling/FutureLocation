@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     @IBOutlet var latituteLabel      : UILabel!
     @IBOutlet var longitudeLabel     : UILabel!
@@ -18,12 +18,13 @@ class ViewController: UIViewController {
     @IBOutlet var address2Label      : UILabel!
     @IBOutlet var address3Label      : UILabel!
     @IBOutlet var getAddressButton   : UIButton!
-    @IBOutlet var startUpdatesButton : UIButton!
+    @IBOutlet var startUpdatesSwitch : UISwitch!
     
     var locationFuture  : FutureStream<[CLLocation]>?
     var addressFuture   : FutureStream<[CLPlacemark]>?
     
-    var locationManager = LocationManager()
+    let locationManager = LocationManager()
+    let addressManager  = LocationManager()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
@@ -33,6 +34,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.locationManager.distanceFilter = kCLDistanceFilterNone
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        if LocationManager.locationServicesEnabled() {
+            if self.locationManager.isUpdating {
+                self.startUpdatesSwitch.on = true
+            } else {
+                self.startUpdatesSwitch.on = false
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,10 +50,9 @@ class ViewController: UIViewController {
 
     @IBAction func getAddress(sender:AnyObject) {
         if LocationManager.locationServicesEnabled() {
-            let addressManager = LocationManager()
-             self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
-                                     addressManager.stopUpdatingLocation()
-                                     return addressManager.reverseGeocodeLocation()
+             self.addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
+                                     self.addressManager.stopUpdatingLocation()
+                                     return self.addressManager.reverseGeocodeLocation()
                                  }
             self.addressFuture?.onSuccess {placemarks in
                 if let placemark = placemarks.first {
@@ -72,13 +79,9 @@ class ViewController: UIViewController {
         if LocationManager.locationServicesEnabled() {
             if self.locationManager.isUpdating {
                 self.locationManager.stopUpdatingLocation()
-                self.startUpdatesButton.setTitle("Start Updates", forState:.Normal)
-                self.startUpdatesButton.setTitleColor(UIColor(red:0.4, green:0.7, blue:0.4, alpha:1.0), forState:.Normal)
             } else {
                 self.locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
                 self.locationFuture?.onSuccess {locations in
-                    self.startUpdatesButton.setTitle("Stop Updates", forState:.Normal)
-                    self.startUpdatesButton.setTitleColor(UIColor(red:0.7, green:0.4, blue:0.4, alpha:1.0), forState:.Normal)
                     if let location = locations.first {
                         self.latituteLabel.text =  NSString(format: "%.6f", location.coordinate.latitude) as String
                         self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String

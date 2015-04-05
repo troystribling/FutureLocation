@@ -34,7 +34,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
                                                Wrapper.WrappedCLLocation:CLLocationWrappable> {
     
     private var locationUpdatePromise               : StreamPromise<[Wrapper.WrappedCLLocation]>?
-    private var authorizationStatusChangedPromise   = Promise<CLAuthorizationStatus>()
+    private var authorizationStatusChangedPromise   : Promise<CLAuthorizationStatus>?
     private var _isUpdating                         = false
     
     public var isUpdating : Bool {
@@ -108,16 +108,17 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
     
     public func didChangeAuthorizationStatus(status:CLAuthorizationStatus) {
         Logger.debug("LocationManagerImpl#didChangeAuthorizationStatus: \(status)")
-        self.authorizationStatusChangedPromise.success(status)
-        self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
+        self.authorizationStatusChangedPromise?.success(status)
+        self.authorizationStatusChangedPromise = nil
     }
     
     public func authorize(locationManager:Wrapper, currentAuthorization:CLAuthorizationStatus, requestedAuthorization:CLAuthorizationStatus) -> Future<Void> {
         let promise = Promise<Void>()
         if currentAuthorization != requestedAuthorization {
+            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
             switch requestedAuthorization {
             case .AuthorizedAlways:
-                self.authorizationStatusChangedPromise.future.onSuccess {(status) in
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
                     if status == .AuthorizedAlways {
                         Logger.debug("LocationManager#authorize: Location Authorized succcess")
                         promise.success()
@@ -129,7 +130,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
                 locationManager.requestAlwaysAuthorization()
                 break
             case .AuthorizedWhenInUse:
-                self.authorizationStatusChangedPromise.future.onSuccess {(status) in
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
                     if status == .AuthorizedWhenInUse {
                         Logger.debug("LocationManager#authorize: Location AuthorizedWhenInUse success")
                         promise.success()

@@ -51,18 +51,12 @@ class ViewController: UIViewController {
                 if let placemark = placemarks.first {
                     if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
                         self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
-                    } else {
-                        self.address1Label.text = "1 Main St"
                     }
                     if let subLocality = placemark.subLocality {
                         self.address2Label.text = "\(placemark.subLocality)"
-                    } else {
-                        self.address2Label.text = "Meat Packing District"
                     }
                     if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
                         self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"
-                    } else {
-                        self.address3Label.text = "Mt. Juliet, TN"
                     }
                 }
             }

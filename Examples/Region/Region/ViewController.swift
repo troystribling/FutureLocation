@@ -12,52 +12,51 @@ import FutureLocation
 
 class ViewController: UIViewController {
 
-    @IBOutlet var latituteLabel      : UILabel!
-    @IBOutlet var longitudeLabel     : UILabel!
-    @IBOutlet var address1Label      : UILabel!
-    @IBOutlet var address2Label      : UILabel!
-    @IBOutlet var address3Label      : UILabel!
-    @IBOutlet var getAddressButton   : UIButton!
-    @IBOutlet var startUpdatesButton : UIButton!
+    @IBOutlet var stateLabel            : UILabel!
+    @IBOutlet var latituteLabel         : UILabel!
+    @IBOutlet var longitudeLabel        : UILabel!
+    @IBOutlet var address1Label         : UILabel!
+    @IBOutlet var address2Label         : UILabel!
+    @IBOutlet var address3Label         : UILabel!
+    @IBOutlet var startMonitoringButton : UIButton!
+    @IBOutlet var createRegionButton    : UIButton!
     
-    var locationFuture  : FutureStream<[CLLocation]>?
+    var region          : CircularRegion?
+    var regionFuture    : FutureStream<RegionState>?
     var addressFuture   : FutureStream<[CLPlacemark]>?
     
-    var locationManager = LocationManager()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func setLocation(sender:AnyObject) {
+    @IBAction func createRegion(sender:AnyObject) {
         if LocationManager.locationServicesEnabled() {
             let addressManager = LocationManager()
-            self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
+            self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {locations -> Future<[CLPlacemark]> in
                 addressManager.stopUpdatingLocation()
+                if let location = locations.first {
+                    self.latituteLabel.text = "\(location.coordinate.latitude)"
+                    self.longitudeLabel.text = "\(location.coordinate.longitude)"
+                    self.startMonitoringButton.enabled = true
+                    self.startMonitoringButton.setTitleColor(UIColor(red:0.0, green:0.7, blue:0.0, alpha:1.0), forState:.Normal)
+                    self.region = CircularRegion(center:location.coordinate, identifier:"region", capacity:10)
+                }
                 return addressManager.reverseGeocodeLocation()
             }
             self.addressFuture?.onSuccess {placemarks in
                 if let placemark = placemarks.first {
                     if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
                         self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
-                    } else {
-                        self.address1Label.text = "1 Main St"
                     }
                     if let subLocality = placemark.subLocality {
                         self.address2Label.text = "\(placemark.subLocality)"
-                    } else {
-                        self.address2Label.text = "Meat Packing District"
                     }
                     if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
                         self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"
-                    } else {
-                        self.address3Label.text = "Mt. Juliet, TN"
                     }
                 }
             }
@@ -66,6 +65,12 @@ class ViewController: UIViewController {
             }
         } else {
             self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services disabled"), animated:true, completion:nil)
+        }
+    }
+    
+    @IBAction func startMonitoring(sender:AnyObject) {
+        if let region = self.region {
+            
         }
     }
 

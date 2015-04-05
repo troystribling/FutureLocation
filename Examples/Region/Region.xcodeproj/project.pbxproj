@@ -17,6 +17,7 @@
 		054C3E741ACEECE800FC8602 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */; };
 		054C3E751ACEECE800FC8602 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		054C3E801ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */; };
+		054C3E831AD0AE4B00FC8602 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E821AD0AE4B00FC8602 /* Notify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FutureLocation.xcodeproj; path = ../../FutureLocation.xcodeproj; sourceTree = "<group>"; };
 		054C3E721ACEECDC00FC8602 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
+		054C3E821AD0AE4B00FC8602 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				054C3E441ACEEAE200FC8602 /* AppDelegate.swift */,
+				054C3E821AD0AE4B00FC8602 /* Notify.swift */,
 				054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */,
 				054C3E461ACEEAE200FC8602 /* ViewController.swift */,
 				054C3E4B1ACEEAE200FC8602 /* Images.xcassets */,
@@ -227,6 +230,11 @@
 				TargetAttributes = {
 					054C3E3E1ACEEAE200FC8602 = {
 						CreatedOnToolsVersion = 6.3;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					054C3E531ACEEAE200FC8602 = {
 						CreatedOnToolsVersion = 6.3;
@@ -301,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054C3E831AD0AE4B00FC8602 /* Notify.swift in Sources */,
 				054C3E471ACEEAE200FC8602 /* ViewController.swift in Sources */,
 				054C3E801ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift in Sources */,
 				054C3E451ACEEAE200FC8602 /* AppDelegate.swift in Sources */,

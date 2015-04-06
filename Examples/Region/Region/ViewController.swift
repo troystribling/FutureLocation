@@ -25,6 +25,9 @@ class ViewController: UITableViewController {
     var regionFuture    : FutureStream<RegionState>?
     var addressFuture   : FutureStream<[CLPlacemark]>?
     
+    let addressManager  = LocationManager()
+    let regionManager   = RegionManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -35,16 +38,15 @@ class ViewController: UITableViewController {
 
     @IBAction func createRegion(sender:AnyObject) {
         if LocationManager.locationServicesEnabled() {
-            let addressManager = LocationManager()
-            self.addressFuture = addressManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
-                addressManager.stopUpdatingLocation()
+            self.addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
+                self.addressManager.stopUpdatingLocation()
                 if let location = locations.first {
                     self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
                     self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
                     self.startMonitoringSwitch.enabled = true
-                    self.region = CircularRegion(center:location.coordinate, identifier:"region", capacity:10)
+                    self.region = CircularRegion(center:location.coordinate, identifier:"FutureLocation Region", capacity:10)
                 }
-                return addressManager.reverseGeocodeLocation()
+                return self.addressManager.reverseGeocodeLocation()
             }
             self.addressFuture?.onSuccess {placemarks in
                 if let placemark = placemarks.first {
@@ -67,9 +69,39 @@ class ViewController: UITableViewController {
         }
     }
     
-    @IBAction func startMonitoring(sender:AnyObject) {
+    @IBAction func toggleMonitoring(sender:AnyObject) {
         if let region = self.region {
-            
+            if self.regionManager.isMonitoring {
+                self.regionManager.stopMonitoringAllRegions()
+                self.stateLabel.text = "Not Monitoring"
+                self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
+                Notify.withMessage("Not Monitoring '\(region.identifier)'")
+            } else {
+                self.startMonitoring(region)
+            }
+        }
+    }
+    
+    func startMonitoring(region:CircularRegion) {
+        self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
+        self.regionFuture?.onSuccess {state in
+            switch state {
+            case .Start:
+                self.stateLabel.text = "Started Monitoring"
+                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+                Notify.withMessage("Started monitoring region '\(region.identifier)'")
+            case .Inside:
+                self.stateLabel.text = "Inside Region"
+                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+                Notify.withMessage("Entered region '\(region.identifier)'")
+            case .Outside:
+                self.stateLabel.text = "Outside Region"
+                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+                Notify.withMessage("Exited region '\(region.identifier)'")
+            }
+        }
+        self.regionFuture?.onFailure {error in
+            Notify.withMessage("Error: '\(error.localizedDescription)'")
         }
     }
 

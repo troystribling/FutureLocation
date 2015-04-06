@@ -16,7 +16,7 @@ class Notify {
     }
     
     class func withMessage(message:String) {
-        if UIApplication.sharedApplication().applicationState != .Active && self.getEnabled(){
+        if UIApplication.sharedApplication().applicationState != .Active {
             eventCount += 1
             let localNotification = UILocalNotification()
             localNotification.alertBody = message
@@ -25,14 +25,6 @@ class Notify {
             UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
         }
 
-    }
-    
-    class func setEnable(enabled:Bool = true) {
-        NSUserDefaults.standardUserDefaults().setBool(enabled, forKey:"notifications")
-    }
-    
-    class func getEnabled() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("notifications")
     }
     
 }

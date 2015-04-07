@@ -202,10 +202,6 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
         return CLLocationManager.deferredLocationUpdatesAvailable()
     }
     
-    public class func isMonitoringAvailableForClass(regionClass:AnyClass!) -> Bool {
-        return CLLocationManager.isMonitoringAvailableForClass(regionClass)
-    }
-
     public func requestWhenInUseAuthorization() {
         self.clLocationManager.requestWhenInUseAuthorization()
     }

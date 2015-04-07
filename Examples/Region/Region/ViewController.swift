@@ -44,7 +44,7 @@ class ViewController: UITableViewController {
                     self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
                     self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
                     self.startMonitoringSwitch.enabled = true
-                    self.region = CircularRegion(center:location.coordinate, identifier:"FutureLocation Region", capacity:10)
+                    self.region = CircularRegion(center:location.coordinate, radius:50.0, identifier:"FutureLocation Region", capacity:10)
                 }
                 return self.addressManager.reverseGeocodeLocation()
             }
@@ -70,21 +70,26 @@ class ViewController: UITableViewController {
     }
     
     @IBAction func toggleMonitoring(sender:AnyObject) {
-        if let region = self.region {
-            if self.regionManager.isMonitoring {
-                self.regionManager.stopMonitoringAllRegions()
-                self.stateLabel.text = "Not Monitoring"
-                self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
-                Notify.withMessage("Not Monitoring '\(region.identifier)'")
-            } else {
-                self.startMonitoring(region)
+        if CircularRegion.isMonitoringAvailableForClass() {
+            if let region = self.region {
+                if self.regionManager.isMonitoring {
+                    self.regionManager.stopMonitoringAllRegions()
+                    self.stateLabel.text = "Not Monitoring"
+                    self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
+                    Notify.withMessage("Not Monitoring '\(region.identifier)'")
+                } else {
+                    self.startMonitoring(region)
+                }
             }
+        } else {
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Circilar region monitoring not available"), animated:true, completion:nil)
         }
     }
     
     func startMonitoring(region:CircularRegion) {
         self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
         self.regionFuture?.onSuccess {state in
+            Notify.withMessage(" region '\(region.identifier)'")
             switch state {
             case .Start:
                 self.stateLabel.text = "Started Monitoring"

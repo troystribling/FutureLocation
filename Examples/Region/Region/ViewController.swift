@@ -89,7 +89,7 @@ class ViewController: UITableViewController {
     func startMonitoring(region:CircularRegion) {
         self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
         self.regionFuture?.onSuccess {state in
-            Notify.withMessage(" region '\(region.identifier)'")
+            Notify.withMessage("region Event '\(region.identifier)'")
             switch state {
             case .Start:
                 self.stateLabel.text = "Started Monitoring"

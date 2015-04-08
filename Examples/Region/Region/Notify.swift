@@ -16,14 +16,14 @@ class Notify {
     }
     
     class func withMessage(message:String) {
-        if UIApplication.sharedApplication().applicationState != .Active {
+//        if UIApplication.sharedApplication().applicationState != .Active {
             eventCount += 1
             let localNotification = UILocalNotification()
             localNotification.alertBody = message
             localNotification.soundName = UILocalNotificationDefaultSoundName
             localNotification.applicationIconBadgeNumber = eventCount
             UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
-        }
+//        }
 
     }
     

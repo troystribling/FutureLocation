@@ -10,23 +10,19 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet var stateLabel            : UILabel!
-    @IBOutlet var latituteLabel         : UILabel!
-    @IBOutlet var longitudeLabel        : UILabel!
-    @IBOutlet var address1Label         : UILabel!
-    @IBOutlet var address2Label         : UILabel!
-    @IBOutlet var address3Label         : UILabel!
+    @IBOutlet var uuidTextField         : UITextField!
+    @IBOutlet var beaconsLabel          : UILabel!
     @IBOutlet var startMonitoringSwitch : UISwitch!
-    @IBOutlet var createRegionButton    : UIButton!
     
     var region          : CircularRegion?
     var regionFuture    : FutureStream<RegionState>?
-    var addressFuture   : FutureStream<[CLPlacemark]>?
+    var beaconFuture    : FutureStream<[CLPlacemark]>?
     
     let addressManager  = LocationManager()
-    let regionManager   = RegionManager()
+    let beaconManager   = BeaconManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +41,9 @@ class ViewController: UITableViewController {
     
     @IBAction func toggleMonitoring(sender:AnyObject) {
         if let region = self.region {
-            if self.regionManager.isMonitoring {
-                self.regionManager.stopMonitoringAllRegions()
+            if self.beaconManager.isMonitoring {
+                self.beaconManager.stopRangingAllBeacons()
+                self.beaconManager.stopMonitoringAllRegions()
                 self.stateLabel.text = "Not Monitoring"
                 self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
                 Notify.withMessage("Not Monitoring '\(region.identifier)'")
@@ -57,28 +54,35 @@ class ViewController: UITableViewController {
     }
     
     func startMonitoring(region:CircularRegion) {
-        self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
-        self.regionFuture?.onSuccess {state in
-            switch state {
-            case .Start:
-                self.stateLabel.text = "Started Monitoring"
-                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
-                Notify.withMessage("Started monitoring region '\(region.identifier)'")
-            case .Inside:
-                self.stateLabel.text = "Inside Region"
-                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
-                Notify.withMessage("Entered region '\(region.identifier)'")
-            case .Outside:
-                self.stateLabel.text = "Outside Region"
-                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
-                Notify.withMessage("Exited region '\(region.identifier)'")
-            }
-        }
-        self.regionFuture?.onFailure {error in
-            Notify.withMessage("Error: '\(error.localizedDescription)'")
-        }
+//        self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
+//        self.regionFuture?.onSuccess {state in
+//            switch state {
+//            case .Start:
+//                self.stateLabel.text = "Started Monitoring"
+//                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+//                Notify.withMessage("Started monitoring region '\(region.identifier)'")
+//            case .Inside:
+//                self.stateLabel.text = "Inside Region"
+//                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+//                Notify.withMessage("Entered region '\(region.identifier)'")
+//            case .Outside:
+//                self.stateLabel.text = "Outside Region"
+//                self.stateLabel.textColor = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+//                Notify.withMessage("Exited region '\(region.identifier)'")
+//            }
+//        }
+//        self.regionFuture?.onFailure {error in
+//            Notify.withMessage("Error: '\(error.localizedDescription)'")
+//        }
     }
     
+    // UITextFieldDelegate
+    func textFieldShouldReturn(textField:UITextField) -> Bool {
+        self.uuidTextField.resignFirstResponder()
+        if let newValue = self.uuidTextField.text {
+        }
+        return true
+    }
 
 }
 

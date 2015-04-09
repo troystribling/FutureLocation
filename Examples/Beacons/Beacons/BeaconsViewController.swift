@@ -33,11 +33,13 @@ class BeaconsViewController: UITableViewController {
         } else {
             self.navigationItem.title = "Beacons"
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateBeacons", name:AppNotification.didUpdateBeacon, object:self.beaconRegion)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationItem.title = ""
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func prepareForSegue(segue:UIStoryboardSegue, sender: AnyObject!) {

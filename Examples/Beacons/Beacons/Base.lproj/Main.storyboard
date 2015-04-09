@@ -23,19 +23,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="B9407F30-F5F8-466E-AFF9-25556B57FE6D" borderStyle="roundedRect" placeholder="UUID" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CFl-Iz-OEl">
-                                                    <rect key="frame" x="20" y="11" width="560" height="40"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="B9407F30-F5F8-466E-AFF9-25556B57FE6D" borderStyle="roundedRect" placeholder="UUID" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CFl-Iz-OEl">
+                                                    <rect key="frame" x="10" y="11" width="580" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="rm5-yp-hwv"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="23"/>
+                                                    <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="yht-EV-xxn" id="6sn-s4-iOr"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="CFl-Iz-OEl" firstAttribute="leading" secondItem="Qbp-95-OOn" secondAttribute="leadingMargin" constant="12" id="56t-PR-to9"/>
+                                                <constraint firstItem="CFl-Iz-OEl" firstAttribute="leading" secondItem="Qbp-95-OOn" secondAttribute="leadingMargin" constant="2" id="56t-PR-to9"/>
                                                 <constraint firstItem="CFl-Iz-OEl" firstAttribute="top" secondItem="Qbp-95-OOn" secondAttribute="topMargin" constant="3" id="Aea-wg-jsa"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="CFl-Iz-OEl" secondAttribute="trailing" constant="12" id="F41-2U-1MP"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CFl-Iz-OEl" secondAttribute="trailing" constant="2" id="F41-2U-1MP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -52,8 +55,11 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cT6-M8-ar6">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cT6-M8-ar6">
                                                     <rect key="frame" x="531" y="12" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="toggleMonitoring:" destination="yht-EV-xxn" eventType="valueChanged" id="Mgz-5C-zqP"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -142,7 +148,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKa-Nx-kQ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="705" y="318"/>
+            <point key="canvasLocation" x="712" y="318"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tvu-cN-POX">

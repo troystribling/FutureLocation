@@ -30,6 +30,11 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !CircularRegion.isMonitoringAvailableForClass() {
+            self.createRegionButton.enabled = false
+            self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Region monitoring not availble"), animated:true, completion:nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,52 +42,44 @@ class ViewController: UITableViewController {
     }
 
     @IBAction func createRegion(sender:AnyObject) {
-        if LocationManager.locationServicesEnabled() {
-            self.addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
-                self.addressManager.stopUpdatingLocation()
-                if let location = locations.first {
-                    self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
-                    self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
-                    self.startMonitoringSwitch.enabled = true
-                    self.region = CircularRegion(center:location.coordinate, radius:50.0, identifier:"FutureLocation Region", capacity:10)
-                }
-                return self.addressManager.reverseGeocodeLocation()
+        self.addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
+            self.addressManager.stopUpdatingLocation()
+            if let location = locations.first {
+                self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
+                self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
+                self.startMonitoringSwitch.enabled = true
+                self.region = CircularRegion(center:location.coordinate, radius:50.0, identifier:"FutureLocation Region", capacity:10)
             }
-            self.addressFuture?.onSuccess {placemarks in
-                if let placemark = placemarks.first {
-                    if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
-                        self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
-                    }
-                    if let subLocality = placemark.subLocality {
-                        self.address2Label.text = "\(placemark.subLocality)"
-                    }
-                    if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
-                        self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"
-                    }
+            return self.addressManager.reverseGeocodeLocation()
+        }
+        self.addressFuture?.onSuccess {placemarks in
+            if let placemark = placemarks.first {
+                if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
+                    self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
+                }
+                if let subLocality = placemark.subLocality {
+                    self.address2Label.text = "\(placemark.subLocality)"
+                }
+                if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
+                    self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"
                 }
             }
-            self.addressFuture?.onFailure {error in
-                self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
-            }
-        } else {
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services disabled"), animated:true, completion:nil)
+        }
+        self.addressFuture?.onFailure {error in
+            self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
         }
     }
     
     @IBAction func toggleMonitoring(sender:AnyObject) {
-        if CircularRegion.isMonitoringAvailableForClass() {
-            if let region = self.region {
-                if self.regionManager.isMonitoring {
-                    self.regionManager.stopMonitoringAllRegions()
-                    self.stateLabel.text = "Not Monitoring"
-                    self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
-                    Notify.withMessage("Not Monitoring '\(region.identifier)'")
-                } else {
-                    self.startMonitoring(region)
-                }
+        if let region = self.region {
+            if self.regionManager.isMonitoring {
+                self.regionManager.stopMonitoringAllRegions()
+                self.stateLabel.text = "Not Monitoring"
+                self.stateLabel.textColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
+                Notify.withMessage("Not Monitoring '\(region.identifier)'")
+            } else {
+                self.startMonitoring(region)
             }
-        } else {
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Circilar region monitoring not available"), animated:true, completion:nil)
         }
     }
     

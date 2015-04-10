@@ -38,6 +38,7 @@ class ViewController: UITableViewController {
     }
 
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if LocationManager.locationServicesEnabled() {
             if LocationManager.locationServicesEnabled() {
                 if self.locationManager.isUpdating {

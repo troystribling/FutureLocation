@@ -30,13 +30,21 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !CircularRegion.isMonitoringAvailableForClass() {
-            self.createRegionButton.enabled = false
-            self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Region monitoring not availble"), animated:true, completion:nil)
-        }
     }
 
+    override func viewDidAppear(animated:Bool) {
+        super.viewDidAppear(animated)
+        if !CircularRegion.isMonitoringAvailableForClass() || !RegionManager.locationServicesEnabled() {
+            self.createRegionButton.enabled = false
+            self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
+            if RegionManager.locationServicesEnabled() {
+                self.presentViewController(UIAlertController.alertOnErrorWithMessage("Region monitoring not availble"), animated:true, completion:nil)
+            } else {
+                self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services not enabled"), animated:true, completion:nil)
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

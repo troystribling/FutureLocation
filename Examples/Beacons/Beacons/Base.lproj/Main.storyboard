@@ -106,8 +106,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NPK-od-oWP">
-                                                    <rect key="frame" x="529" y="14" width="31" height="31"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NPK-od-oWP">
+                                                    <rect key="frame" x="537" y="14" width="23" height="31"/>
                                                     <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="23"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -141,6 +141,7 @@
                     <navigationItem key="navigationItem" title="Beacon Region" id="9LF-Yi-nFb"/>
                     <connections>
                         <outlet property="beaconsLabel" destination="NPK-od-oWP" id="iRM-OF-mMh"/>
+                        <outlet property="startMonitoringLabel" destination="uEJ-IK-fBm" id="UYi-uG-Yrl"/>
                         <outlet property="startMonitoringSwitch" destination="cT6-M8-ar6" id="KMG-Oe-OA3"/>
                         <outlet property="stateLabel" destination="vIW-l7-EjZ" id="8O8-XT-zsc"/>
                         <outlet property="uuidTextField" destination="CFl-Iz-OEl" id="gI4-0Q-3ox"/>

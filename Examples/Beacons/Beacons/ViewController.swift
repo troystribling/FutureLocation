@@ -16,11 +16,11 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet var uuidTextField         : UITextField!
     @IBOutlet var beaconsLabel          : UILabel!
     @IBOutlet var startMonitoringSwitch : UISwitch!
+    @IBOutlet var startMonitoringLabel  : UILabel!
     
     var beaconFuture    : FutureStream<[Beacon]>?
     var beaconRegion    : BeaconRegion
     
-    let addressManager  = LocationManager()
     let beaconManager   = BeaconManager()
     let estimoteUUID    = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
     
@@ -38,7 +38,19 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         if let uuid = BeaconStore.getBeacon() {
             self.uuidTextField.text = uuid.UUIDString
         }
-        self.beaconsLabel.text = " 0"
+    }
+    
+    override func viewDidAppear(animated:Bool) {
+        super.viewDidAppear(animated)
+        if !BeaconManager.isRangingAvailable() || !BeaconManager.locationServicesEnabled() {
+            self.startMonitoringSwitch.enabled = false
+            self.uuidTextField.enabled = false
+            if BeaconManager.locationServicesEnabled() {
+                self.presentViewController(UIAlertController.alertOnErrorWithMessage("Beacon ranging not available"), animated:true, completion:nil)
+            } else {
+                self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services not enabled"), animated:true, completion:nil)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,7 +116,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 Notify.withMessage("Error: '\(error.localizedDescription)'")
             }
         } else {
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("No beacon region defiled"), animated:true, completion:nil)
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage("No beacon region defined"), animated:true, completion:nil)
         }
     }
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I58-is-cJ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I58-is-cJ2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -221,6 +221,7 @@
                         <outlet property="createRegionButton" destination="5Qm-6A-Y49" id="iIl-3d-eCg"/>
                         <outlet property="latituteLabel" destination="MSO-sF-Cjc" id="FYb-VA-V4K"/>
                         <outlet property="longitudeLabel" destination="QUa-Pm-qUl" id="MZj-TY-69a"/>
+                        <outlet property="startMonitoringLabel" destination="VBA-2Z-pcs" id="co4-IT-2gg"/>
                         <outlet property="startMonitoringSwitch" destination="Pn8-0y-UYE" id="L9D-Tn-b5x"/>
                         <outlet property="stateLabel" destination="aT0-BB-EBM" id="tnu-TD-K4g"/>
                     </connections>

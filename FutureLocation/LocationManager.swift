@@ -142,6 +142,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
                 locationManager.requestWhenInUseAuthorization()
                 break
             default:
+                Logger.debug("LocationManager#authorize: Location Authorization invalid")
                 break
             }
         } else {

@@ -17,6 +17,7 @@
 		05BC8B391AC9A19700F5B8A4 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; };
 		05BC8B3C1ACA657F00F5B8A4 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05BC8B321AC9A16E00F5B8A4 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */; };
+		05F3F0421AD9AF6C00E3FBB1 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3F0411AD9AF6C00E3FBB1 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		05BC8B2C1AC9A16E00F5B8A4 /* FutureLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FutureLocation.xcodeproj; path = ../../FutureLocation.xcodeproj; sourceTree = "<group>"; };
 		05BC8B371AC9A19200F5B8A4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
+		05F3F0411AD9AF6C00E3FBB1 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		05BC8B091AC9A11D00F5B8A4 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				05F3F0411AD9AF6C00E3FBB1 /* ProgressView.swift */,
 				05BC8B0C1AC9A11D00F5B8A4 /* AppDelegate.swift */,
 				05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */,
 				05BC8B0E1AC9A11D00F5B8A4 /* ViewController.swift */,
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BC8B0F1AC9A11D00F5B8A4 /* ViewController.swift in Sources */,
+				05F3F0421AD9AF6C00E3FBB1 /* ProgressView.swift in Sources */,
 				05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */,
 				05BC8B0D1AC9A11D00F5B8A4 /* AppDelegate.swift in Sources */,
 			);

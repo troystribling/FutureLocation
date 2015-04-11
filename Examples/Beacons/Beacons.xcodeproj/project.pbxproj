@@ -21,6 +21,7 @@
 		050353B41AD2E232006AE6FB /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353B21AD2E232006AE6FB /* Notify.swift */; };
 		050353B51AD2E232006AE6FB /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */; };
 		050353BD1AD57DB0006AE6FB /* BeaconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353BC1AD57DB0006AE6FB /* BeaconStore.swift */; };
+		05F5B2821AD9B31E00432393 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F5B2811AD9B31E00432393 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		050353B21AD2E232006AE6FB /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		050353BC1AD57DB0006AE6FB /* BeaconStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconStore.swift; sourceTree = "<group>"; };
+		05F5B2811AD9B31E00432393 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,17 +140,18 @@
 		0503536A1AD20CCB006AE6FB /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
-				050353B21AD2E232006AE6FB /* Notify.swift */,
-				050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */,
 				0503536D1AD20CCB006AE6FB /* AppDelegate.swift */,
-				0503536F1AD20CCB006AE6FB /* ViewController.swift */,
-				050353711AD20CCB006AE6FB /* Main.storyboard */,
-				050353741AD20CCB006AE6FB /* Images.xcassets */,
-				050353761AD20CCB006AE6FB /* LaunchScreen.xib */,
-				0503536B1AD20CCB006AE6FB /* Supporting Files */,
-				050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */,
 				050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */,
 				050353BC1AD57DB0006AE6FB /* BeaconStore.swift */,
+				050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */,
+				050353B21AD2E232006AE6FB /* Notify.swift */,
+				05F5B2811AD9B31E00432393 /* ProgressView.swift */,
+				050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */,
+				0503536F1AD20CCB006AE6FB /* ViewController.swift */,
+				050353741AD20CCB006AE6FB /* Images.xcassets */,
+				050353761AD20CCB006AE6FB /* LaunchScreen.xib */,
+				050353711AD20CCB006AE6FB /* Main.storyboard */,
+				0503536B1AD20CCB006AE6FB /* Supporting Files */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				050353BD1AD57DB0006AE6FB /* BeaconStore.swift in Sources */,
 				050353AD1AD2DF64006AE6FB /* BeaconsViewController.swift in Sources */,
 				050353B01AD2DFAA006AE6FB /* BeaconCell.swift in Sources */,
+				05F5B2821AD9B31E00432393 /* ProgressView.swift in Sources */,
 				050353B51AD2E232006AE6FB /* UIAlertControllerExtensions.swift in Sources */,
 				050353B41AD2E232006AE6FB /* Notify.swift in Sources */,
 			);

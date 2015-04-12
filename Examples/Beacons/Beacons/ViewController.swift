@@ -20,6 +20,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     var beaconFuture    : FutureStream<[Beacon]>?
     var beaconRegion    : BeaconRegion
+    var isRanging       = false
     
     let beaconManager   = BeaconManager()
     let estimoteUUID    = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
@@ -29,7 +30,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
             self.beaconRegion = BeaconRegion(proximityUUID:uuid, identifier:"Example Beacon")
         } else {
             self.beaconRegion = BeaconRegion(proximityUUID:self.estimoteUUID, identifier:"Example Beacon")
-            BeaconStore.setBeacons(self.estimoteUUID)
+            BeaconStore.setBeacon(self.estimoteUUID)
         }
         super.init(coder:aDecoder)
     }
@@ -64,6 +65,8 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         if self.beaconManager.isMonitoring {
             self.beaconManager.stopRangingAllBeacons()
             self.beaconManager.stopMonitoringAllRegions()
+            self.uuidTextField.enabled = true
+            self.isRanging = false
             self.setNotMonitoring()
         } else {
             self.startMonitoring()
@@ -72,15 +75,18 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     func startMonitoring() {
         if let beacon = BeaconStore.getBeacon() {
+            self.uuidTextField.enabled = false
             let regionFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways)
             self.beaconFuture = regionFuture.flatmap{state -> FutureStream<[Beacon]> in
                 switch state {
                 case .Start:
                     self.setStartedMonitoring()
+                    self.isRanging = true
                     return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
                 case .Inside:
                     self.setInsideRegion()
                     if !self.beaconManager.isRangingRegion(self.beaconRegion.identifier) {
+                        self.isRanging = true
                         return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
                     } else {
                         let errorPromise = StreamPromise<[Beacon]>()
@@ -96,10 +102,12 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 }
             }
             self.beaconFuture?.onSuccess {beacons in
-                if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
-                    NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
+                if self.isRanging {
+                    if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
+                        NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
+                    }
+                    self.beaconsLabel.text = "\(beacons.count)"
                 }
-                self.beaconsLabel.text = "\(beacons.count)"
             }
             self.beaconFuture?.onFailure {error in
                 Notify.withMessage("Error: '\(error.localizedDescription)'")
@@ -111,19 +119,20 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     // UITextFieldDelegate
     func textFieldShouldReturn(textField:UITextField) -> Bool {
-        self.uuidTextField.resignFirstResponder()
         if let newValue = self.uuidTextField.text {
             if let uuid = NSUUID(UUIDString:newValue) {
-                BeaconStore.setBeacons(uuid)
-                self.navigationController?.popViewControllerAnimated(true)
+                self.beaconRegion = BeaconRegion(proximityUUID:uuid, identifier:"Example Beacon")
+                BeaconStore.setBeacon(uuid)
+                self.uuidTextField.resignFirstResponder()
                 return true
             } else {
                 self.presentViewController(UIAlertController.alertOnErrorWithMessage("UUID '\(newValue)' is Invalid"), animated:true, completion:nil)
                 return false
             }
 
+        } else {
+            return false
         }
-        return true
     }
 
     func setNotMonitoring() {

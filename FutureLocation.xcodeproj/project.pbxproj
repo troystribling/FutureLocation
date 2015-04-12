@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF11AC889AD00861D0A /* RegionManagerTests.swift */; };
 		05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF31AC8949300861D0A /* BeaconManagerTests.swift */; };
+		05644B0C1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05644B0B1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift */; };
 		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		05250BF11AC889AD00861D0A /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManagerTests.swift; sourceTree = "<group>"; };
 		05250BF31AC8949300861D0A /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManagerTests.swift; sourceTree = "<group>"; };
+		05644B0B1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLAuthorizationStatusExtension.swift; sourceTree = "<group>"; };
 		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -129,16 +131,18 @@
 		05BAEA9E1A9AA045003C0C1C /* FutureLocation */ = {
 			isa = PBXGroup;
 			children = (
-				05BAEACC1A9AA31A003C0C1C /* External */,
+				05BAEAA11A9AA045003C0C1C /* FutureLocation.h */,
 				05BAEAB81A9AA212003C0C1C /* Beacon.swift */,
 				05BAEAB91A9AA212003C0C1C /* BeaconManager.swift */,
 				05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */,
 				05BAEABB1A9AA212003C0C1C /* CircularRegion.swift */,
+				05644B0B1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift */,
 				05BAEABC1A9AA212003C0C1C /* CLProximityExtension.swift */,
 				05BAEABD1A9AA212003C0C1C /* LocationManager.swift */,
 				05BAEABE1A9AA212003C0C1C /* Region.swift */,
 				05BAEABF1A9AA212003C0C1C /* RegionManager.swift */,
-				05BAEAA11A9AA045003C0C1C /* FutureLocation.h */,
+				05BAEAF01A9AA59A003C0C1C /* Logger.swift */,
+				05BAEACC1A9AA31A003C0C1C /* External */,
 				05BAEA9F1A9AA045003C0C1C /* Supporting Files */,
 			);
 			path = FutureLocation;
@@ -177,7 +181,6 @@
 				05BAEADB1A9AA490003C0C1C /* ExtSwift */,
 				05BAEAD41A9AA34A003C0C1C /* Wrappers */,
 				05BAEACD1A9AA331003C0C1C /* SimpleFutures */,
-				05BAEAF01A9AA59A003C0C1C /* Logger.swift */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				05BAEAC51A9AA212003C0C1C /* LocationManager.swift in Sources */,
 				05BAEAD91A9AA34A003C0C1C /* Optional.swift in Sources */,
 				05BAEAC11A9AA212003C0C1C /* BeaconManager.swift in Sources */,
+				05644B0C1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift in Sources */,
 				05BAEAEB1A9AA490003C0C1C /* Int.swift in Sources */,
 				05BAEAC61A9AA212003C0C1C /* Region.swift in Sources */,
 				05BAEAE61A9AA490003C0C1C /* Array.swift in Sources */,

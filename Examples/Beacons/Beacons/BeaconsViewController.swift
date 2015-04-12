@@ -28,11 +28,6 @@ class BeaconsViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if let beaconRegion = self.beaconRegion {
-            self.navigationItem.title = beaconRegion.identifier
-        } else {
-            self.navigationItem.title = "Beacons"
-        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateBeacons", name:AppNotification.didUpdateBeacon, object:self.beaconRegion)
     }
     

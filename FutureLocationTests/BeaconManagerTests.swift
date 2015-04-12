@@ -167,6 +167,98 @@ class BeaconManagerTests: XCTestCase {
         super.tearDown()
     }
 
+    func testAuthorizedAlwaysWhenAuthorizedAlways() {
+        let mock = BeaconManagerMock()
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.AuthorizedAlways, requestedAuthorization:.AuthorizedAlways)
+        future.onSuccess {
+            expectation.fulfill()
+        }
+        future.onFailure{error in
+            XCTAssert(false, "onFailure called")
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
+    func testAuthorizedAlwaysSuccess() {
+        let mock = BeaconManagerMock(responseAuthorization:.AuthorizedAlways)
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways)
+        future.onSuccess {
+            expectation.fulfill()
+        }
+        future.onFailure{error in
+            XCTAssert(false, "onFailure called")
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
+    func testAuthorizedAlwaysFailure() {
+        let mock = BeaconManagerMock(responseAuthorization:.Denied)
+        let expectation = expectationWithDescription("onFailure fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways)
+        future.onSuccess {
+            XCTAssert(false, "onSuccess called")
+        }
+        future.onFailure{error in
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
+    func testAuthorizedWhenInUseWhenAuthorizedWhenInUse() {
+        let mock = BeaconManagerMock()
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.AuthorizedWhenInUse, requestedAuthorization:.AuthorizedWhenInUse)
+        future.onSuccess {
+            expectation.fulfill()
+        }
+        future.onFailure{error in
+            XCTAssert(error.code == LocationError.AuthorizationAlwaysFailed.rawValue, "Error code invalid")
+            XCTAssert(false, "onFailure called")
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
+    func testAuthorizedWhenInUseSuccess() {
+        let mock = BeaconManagerMock(responseAuthorization:.AuthorizedWhenInUse)
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedWhenInUse)
+        future.onSuccess {
+            expectation.fulfill()
+        }
+        future.onFailure{error in
+            XCTAssert(false, "onFailure called")
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
+    func testAuthorizedWhenInUseFailure() {
+        let mock = BeaconManagerMock(responseAuthorization:.Denied)
+        let expectation = expectationWithDescription("onFailure fulfilled for future")
+        let future = mock.impl.authorize(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedWhenInUse)
+        future.onSuccess {
+            XCTAssert(false, "onSuccess called")
+        }
+        future.onFailure{error in
+            XCTAssert(error.code == LocationError.AuthorisedWhenInUseFailed.rawValue, "Error code invalid")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+    
     func testStartRangingRegionSuccess() {
         let mock = BeaconManagerMock(responseAuthorization:.AuthorizedAlways)
         let expectation = expectationWithDescription("onSuccess fulfilled for future")

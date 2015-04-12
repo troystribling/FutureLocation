@@ -34,7 +34,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
                                                Wrapper.WrappedCLLocation:CLLocationWrappable> {
     
     private var locationUpdatePromise               : StreamPromise<[Wrapper.WrappedCLLocation]>?
-    private var authorizationStatusChangedPromise   : Promise<CLAuthorizationStatus>?
+    public var authorizationStatusChangedPromise   : Promise<CLAuthorizationStatus>?
     private var _isUpdating                         = false
     
     public var isUpdating : Bool {
@@ -108,7 +108,9 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
     
     public func didChangeAuthorizationStatus(status:CLAuthorizationStatus) {
         Logger.debug("LocationManagerImpl#didChangeAuthorizationStatus: \(status)")
-        self.authorizationStatusChangedPromise?.success(status)
+        if let authorizationStatusChangedPromise = self.authorizationStatusChangedPromise {
+            authorizationStatusChangedPromise.success(status)
+        }
         self.authorizationStatusChangedPromise = nil
     }
     
@@ -171,7 +173,7 @@ struct FLError {
 
 public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationManagerWrappable {
     
-    let impl = LocationManagerImpl<LocationManager>()
+    public let impl = LocationManagerImpl<LocationManager>()
 
     // LocationManagerImpl
 

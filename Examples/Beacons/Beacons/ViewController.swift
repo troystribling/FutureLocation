@@ -20,6 +20,8 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     var beaconFuture    : FutureStream<[Beacon]>?
     var beaconRegion    : BeaconRegion
+
+    var progressView    = ProgressView()
     var isRanging       = false
     
     let beaconManager   = BeaconManager()
@@ -47,6 +49,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         if !BeaconManager.isRangingAvailable() || !BeaconManager.locationServicesEnabled() {
             self.startMonitoringSwitch.enabled = false
             self.uuidTextField.enabled = false
+            self.startMonitoringLabel.textColor = UIColor.lightGrayColor()
             let message = BeaconManager.locationServicesEnabled() ? "Beacon ranging not available" : "Location services not enabled"
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
         }
@@ -74,10 +77,11 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func startMonitoring() {
+        self.progressView.show()
         if let beacon = BeaconStore.getBeacon() {
             self.uuidTextField.enabled = false
-            let regionFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways)
-            self.beaconFuture = regionFuture.flatmap{state -> FutureStream<[Beacon]> in
+            self.beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways).flatmap{state -> FutureStream<[Beacon]> in
+                self.progressView.remove()
                 switch state {
                 case .Start:
                     self.setStartedMonitoring()
@@ -105,12 +109,15 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 if self.isRanging {
                     if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
                         NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
+                        self.setInsideRegion()
                     }
                     self.beaconsLabel.text = "\(beacons.count)"
                 }
             }
             self.beaconFuture?.onFailure {error in
                 Notify.withMessage("Error: '\(error.localizedDescription)'")
+                self.progressView.remove()
+                self.startMonitoringSwitch.on = false
             }
         } else {
             self.presentViewController(UIAlertController.alertOnErrorWithMessage("No beacon region defined"), animated:true, completion:nil)

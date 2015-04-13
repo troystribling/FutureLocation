@@ -115,9 +115,11 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 }
             }
             self.beaconFuture?.onFailure {error in
-                Notify.withMessage("Error: '\(error.localizedDescription)'")
                 self.progressView.remove()
-                self.startMonitoringSwitch.on = false
+                if error.domain != AppErrors.domain {
+                    Notify.withMessage("Error: '\(error.localizedDescription)'")
+                    self.startMonitoringSwitch.on = false
+                }
             }
         } else {
             self.presentViewController(UIAlertController.alertOnErrorWithMessage("No beacon region defined"), animated:true, completion:nil)

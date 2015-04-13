@@ -39,6 +39,7 @@
 		05BAEAEE1A9AA490003C0C1C /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE41A9AA490003C0C1C /* Sequence.swift */; };
 		05BAEAEF1A9AA490003C0C1C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE51A9AA490003C0C1C /* String.swift */; };
 		05BAEAF11A9AA59A003C0C1C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAF01A9AA59A003C0C1C /* Logger.swift */; };
+		05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAD67A1ADB583500DCCBB7 /* Mocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		05BAEAE41A9AA490003C0C1C /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		05BAEAE51A9AA490003C0C1C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		05BAEAF01A9AA59A003C0C1C /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		05EAD67A1ADB583500DCCBB7 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */,
 				05250BF11AC889AD00861D0A /* RegionManagerTests.swift */,
 				05250BF31AC8949300861D0A /* BeaconManagerTests.swift */,
+				05EAD67A1ADB583500DCCBB7 /* Mocks.swift */,
 			);
 			path = FutureLocationTests;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */,
 				0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */,
 				05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */,
+				05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

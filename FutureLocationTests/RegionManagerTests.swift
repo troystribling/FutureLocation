@@ -13,111 +13,6 @@ import FutureLocation
 
 class RegionManagerTests: XCTestCase {
 
-    // LocationManagerMock
-    class LocationManagerMock : LocationManagerWrappable {
-        
-        var impl = RegionManagerImpl<RegionManagerMock>()
-        
-        let responseAuthorization:CLAuthorizationStatus?
-        let error : NSError?
-        
-        var location : CLLocationMock! {
-            return CLLocationMock()
-        }
-        
-        init(responseAuthorization:CLAuthorizationStatus? = nil, error:NSError? = nil) {
-            self.responseAuthorization = responseAuthorization
-            self.error = error
-        }
-        
-        func requestWhenInUseAuthorization() {
-            if let responseAuthorization = self.responseAuthorization {
-                self.impl.didChangeAuthorizationStatus(responseAuthorization)
-            }
-        }
-        
-        func requestAlwaysAuthorization() {
-            if let responseAuthorization = self.responseAuthorization {
-                self.impl.didChangeAuthorizationStatus(responseAuthorization)
-            }
-        }
-        
-        func wrappedStartUpdatingLocation() {
-            if let responseAuthorization = self.responseAuthorization {
-                if let error = self.error {
-                    self.impl.didFailWithError(error)
-                } else {
-                    self.impl.didUpdateLocations([CLLocationMock(), CLLocationMock()])
-                }
-            }
-        }
-        
-        func wrappedStartMonitoringSignificantLocationChanges() {
-            if let responseAuthorization = self.responseAuthorization {
-                if let error = self.error {
-                    self.impl.didFailWithError(error)
-                } else {
-                    self.impl.didUpdateLocations([CLLocationMock(), CLLocationMock()])
-                }
-            }
-        }
-    }
-
-    class CLLocationMock : CLLocationWrappable {
-    }
-    //LocationManagerMock
-    
-    //RegionManagerMock
-    class RegionManagerMock : LocationManagerMock, RegionManagerWrappable {
-    
-        // RegionManagerWrappable
-        var _regions = [String:RegionMock]()
-        
-        var regions : [RegionMock] {
-            return self._regions.values.array
-        }
-        
-        func region(identifier:String) -> RegionMock? {
-            return self._regions[identifier]
-        }
-        
-        func wrappedStartMonitoringForRegion(region:RegionMock) {
-            self._regions[region.identifier] = region
-            if let responseAuthorization = self.responseAuthorization {
-                if let error = self.error {
-                    self.impl.didFailMonitoringForRegion(region, error:error)
-                } else {
-                    self.impl.didStartMonitoringForRegion(region)
-                }
-            }
-        }
-        
-        func wrappedStopMonitoringForRegion(region:RegionMock) {
-            self._regions.removeValueForKey(region.identifier)
-        }
-        
-    }
-    
-    class RegionMock : RegionWrappable {
-        
-        let _regionPromise = StreamPromise<RegionState>()
-        let _identifier : String
-        
-        var regionPromise   : StreamPromise<RegionState> {
-            return self._regionPromise
-        }
-        
-        var identifier : String {
-            return self._identifier
-        }
-        
-        init(identifier:String) {
-            self._identifier = identifier
-        }
-
-    }
-    // RegionManagerMock
-
     override func setUp() {
         super.setUp()
     }
@@ -129,7 +24,7 @@ class RegionManagerTests: XCTestCase {
     func testStartMonitoringRegionSuccess() {
         let mock = RegionManagerMock(responseAuthorization:.AuthorizedAlways)
         let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let future = mock.impl.startMonitoringForRegion(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
+        let future = mock.regionImpl.startMonitoringForRegion(mock, authorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
         future.onSuccess {state in
             XCTAssert(state == .Start, "region state invalid")
             expectation.fulfill()
@@ -145,7 +40,7 @@ class RegionManagerTests: XCTestCase {
     func testStartMonitoringRegionFailure() {
         let mock = RegionManagerMock(responseAuthorization:.AuthorizedAlways, error:TestFailure.error)
         let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = mock.impl.startMonitoringForRegion(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
+        let future = mock.regionImpl.startMonitoringForRegion(mock, authorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
         future.onSuccess {state in
             XCTAssert(false, "onSuccess called")
         }
@@ -160,7 +55,7 @@ class RegionManagerTests: XCTestCase {
     func testStartMonitoringAuthorizationFailure() {
         let mock = RegionManagerMock(responseAuthorization:.Denied)
         let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = mock.impl.startMonitoringForRegion(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
+        let future = mock.regionImpl.startMonitoringForRegion(mock, authorization:.AuthorizedAlways, region:RegionMock(identifier:"region"))
         future.onSuccess {state in
             XCTAssert(false, "onSuccess called")
         }
@@ -177,10 +72,10 @@ class RegionManagerTests: XCTestCase {
         let mock = RegionManagerMock(responseAuthorization:.AuthorizedAlways)
         let expectation = expectationWithDescription("onSuccess fulfilled for future")
         let region = RegionMock(identifier:"region")
-        let future = mock.impl.startMonitoringForRegion(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways, region:region)
+        let future = mock.regionImpl.startMonitoringForRegion(mock, authorization:.AuthorizedAlways, region:region)
         future.onSuccess {state in
             if state == .Start {
-                mock.impl.didEnterRegion(region)
+                mock.regionImpl.didEnterRegion(region)
             } else {
                 XCTAssert(state == .Inside, "region state invalid")
                 expectation.fulfill()
@@ -198,10 +93,10 @@ class RegionManagerTests: XCTestCase {
         let mock = RegionManagerMock(responseAuthorization:.AuthorizedAlways)
         let expectation = expectationWithDescription("onSuccess fulfilled for future")
         let region = RegionMock(identifier:"region")
-        let future = mock.impl.startMonitoringForRegion(mock, currentAuthorization:.Denied, requestedAuthorization:.AuthorizedAlways, region:region)
+        let future = mock.regionImpl.startMonitoringForRegion(mock, authorization:.AuthorizedAlways, region:region)
         future.onSuccess {state in
             if state == .Start {
-                mock.impl.didExitRegion(region)
+                mock.regionImpl.didExitRegion(region)
             } else {
                 XCTAssert(state == .Outside, "region state invalid")
                 expectation.fulfill()

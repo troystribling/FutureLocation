@@ -18,61 +18,6 @@ struct TestFailure {
 class LocationManagerTests: XCTestCase {
 
     
-    // LocationManagerMock
-    class LocationManagerMock : LocationManagerWrappable {
-
-        var impl = LocationManagerImpl<LocationManagerMock>()
-        
-        let responseAuthorization:CLAuthorizationStatus?
-        let error : NSError?
-        
-        var location : CLLocationMock! {
-            return CLLocationMock()
-        }
-                
-        init(responseAuthorization:CLAuthorizationStatus? = nil, error:NSError? = nil) {
-            self.responseAuthorization = responseAuthorization
-            self.error = error
-        }
-        
-        func requestWhenInUseAuthorization() {
-            if let responseAuthorization = self.responseAuthorization {
-                self.impl.didChangeAuthorizationStatus(responseAuthorization)
-            }
-        }
-        
-        func requestAlwaysAuthorization() {
-            if let responseAuthorization = self.responseAuthorization {
-                self.impl.didChangeAuthorizationStatus(responseAuthorization)
-            }
-        }
-        
-        func wrappedStartUpdatingLocation() {
-            if let responseAuthorization = self.responseAuthorization {
-                if let error = self.error {
-                    self.impl.didFailWithError(error)
-                } else {
-                    self.impl.didUpdateLocations([CLLocationMock(), CLLocationMock()])
-                }
-            }
-        }
-        
-        func wrappedStartMonitoringSignificantLocationChanges() {
-            if let responseAuthorization = self.responseAuthorization {
-                if let error = self.error {
-                    self.impl.didFailWithError(error)
-                } else {
-                    self.impl.didUpdateLocations([CLLocationMock(), CLLocationMock()])
-                }
-            }
-        }
-
-    }
-    
-    class CLLocationMock : CLLocationWrappable {
-    }    
-    // LocationManagerMock
-    
     override func setUp() {
         super.setUp()
     }

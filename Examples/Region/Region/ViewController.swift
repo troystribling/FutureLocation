@@ -47,10 +47,15 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(animated:Bool) {
         super.viewDidAppear(animated)        
-        if !CircularRegion.isMonitoringAvailableForClass() || !RegionManager.locationServicesEnabled() {
+        if !CircularRegion.isMonitoringAvailableForClass() || !RegionManager.locationServicesEnabled() || RegionManager.authorizationStatus() == .Denied {
             self.createRegionButton.enabled = false
             self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
-            let message = RegionManager.locationServicesEnabled() ? "Region monitoring not availble" : "Location services not enabled"
+            var message = "Region monitoring not availble"
+            if !RegionManager.locationServicesEnabled() {
+                message = "Location services not enabled"
+            } else if RegionManager.authorizationStatus() == .Denied {
+                message = "Autorization status is denied"
+            }
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
         }
     }
@@ -120,6 +125,7 @@ class ViewController: UITableViewController {
             }
         }
         self.regionFuture?.onFailure {error in
+            self.startMonitoringSwitch.on = false
             Notify.withMessage("Error: '\(error.localizedDescription)'")
         }
     }

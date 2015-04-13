@@ -34,7 +34,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
                                                Wrapper.WrappedCLLocation:CLLocationWrappable> {
     
     private var locationUpdatePromise               : StreamPromise<[Wrapper.WrappedCLLocation]>?
-    public var authorizationStatusChangedPromise   : Promise<CLAuthorizationStatus>?
+    private var authorizationStatusChangedPromise   : Promise<CLAuthorizationStatus>?
     private var _isUpdating                         = false
     
     public var isUpdating : Bool {
@@ -108,9 +108,7 @@ public class LocationManagerImpl<Wrapper where Wrapper:LocationManagerWrappable,
     
     public func didChangeAuthorizationStatus(status:CLAuthorizationStatus) {
         Logger.debug("LocationManagerImpl#didChangeAuthorizationStatus: \(status)")
-        if let authorizationStatusChangedPromise = self.authorizationStatusChangedPromise {
-            authorizationStatusChangedPromise.success(status)
-        }
+        self.authorizationStatusChangedPromise?.success(status)
         self.authorizationStatusChangedPromise = nil
     }
     

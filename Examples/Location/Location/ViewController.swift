@@ -41,7 +41,17 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if LocationManager.locationServicesEnabled() {
+        if !LocationManager.locationServicesEnabled() || LocationManager.authorizationStatus() == .Denied {
+            self.startUpdatesLabel.textColor = UIColor.lightGrayColor()
+            self.startUpdatesSwitch.enabled = false
+            self.getAddressButton.enabled = false
+            var message = "Location services disabled"
+            if LocationManager.authorizationStatus() == .Denied {
+                message = "Authorization status is denied"
+            }
+            self.getAddressButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Disabled)
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
+        } else {
             if LocationManager.locationServicesEnabled() {
                 if self.locationManager.isUpdating {
                     self.startUpdatesSwitch.on = true
@@ -49,12 +59,6 @@ class ViewController: UITableViewController {
                     self.startUpdatesSwitch.on = false
                 }
             }
-        } else {
-            self.startUpdatesLabel.textColor = UIColor.lightGrayColor()
-            self.startUpdatesSwitch.enabled = false
-            self.getAddressButton.enabled = false
-            self.getAddressButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Disabled)
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("Location services disabled"), animated:true, completion:nil)
         }
     }
     override func didReceiveMemoryWarning() {
@@ -102,6 +106,7 @@ class ViewController: UITableViewController {
             }
             self.locationFuture?.onFailure {error in
                 self.progressView.remove()
+                self.startUpdatesSwitch.on = false
                 self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
             }
         }

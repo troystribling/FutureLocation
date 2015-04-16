@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
+        Notify.resetEventCount()
     }
 
     func applicationWillTerminate(application: UIApplication) {

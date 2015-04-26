@@ -23,9 +23,6 @@ class ViewController: UITableViewController {
     @IBOutlet var createRegionButton    : UIButton!
     
     var region                      : CircularRegion?
-    var regionFuture                : FutureStream<RegionState>?
-    var addressFuture               : FutureStream<[CLPlacemark]>?
-    var locationFuture              : FutureStream<[CLLocation]>?
     
     let locationManager = LocationManager()
     let regionManager   = RegionManager()
@@ -66,7 +63,7 @@ class ViewController: UITableViewController {
 
     @IBAction func createRegion(sender:AnyObject) {
         self.progressView.show()
-        self.addressFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
+        let addressFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedAlways).flatmap {locations -> Future<[CLPlacemark]> in
             self.locationManager.stopUpdatingLocation()
             if let location = locations.first {
                 self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
@@ -75,7 +72,7 @@ class ViewController: UITableViewController {
             }
             return self.locationManager.reverseGeocodeLocation()
         }
-        self.addressFuture?.onSuccess {placemarks in
+        addressFuture.onSuccess {placemarks in
             if let placemark = placemarks.first {
                 self.startMonitoringSwitch.enabled = true
                 self.startMonitoringLabel.textColor = UIColor.blackColor()
@@ -91,7 +88,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        self.addressFuture?.onFailure {error in
+        addressFuture.onFailure {error in
             self.progressView.remove()
             self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
         }
@@ -109,8 +106,8 @@ class ViewController: UITableViewController {
     }
     
     func startMonitoring(region:CircularRegion) {
-        self.regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
-        self.regionFuture?.onSuccess {state in
+        let regionFuture = self.regionManager.startMonitoringForRegion(region, authorization:.AuthorizedAlways)
+        regionFuture.onSuccess {state in
             Notify.withMessage("region Event '\(region.identifier)'")
             switch state {
             case .Start:
@@ -124,15 +121,15 @@ class ViewController: UITableViewController {
                 self.setOutsideRegion(region)
             }
         }
-        self.regionFuture?.onFailure {error in
+        regionFuture.onFailure {error in
             self.startMonitoringSwitch.on = false
             Notify.withMessage("Error: '\(error.localizedDescription)'")
         }
     }
     
     func locationInRegion(region:CircularRegion) {
-        self.locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedAlways)
-        self.locationFuture?.onSuccess {locations in
+        let locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedAlways)
+        locationFuture.onSuccess {locations in
             if let location = locations.first {
                 self.locationManager.stopUpdatingLocation()
                 if region.containsCoordinate(location.coordinate) {
@@ -142,7 +139,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        self.locationFuture?.onFailure {error in
+        locationFuture.onFailure {error in
             self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
         }
 

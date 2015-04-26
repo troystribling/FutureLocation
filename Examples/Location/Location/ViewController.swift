@@ -21,9 +21,6 @@ class ViewController: UITableViewController {
     @IBOutlet var startUpdatesSwitch : UISwitch!
     @IBOutlet var startUpdatesLabel  : UILabel!
     
-    var locationFuture  : FutureStream<[CLLocation]>?
-    var addressFuture   : FutureStream<[CLPlacemark]>?
-    
     let locationManager = LocationManager()
     let addressManager  = LocationManager()
     
@@ -67,11 +64,11 @@ class ViewController: UITableViewController {
 
     @IBAction func getAddress(sender:AnyObject) {
         self.progressView.show()
-        self.addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
+        let addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
                                  self.addressManager.stopUpdatingLocation()
                                  return self.addressManager.reverseGeocodeLocation()
                              }
-        self.addressFuture?.onSuccess {placemarks in
+        addressFuture.onSuccess {placemarks in
             if let placemark = placemarks.first {
                 self.progressView.remove()
                 if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
@@ -85,7 +82,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        self.addressFuture?.onFailure {error in
+        addressFuture.onFailure {error in
             self.progressView.remove()
             self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
         }
@@ -96,15 +93,15 @@ class ViewController: UITableViewController {
             self.locationManager.stopUpdatingLocation()
         } else {
             self.progressView.show()
-            self.locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
-            self.locationFuture?.onSuccess {locations in
+            let locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
+            locationFuture.onSuccess {locations in
                 if let location = locations.first {
                     self.progressView.remove()
                     self.latituteLabel.text =  NSString(format: "%.6f", location.coordinate.latitude) as String
                     self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
                 }
             }
-            self.locationFuture?.onFailure {error in
+            locationFuture.onFailure {error in
                 self.progressView.remove()
                 self.startUpdatesSwitch.on = false
                 self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)

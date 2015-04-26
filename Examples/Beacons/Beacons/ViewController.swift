@@ -18,7 +18,6 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet var startMonitoringSwitch : UISwitch!
     @IBOutlet var startMonitoringLabel  : UILabel!
     
-    var beaconFuture    : FutureStream<[Beacon]>?
     var beaconRegion    : BeaconRegion
 
     var progressView    = ProgressView()
@@ -80,7 +79,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         self.progressView.show()
         if let beacon = BeaconStore.getBeacon() {
             self.uuidTextField.enabled = false
-            self.beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways).flatmap{state -> FutureStream<[Beacon]> in
+            let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways).flatmap{state -> FutureStream<[Beacon]> in
                 self.progressView.remove()
                 switch state {
                 case .Start:
@@ -105,7 +104,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                     return errorPromise.future
                 }
             }
-            self.beaconFuture?.onSuccess {beacons in
+            beaconFuture.onSuccess {beacons in
                 if self.isRanging {
                     if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
                         NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
@@ -114,7 +113,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                     self.beaconsLabel.text = "\(beacons.count)"
                 }
             }
-            self.beaconFuture?.onFailure {error in
+            beaconFuture.onFailure {error in
                 self.progressView.remove()
                 if error.domain != AppErrors.domain {
                     Notify.withMessage("Error: '\(error.localizedDescription)'")

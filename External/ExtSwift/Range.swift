@@ -50,8 +50,8 @@ internal extension Range {
     */
     static func random (from: Int, to: Int) -> Range<Int> {
         
-        let lowerBound = Int.random(min: from, max: to)
-        let upperBound = Int.random(min: lowerBound, max: to)
+        let lowerBound = Int.random(from, max: to)
+        let upperBound = Int.random(lowerBound, max: to)
         
         return lowerBound...upperBound
 

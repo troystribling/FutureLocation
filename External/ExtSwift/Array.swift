@@ -112,7 +112,7 @@ internal extension Array {
         
         :returns: First element of the array if not empty
     */
-    @availability(*, unavailable, message="use the 'first' property instead") func first () -> Element? {
+    @available(*, unavailable, message="use the 'first' property instead") func first () -> Element? {
         return first
     }
 
@@ -121,7 +121,7 @@ internal extension Array {
     
         :returns: Last element of the array if not empty
     */
-    @availability(*, unavailable, message="use the 'last' property instead") func last () -> Element? {
+    @available(*, unavailable, message="use the 'last' property instead") func last () -> Element? {
         return last
     }
 
@@ -986,7 +986,7 @@ internal extension Array {
         :param: range Range of the subarray elements
         :returns: Subarray or nil if the index is out of bounds
     */
-    subscript (#rangeAsArray: Range<Int>) -> Array {
+    subscript (rangeAsArray rangeAsArray: Range<Int>) -> Array {
         //  Fix out of bounds indexes
         let start = Swift.max(0, rangeAsArray.startIndex)
         let end = Swift.min(rangeAsArray.endIndex, count)

@@ -31,7 +31,6 @@
 		05BAEAEB1A9AA490003C0C1C /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE11A9AA490003C0C1C /* Int.swift */; };
 		05BAEAEC1A9AA490003C0C1C /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE21A9AA490003C0C1C /* NSArray.swift */; };
 		05BAEAED1A9AA490003C0C1C /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE31A9AA490003C0C1C /* Range.swift */; };
-		05BAEAEE1A9AA490003C0C1C /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE41A9AA490003C0C1C /* Sequence.swift */; };
 		05BAEAEF1A9AA490003C0C1C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAE51A9AA490003C0C1C /* String.swift */; };
 		05BAEAF11A9AA59A003C0C1C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAF01A9AA59A003C0C1C /* Logger.swift */; };
 		05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAD67A1ADB583500DCCBB7 /* Mocks.swift */; };
@@ -75,7 +74,6 @@
 		05BAEAE11A9AA490003C0C1C /* Int.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		05BAEAE21A9AA490003C0C1C /* NSArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSArray.swift; sourceTree = "<group>"; };
 		05BAEAE31A9AA490003C0C1C /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
-		05BAEAE41A9AA490003C0C1C /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		05BAEAE51A9AA490003C0C1C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		05BAEAF01A9AA59A003C0C1C /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		05EAD67A1ADB583500DCCBB7 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 				05BAEAE11A9AA490003C0C1C /* Int.swift */,
 				05BAEAE21A9AA490003C0C1C /* NSArray.swift */,
 				05BAEAE31A9AA490003C0C1C /* Range.swift */,
-				05BAEAE41A9AA490003C0C1C /* Sequence.swift */,
 				05BAEAE51A9AA490003C0C1C /* String.swift */,
 			);
 			name = ExtSwift;
@@ -260,7 +257,8 @@
 		05BAEA931A9AA045003C0C1C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Troy Stribling";
 				TargetAttributes = {
 					05BAEA9B1A9AA045003C0C1C = {
@@ -312,7 +310,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BAEAE81A9AA490003C0C1C /* Double.swift in Sources */,
-				05BAEAEE1A9AA490003C0C1C /* Sequence.swift in Sources */,
 				05BAEAED1A9AA490003C0C1C /* Range.swift in Sources */,
 				05BAEAC31A9AA212003C0C1C /* CircularRegion.swift in Sources */,
 				05BAEAE71A9AA490003C0C1C /* Dictionary.swift in Sources */,
@@ -379,6 +376,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -393,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -434,7 +432,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -455,6 +453,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -470,6 +469,7 @@
 				INFOPLIST_FILE = FutureLocation/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -488,6 +488,7 @@
 				);
 				INFOPLIST_FILE = FutureLocationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -501,6 +502,7 @@
 				);
 				INFOPLIST_FILE = FutureLocationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

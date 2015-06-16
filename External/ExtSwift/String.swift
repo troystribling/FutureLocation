@@ -13,7 +13,7 @@ public extension String {
     /**
         String length
     */
-    var length: Int { return count(self) }
+    var length: Int { return self.characters.count }
     
     /**
         self.capitalizedString shorthand
@@ -57,7 +57,7 @@ public extension String {
         :returns: Character as String or nil if the index is out of bounds
     */
     subscript (index: Int) -> String? {
-        if let char = Array(self).get(index) {
+        if let char = Array(arrayLiteral:self).get(index) {
             return String(char)
         }
 
@@ -120,7 +120,7 @@ public extension String {
         :param: string String to insert
         :returns: String formed from self inserting string at index
     */
-    func insert (var index: Int, _ string: String) -> String {
+    func insert (index: Int, _ string: String) -> String {
         //  Edge cases, prepend and append
         if index > length {
             return self + string
@@ -183,7 +183,7 @@ public extension String {
         let max = charset.length - 1
 
         len.times {
-            result += charset[Int.random(min: 0, max: max)]!
+            result += charset[Int.random(0, max: max)]!
         }
 
         return result

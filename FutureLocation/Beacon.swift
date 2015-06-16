@@ -23,27 +23,15 @@ public class Beacon {
     }
     
     public var major : Int? {
-        if let major = self.clbeacon.major {
-            return major.integerValue
-        } else {
-            return nil
-        }
+        return self.clbeacon.major.integerValue
     }
     
     public var minor : Int? {
-        if let minor = self.clbeacon.minor {
-            return minor.integerValue
-        } else {
-            return nil
-        }
+        return self.clbeacon.minor.integerValue
     }
     
-    public var proximityUUID : NSUUID? {
-        if let nsuuid = self.clbeacon.proximityUUID {
-            return nsuuid
-        } else {
-            return nil
-        }
+    public var proximityUUID : NSUUID {
+        return self.clbeacon.proximityUUID
     }
     
     public var proximity : CLProximity {

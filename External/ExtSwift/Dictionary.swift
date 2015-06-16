@@ -330,7 +330,7 @@ internal extension Dictionary {
         :returns: Resulting value
     */
     func reduce <U> (initial: U, combine: (U, Element) -> U) -> U {
-        return Swift.reduce(self, initial, combine)
+        return self.reduce(initial, combine:combine)
     }
 
     /**

@@ -253,15 +253,15 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate, LocationMan
     public class func reverseGeocodeLocation(location:CLLocation) -> Future<[CLPlacemark]>  {
         let geocoder = CLGeocoder()
         let promise = Promise<[CLPlacemark]>()
-        geocoder.reverseGeocodeLocation(location){(placemarks:[AnyObject]!, error:NSError!) in
+        geocoder.reverseGeocodeLocation(location){(placemarks:[CLPlacemark]?, error:NSError?) in
             if let error = error {
                 promise.failure(error)
             } else {
-                var places = [CLPlacemark]()
-                if placemarks != nil {
-                    places = placemarks.map {$0 as! CLPlacemark}
+                if let placemarks = placemarks {
+                    promise.success(placemarks)
+                } else {
+                    promise.success([CLPlacemark]())
                 }
-                promise.success(places)
             }
         }
         return promise.future

@@ -140,24 +140,6 @@ public extension Int {
     }
     
     /**
-        Returns an [Int] containing the digits in self.
-        
-        :return: Array of digits
-    */
-    func digits () -> [Int] {
-        var result = [Int]()
-        
-        for char in String(self) {
-            let string = String(char)
-            if let toInt = string.toInt() {
-                result.append(toInt)
-            }
-        }
-    
-        return result
-    }
-    
-    /**
         Absolute value.
     
         :returns: abs(self)

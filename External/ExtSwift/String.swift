@@ -85,35 +85,6 @@ public extension String {
     }
 
     /**
-        Returns an array of strings, each of which is a substring of self formed by splitting it on separator.
-        
-        :param: separator Character used to split the string
-        :returns: Array of substrings
-    */
-    func explode (separator: Character) -> [String] {
-        return split(self, isSeparator:{ ( element: Character) -> Bool in
-            return element == separator
-        })
-    }
-
-    /**
-        Finds any match in self for pattern.
-        
-        :param: pattern Pattern to match
-        :param: ignoreCase true for case insensitive matching
-        :returns: Matches found (as [NSTextCheckingResult])
-    */
-    func matches (pattern: String, ignoreCase: Bool = false) -> [NSTextCheckingResult]? {
-
-        if let regex = ExSwift.regex(pattern, ignoreCase: ignoreCase) {
-            //  Using map to prevent a possible bug in the compiler
-            return regex.matchesInString(self, options: nil, range: NSMakeRange(0, length)).map { $0 as! NSTextCheckingResult }
-        }
-
-        return nil
-    }
-
-    /**
         Inserts a substring at the given index in self.
     
         :param: index Where the new string is inserted
@@ -203,46 +174,4 @@ public func * (first: String, n: Int) -> String {
     }
 
     return result
-}
-
-//  Pattern matching using a regular expression
-public func =~ (string: String, pattern: String) -> Bool {
-    let regex = ExSwift.regex(pattern, ignoreCase: false)!
-    let matches = regex.numberOfMatchesInString(string, options: nil, range: NSMakeRange(0, string.length))
-    return matches > 0
-}
-
-//  Pattern matching using a regular expression
-public func =~ (string: String, regex: NSRegularExpression) -> Bool {
-    let matches = regex.numberOfMatchesInString(string, options: nil, range: NSMakeRange(0, string.length))
-    return matches > 0
-}
-
-//  This version also allowes to specify case sentitivity
-public func =~ (string: String, options: (pattern: String, ignoreCase: Bool)) -> Bool {
-    if let matches = ExSwift.regex(options.pattern, ignoreCase: options.ignoreCase)?.numberOfMatchesInString(string, options: nil, range: NSMakeRange(0, string.length)) {
-        return matches > 0
-    }
-
-    return false
-}
-
-//  Match against all the alements in an array of String
-public func =~ (strings: [String], pattern: String) -> Bool {
-    let regex = ExSwift.regex(pattern, ignoreCase: false)!
-    return strings.all { $0 =~ regex }
-}
-
-public func =~ (strings: [String], options: (pattern: String, ignoreCase: Bool)) -> Bool {
-    return strings.all { $0 =~ options }
-}
-
-//  Match against any element in an array of String
-public func |~ (strings: [String], pattern: String) -> Bool {
-    let regex = ExSwift.regex(pattern, ignoreCase: false)!
-    return strings.any { $0 =~ regex }
-}
-
-public func |~ (strings: [String], options: (pattern: String, ignoreCase: Bool)) -> Bool {
-    return strings.any { $0 =~ options }
 }

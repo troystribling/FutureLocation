@@ -20,7 +20,7 @@ public class BeaconRegion : Region {
     internal  let clBeaconRegion : CLBeaconRegion
     
     public var beacons : [Beacon] {
-        return self._beacons.sortBy() {(b1:Beacon, b2:Beacon) -> Bool in
+        return self._beacons.sort() {(b1:Beacon, b2:Beacon) -> Bool in
             switch b1.discoveredAt.compare(b2.discoveredAt) {
             case .OrderedSame:
                 return true

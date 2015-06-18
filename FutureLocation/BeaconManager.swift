@@ -9,8 +9,8 @@
 import Foundation
 import CoreLocation
 
-/////////////////////////////////////////////
-// BeaconManagerImpl
+///////////////////////////////////////////////
+//// BeaconManagerImpl
 public protocol BeaconManagerWrappable {
 
     typealias WrappedBeaconRegion
@@ -36,12 +36,12 @@ public protocol BeaconRegionWrappable {
 public protocol BeaconWrappable {
 }
 
-extension BeaconRegion : BeaconRegionWrappable {
-}
-
-extension Beacon : BeaconWrappable {
-}
-
+//extension BeaconRegion : BeaconRegionWrappable {
+//}
+//
+//extension Beacon : BeaconWrappable {
+//}
+//
 public class BeaconManagerImpl<Wrapper where
                                 Wrapper:BeaconManagerWrappable,
                                 Wrapper.WrappedBeaconRegion:BeaconRegionWrappable,

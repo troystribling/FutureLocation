@@ -29,7 +29,7 @@ class ViewController: UITableViewController {
     
     let progressView    = ProgressView()
 
-    required init!(coder aDecoder:NSCoder!) {
+    required init(coder aDecoder:NSCoder) {
         super.init(coder:aDecoder)
     }
     
@@ -81,7 +81,7 @@ class ViewController: UITableViewController {
                     self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
                 }
                 if let subLocality = placemark.subLocality {
-                    self.address2Label.text = "\(placemark.subLocality)"
+                    self.address2Label.text = "\(subLocality)"
                 }
                 if let subAdministrativeArea = placemark.subAdministrativeArea, administrativeArea = placemark.administrativeArea {
                     self.address3Label.text = "\(subAdministrativeArea), \(administrativeArea)"

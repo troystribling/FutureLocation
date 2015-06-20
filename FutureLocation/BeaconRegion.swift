@@ -9,10 +9,18 @@
 import UIKit
 import CoreLocation
 
-public class BeaconRegion : Region {
+public class BeaconRegion : Region, BeaconRegionWrappable {
     
     // BeaconRegionWrappable
     public let beaconPromise  : StreamPromise<[Beacon]>
+    
+    public func peripheralDataWithMeasuredPower(measuredPower:Int?) -> [NSObject:AnyObject] {
+        if let measuredPower = measuredPower {
+            return self.clBeaconRegion.peripheralDataWithMeasuredPower(NSNumber(integer:measuredPower)) as [NSObject : AnyObject]
+        } else {
+            return self.clBeaconRegion.peripheralDataWithMeasuredPower(nil) as [NSObject : AnyObject]
+        }
+    }    
     // BeaconRegionWrappable
     
     internal var _beacons       = [Beacon]()
@@ -93,12 +101,4 @@ public class BeaconRegion : Region {
         return CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion)
     }
     
-    public func peripheralDataWithMeasuredPower(measuredPower:Int? = nil) -> [NSObject:AnyObject] {
-        if let measuredPower = measuredPower {
-            return self.clBeaconRegion.peripheralDataWithMeasuredPower(NSNumber(integer:measuredPower)) as [NSObject : AnyObject]
-        } else {
-            return self.clBeaconRegion.peripheralDataWithMeasuredPower(nil) as [NSObject : AnyObject]
-        }
-    }
-
 }

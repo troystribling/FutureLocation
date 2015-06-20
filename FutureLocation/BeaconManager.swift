@@ -29,23 +29,17 @@ public protocol BeaconRegionWrappable {
     
     var identifier     : String                         {get}
     var beaconPromise  : StreamPromise<[WrappedBeacon]> {get}
- 
+    
     func peripheralDataWithMeasuredPower(measuredPower:Int?) -> [NSObject:AnyObject]
 }
 
 public protocol BeaconWrappable {
 }
 
-//extension BeaconRegion : BeaconRegionWrappable {
-//}
-//
-//extension Beacon : BeaconWrappable {
-//}
-//
 public class BeaconManagerImpl<Wrapper where
-                                Wrapper:BeaconManagerWrappable,
-                                Wrapper.WrappedBeaconRegion:BeaconRegionWrappable,
-                                Wrapper.WrappedBeaconRegion.WrappedBeacon:BeaconWrappable> {
+                                 Wrapper:BeaconManagerWrappable,
+                                 Wrapper.WrappedBeaconRegion:BeaconRegionWrappable,
+                                 Wrapper.WrappedBeaconRegion.WrappedBeacon:BeaconWrappable> {
 
     private var regionRangingStatus = [String:Bool]()
 

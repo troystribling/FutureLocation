@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class Beacon {
+public class Beacon : BeaconWrappable {
     
     private let clbeacon        : CLBeacon
     private let _discoveredAt   = NSDate()
@@ -22,11 +22,11 @@ public class Beacon {
         self.clbeacon = clbeacon
     }
     
-    public var major : Int? {
+    public var major : Int {
         return self.clbeacon.major.integerValue
     }
     
-    public var minor : Int? {
+    public var minor : Int {
         return self.clbeacon.minor.integerValue
     }
     

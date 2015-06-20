@@ -77,51 +77,47 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     func startMonitoring() {
         self.progressView.show()
-        if let beacon = BeaconStore.getBeacon() {
-            self.uuidTextField.enabled = false
-            let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways).flatmap{state -> FutureStream<[Beacon]> in
-                self.progressView.remove()
-                switch state {
-                case .Start:
-                    self.setStartedMonitoring()
+        self.uuidTextField.enabled = false
+        let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization:.AuthorizedAlways).flatmap{state -> FutureStream<[Beacon]> in
+            self.progressView.remove()
+            switch state {
+            case .Start:
+                self.setStartedMonitoring()
+                self.isRanging = true
+                return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
+            case .Inside:
+                self.setInsideRegion()
+                if !self.beaconManager.isRangingRegion(self.beaconRegion.identifier) {
                     self.isRanging = true
                     return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
-                case .Inside:
-                    self.setInsideRegion()
-                    if !self.beaconManager.isRangingRegion(self.beaconRegion.identifier) {
-                        self.isRanging = true
-                        return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
-                    } else {
-                        let errorPromise = StreamPromise<[Beacon]>()
-                        errorPromise.failure(AppErrors.rangingBeacons)
-                        return errorPromise.future
-                    }
-                case .Outside:
-                    self.setOutsideRegion()
-                    self.beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
+                } else {
                     let errorPromise = StreamPromise<[Beacon]>()
-                    errorPromise.failure(AppErrors.outOfRegion)
+                    errorPromise.failure(AppErrors.rangingBeacons)
                     return errorPromise.future
                 }
+            case .Outside:
+                self.setOutsideRegion()
+                self.beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
+                let errorPromise = StreamPromise<[Beacon]>()
+                errorPromise.failure(AppErrors.outOfRegion)
+                return errorPromise.future
             }
-            beaconFuture.onSuccess {beacons in
-                if self.isRanging {
-                    if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
-                        NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
-                        self.setInsideRegion()
-                    }
-                    self.beaconsLabel.text = "\(beacons.count)"
+        }
+        beaconFuture.onSuccess {beacons in
+            if self.isRanging {
+                if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
+                    NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object:self.beaconRegion)
+                    self.setInsideRegion()
                 }
+                self.beaconsLabel.text = "\(beacons.count)"
             }
-            beaconFuture.onFailure {error in
-                self.progressView.remove()
-                if error.domain != AppErrors.domain {
-                    Notify.withMessage("Error: '\(error.localizedDescription)'")
-                    self.startMonitoringSwitch.on = false
-                }
+        }
+        beaconFuture.onFailure {error in
+            self.progressView.remove()
+            if error.domain != AppErrors.domain {
+                Notify.withMessage("Error: '\(error.localizedDescription)'")
+                self.startMonitoringSwitch.on = false
             }
-        } else {
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage("No beacon region defined"), animated:true, completion:nil)
         }
     }
     

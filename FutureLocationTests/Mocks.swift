@@ -40,7 +40,7 @@ class LocationManagerMock : LocationManagerWrappable {
     }
     
     func wrappedStartUpdatingLocation() {
-        if let responseAuthorization = self.responseAuthorization {
+        if let _ = self.responseAuthorization {
             if let error = self.error {
                 self.impl.didFailWithError(error)
             } else {
@@ -50,7 +50,7 @@ class LocationManagerMock : LocationManagerWrappable {
     }
     
     func wrappedStartMonitoringSignificantLocationChanges() {
-        if let responseAuthorization = self.responseAuthorization {
+        if let _ = self.responseAuthorization {
             if let error = self.error {
                 self.impl.didFailWithError(error)
             } else {
@@ -93,7 +93,7 @@ class RegionManagerMock : LocationManagerMock, RegionManagerWrappable {
     
     func wrappedStartMonitoringForRegion(region:RegionMock) {
         self._regions[region.identifier] = region
-        if let responseAuthorization = self.responseAuthorization {
+        if let _ = self.responseAuthorization {
             if let error = self.error {
                 self.regionImpl.didFailMonitoringForRegion(region, error:error)
             } else {

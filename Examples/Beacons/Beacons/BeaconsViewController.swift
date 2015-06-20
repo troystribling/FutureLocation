@@ -44,13 +44,15 @@ class BeaconsViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func sortBeacons(b1:Beacon, b2:Beacon) -> Bool {
-        if b1.major > b2.major {
-            return true
-        } else if b1.major == b2.major && b1.minor > b2.minor {
-            return true
-        } else {
-            return false
+    func sortedBeacons(beaconRegion:BeaconRegion) -> [Beacon] {
+        return  beaconRegion.beacons.sort {(b1:Beacon, b2:Beacon) -> Bool in
+            if b1.major > b2.major {
+                return true
+            } else if b1.major == b2.major && b1.minor > b2.minor {
+                return true
+            } else {
+                return false
+            }
         }
     }
     
@@ -71,22 +73,10 @@ class BeaconsViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.beaconCell, forIndexPath: indexPath) as! BeaconCell
         if let beaconRegion = self.beaconRegion {
-            let beacon = sorted(beaconRegion.beacons, self.sortBeacons)[indexPath.row]
-            if let uuid = beacon.proximityUUID {
-                cell.proximityUUIDLabel.text = uuid.UUIDString
-            } else {
-                cell.proximityUUIDLabel.text = "Unknown"
-            }
-            if let major = beacon.major {
-                cell.majorLabel.text = "\(major)"
-            } else {
-                cell.majorLabel.text = "Unknown"
-            }
-            if let minor = beacon.minor {
-                cell.minorLabel.text = "\(minor)"
-            } else {
-                cell.minorLabel.text = "Unknown"
-            }
+            let beacon = self.sortedBeacons(beaconRegion)[indexPath.row]
+            cell.proximityUUIDLabel.text = beacon.proximityUUID.UUIDString
+            cell.majorLabel.text = "\(beacon.major)"
+            cell.minorLabel.text = "\(beacon.minor)"
             cell.proximityLabel.text = beacon.proximity.stringValue
             cell.rssiLabel.text = "\(beacon.rssi)"
             let accuracy = NSString(format:"%.4f", beacon.accuracy)

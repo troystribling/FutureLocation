@@ -18,7 +18,6 @@
 		05BAEAC11A9AA212003C0C1C /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB91A9AA212003C0C1C /* BeaconManager.swift */; };
 		05BAEAC21A9AA212003C0C1C /* BeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */; };
 		05BAEAC31A9AA212003C0C1C /* CircularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABB1A9AA212003C0C1C /* CircularRegion.swift */; };
-		05BAEAC41A9AA212003C0C1C /* CLProximityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABC1A9AA212003C0C1C /* CLProximityExtension.swift */; };
 		05BAEAC51A9AA212003C0C1C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABD1A9AA212003C0C1C /* LocationManager.swift */; };
 		05BAEAC61A9AA212003C0C1C /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABE1A9AA212003C0C1C /* Region.swift */; };
 		05BAEAC71A9AA212003C0C1C /* RegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABF1A9AA212003C0C1C /* RegionManager.swift */; };
@@ -66,7 +65,6 @@
 		05BAEAB91A9AA212003C0C1C /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 		05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRegion.swift; sourceTree = "<group>"; };
 		05BAEABB1A9AA212003C0C1C /* CircularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularRegion.swift; sourceTree = "<group>"; };
-		05BAEABC1A9AA212003C0C1C /* CLProximityExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLProximityExtension.swift; sourceTree = "<group>"; };
 		05BAEABD1A9AA212003C0C1C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		05BAEABE1A9AA212003C0C1C /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		05BAEABF1A9AA212003C0C1C /* RegionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManager.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				05BAEABA1A9AA212003C0C1C /* BeaconRegion.swift */,
 				05BAEABB1A9AA212003C0C1C /* CircularRegion.swift */,
 				05644B0B1AD9EC8A0097EED7 /* CLAuthorizationStatusExtension.swift */,
-				05BAEABC1A9AA212003C0C1C /* CLProximityExtension.swift */,
 				05BAEABD1A9AA212003C0C1C /* LocationManager.swift */,
 				05BAEABE1A9AA212003C0C1C /* Region.swift */,
 				05BAEABF1A9AA212003C0C1C /* RegionManager.swift */,
@@ -341,7 +338,6 @@
 				05BAEAC61A9AA212003C0C1C /* Region.swift in Sources */,
 				05D60A791B32DFA600D7507B /* Float.swift in Sources */,
 				05BAEAC71A9AA212003C0C1C /* RegionManager.swift in Sources */,
-				05BAEAC41A9AA212003C0C1C /* CLProximityExtension.swift in Sources */,
 				05D60A751B32DFA600D7507B /* Character.swift in Sources */,
 				05BAEAF11A9AA59A003C0C1C /* Logger.swift in Sources */,
 				05D60A761B32DFA600D7507B /* Dictionary.swift in Sources */,

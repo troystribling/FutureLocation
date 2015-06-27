@@ -160,7 +160,7 @@ class BeaconRegionMock : RegionMock, BeaconRegionWrappable {
         return self._beaconPromise
     }
     
-    func peripheralDataWithMeasuredPower(measuredPower:Int?) -> [NSObject:AnyObject] {
+    func peripheralDataWithMeasuredPower(measuredPower:Int?) -> [String:AnyObject] {
         return [:]
     }
 }

@@ -18,7 +18,7 @@ class LocationManagerMock : LocationManagerWrappable {
     let responseAuthorization:CLAuthorizationStatus?
     let error : NSError?
     
-    var location : CLLocationMock! {
+    var location : CLLocationMock? {
         return CLLocationMock()
     }
     

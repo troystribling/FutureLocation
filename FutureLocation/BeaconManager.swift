@@ -44,7 +44,14 @@ public class BeaconManagerImpl<Wrapper where
     private var regionRangingStatus = [String:Bool]()
 
     public var isRanging : Bool {
-        return self.regionRangingStatus.values.array.any{$0}
+        var status = false
+        for rangingStatus in self.regionRangingStatus.values.array {
+            if rangingStatus {
+                status = true
+                break
+            }
+        }
+        return status
     }
     
     public init() {
@@ -62,6 +69,7 @@ public class BeaconManagerImpl<Wrapper where
     public func startRangingBeaconsInRegion(manager:Wrapper, authorization:CLAuthorizationStatus, beaconRegion:Wrapper.WrappedBeaconRegion) -> FutureStream<[Wrapper.WrappedBeaconRegion.WrappedBeacon]> {
         let authoriztaionFuture = manager.authorize(authorization)
         authoriztaionFuture.onSuccess {status in
+            Logger.debug("authorization status: \(status)")
             self.regionRangingStatus[beaconRegion.identifier] = true
             manager.wrappedStartRangingBeaconsInRegion(beaconRegion)
         }

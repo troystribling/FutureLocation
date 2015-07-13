@@ -26,7 +26,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     let beaconManager   = BeaconManager()
     let estimoteUUID    = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         if let uuid = BeaconStore.getBeacon() {
             self.beaconRegion = BeaconRegion(proximityUUID:uuid, identifier:"Example Beacon")
         } else {

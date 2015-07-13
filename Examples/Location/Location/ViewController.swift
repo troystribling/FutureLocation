@@ -27,7 +27,7 @@ class ViewController: UITableViewController {
     let addressProgressView = ProgressView()
     let locationProgressView = ProgressView()
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
         self.locationManager.distanceFilter = kCLDistanceFilterNone
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest

@@ -84,7 +84,7 @@ class RegionManagerMock : LocationManagerMock, RegionManagerWrappable {
     var _regions = [String:RegionMock]()
     
     var regions : [RegionMock] {
-        return self._regions.values.array
+        return Array(self._regions.values)
     }
     
     func region(identifier:String) -> RegionMock? {

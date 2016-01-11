@@ -12,7 +12,7 @@ import Foundation
 // Optional
 extension Optional {
     
-    func flatmap<M>(mapping:T -> M?) -> M? {
+    func flatmap<M>(mapping:Wrapped -> M?) -> M? {
         switch self {
         case .Some(let value):
             return mapping(value)
@@ -21,7 +21,7 @@ extension Optional {
         }
     }
     
-    func filter(predicate:T -> Bool) -> T? {
+    func filter(predicate:Wrapped -> Bool) -> Wrapped? {
         switch self {
         case .Some(let value):
             return predicate(value) ? Optional(value) : nil
@@ -30,7 +30,7 @@ extension Optional {
         }
     }
     
-    func foreach(apply:T -> Void) {
+    func foreach(apply:Wrapped -> Void) {
         switch self {
         case .Some(let value):
             apply(value)
@@ -199,8 +199,8 @@ public enum Try<T> {
     
     public func recover(recovery:NSError -> T) -> Try<T> {
         switch self {
-        case .Success(let box):
-            return Try(box)
+        case .Success(let value):
+            return Try(value)
         case .Failure(let error):
             return Try<T>(recovery(error))
         }
@@ -364,6 +364,17 @@ public protocol ExecutionContext {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Immediate Context
+public class ImmediateContext : ExecutionContext {
+    
+    public init() {}
+    
+    public func execute(task:Void->Void) {
+        task()
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QueueContext
 public struct QueueContext : ExecutionContext {
     
@@ -415,9 +426,15 @@ public struct Queue {
         return result;
     }
     
-    public func async(block:dispatch_block_t) {
+    public func async(block:Void -> Void) {
         dispatch_async(self.queue, block);
     }
+    
+    public func delay(delay:Double, request:Void -> Void) {
+        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Float(delay)*Float(NSEC_PER_SEC)))
+        dispatch_after(popTime, self.queue, request)
+    }
+
     
 }
 
@@ -436,15 +453,16 @@ public struct SimpleFuturesException {
 // Promise
 public class Promise<T> {
     
-    public let future = Future<T>()
+    public let future : Future<T>
     
     public var completed : Bool {
         return self.future.completed
     }
     
     public init() {
+        self.future = Future<T>()
     }
-    
+
     public func completeWith(future:Future<T>) {
         self.completeWith(self.future.defaultExecutionContext, future:future)
     }
@@ -460,33 +478,36 @@ public class Promise<T> {
     public func success(value:T) {
         self.future.success(value)
     }
-    
+
     public func failure(error:NSError)  {
         self.future.failure(error)
     }
-    
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Future
 public class Future<T> {
     
-    private var result:Try<T>?
-    
     internal let defaultExecutionContext: ExecutionContext  = QueueContext.main
-    typealias OnComplete                                    = Try<T> -> Void
-    private var saveCompletes                               = [OnComplete]()
+
+    private var result:Try<T>?
+
+    typealias OnComplete        = Try<T> -> Void
+    private var saveCompletes   = [OnComplete]()
+    private let futureQueue     = Queue.simpleFutures
     
     public var completed : Bool {
-        return self.result != nil
+        return Queue.simpleFutures.sync {Void -> Bool in
+            return self.result != nil
+        }
     }
     
-    public init() {
-    }
+    public init() {}
     
     // should be future mixin
     internal func complete(result:Try<T>) {
-        Queue.simpleFutures.sync {
+        self.futureQueue.sync {
             if self.result != nil {
                 SimpleFuturesException.futureCompleted.raise()
             }
@@ -499,7 +520,7 @@ public class Future<T> {
     }
     
     public func onComplete(executionContext:ExecutionContext, complete:Try<T> -> Void) -> Void {
-        Queue.simpleFutures.sync {
+        self.futureQueue.sync {
             let savedCompletion : OnComplete = {result in
                 executionContext.execute {
                     complete(result)
@@ -645,10 +666,7 @@ public class Future<T> {
     }
     
     internal func completeWith(executionContext:ExecutionContext, future:Future<T>) {
-        let isCompleted = Queue.simpleFutures.sync {Void -> Bool in
-            return self.result != nil
-        }
-        if isCompleted == false {
+        if self.completed == false {
             future.onComplete(executionContext) {result in
                 self.complete(result)
             }
@@ -909,8 +927,10 @@ public class FutureStream<T> {
     
     private var futures         = [Future<T>]()
     private typealias InFuture  = Future<T> -> Void
+
     private var saveCompletes   = [InFuture]()
-    private var capacity        : Int?
+    private let futureQueue     = Queue.simpleFutureStreams
+    private var capacity : Int?
     
     internal let defaultExecutionContext: ExecutionContext  = QueueContext.main
     
@@ -921,12 +941,11 @@ public class FutureStream<T> {
     public init(capacity:Int?=nil) {
         self.capacity = capacity
     }
-    
-    // should be future mixin
+
     internal func complete(result:Try<T>) {
         let future = Future<T>()
         future.complete(result)
-        Queue.simpleFutureStreams.sync {
+        self.futureQueue.sync {
             self.addFuture(future)
             for complete in self.saveCompletes {
                 complete(future)
@@ -935,7 +954,7 @@ public class FutureStream<T> {
     }
     
     public func onComplete(executionContext:ExecutionContext, complete:Try<T> -> Void) {
-        Queue.simpleFutureStreams.sync {
+        self.futureQueue.sync {
             let futureComplete : InFuture = {future in
                 future.onComplete(executionContext, complete:complete)
             }

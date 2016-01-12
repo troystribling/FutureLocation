@@ -43,6 +43,75 @@ public protocol CLLocationManagerInjectable {
 
 extension CLLocationManager : CLLocationManagerInjectable {}
 
+internal protocol LocationManagerAuthorizable: class {
+    var clLocationManager: CLLocationManagerInjectable { get set }
+    var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>? { get set }
+
+    static func authorizationStatus() -> CLAuthorizationStatus
+    func requestWhenInUseAuthorization()
+    func requestAlwaysAuthorization()
+}
+
+internal extension LocationManagerAuthorizable {
+
+    static func authorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManager.authorizationStatus()
+    }
+
+    func requestWhenInUseAuthorization()  {
+        self.clLocationManager.requestWhenInUseAuthorization()
+    }
+
+    func requestAlwaysAuthorization() {
+        self.clLocationManager.requestAlwaysAuthorization()
+    }
+
+    func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
+        let currentAuthorization = LocationManager.authorizationStatus()
+        let promise = Promise<Void>()
+        if currentAuthorization != authorization {
+            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
+            switch authorization {
+            case .AuthorizedAlways:
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
+                    if status == .AuthorizedAlways {
+                        Logger.debug("location AuthorizedAlways succcess")
+                        promise.success()
+                    } else {
+                        Logger.debug("location AuthorizedAlways failed")
+                        promise.failure(FLError.authoizationAlwaysFailed)
+                    }
+                }
+                self.requestAlwaysAuthorization()
+                break
+            case .AuthorizedWhenInUse:
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
+                    if status == .AuthorizedWhenInUse {
+                        Logger.debug("location AuthorizedWhenInUse succcess")
+                        promise.success()
+                    } else {
+                        Logger.debug("location AuthorizedWhenInUse failed")
+                        promise.failure(FLError.authoizationWhenInUseFailed)
+                    }
+                }
+                self.requestWhenInUseAuthorization()
+                break
+            default:
+                Logger.debug("location authorization invalid")
+                break
+            }
+        } else {
+            promise.success()
+        }
+        return promise.future
+    }
+
+}
+
+public protocol LocationManagerConfigurable {
+
+}
+
 public enum LocationError : Int {
     case NotAvailable               = 0
     case UpdateFailed               = 1
@@ -50,17 +119,13 @@ public enum LocationError : Int {
     case AuthorisedWhenInUseFailed  = 3
 }
 
-public class LocationManager : NSObject,  CLLocationManagerDelegate {
+public class LocationManager : NSObject, CLLocationManagerDelegate, LocationManagerAuthorizable {
 
     private var locationUpdatePromise: StreamPromise<[CLLocation]>?
-    private var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>?
     private var _isUpdating = false
 
-    internal var clLocationManager: CLLocationManagerInjectable!
-
-    public class func authorizationStatus() -> CLAuthorizationStatus {
-        return CLLocationManager.authorizationStatus()
-    }
+    internal var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>?
+    internal var clLocationManager: CLLocationManagerInjectable
 
     public class func locationServicesEnabled() -> Bool {
         return CLLocationManager.locationServicesEnabled()
@@ -131,14 +196,6 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate {
         set {
             self.clLocationManager.desiredAccuracy = newValue
         }
-    }
-
-    public func requestWhenInUseAuthorization() {
-        self.clLocationManager.requestWhenInUseAuthorization()
-    }
-
-    public func requestAlwaysAuthorization() {
-        self.clLocationManager.requestAlwaysAuthorization()
     }
 
     public class func reverseGeocodeLocation(location: CLLocation) -> Future<[CLPlacemark]>  {
@@ -240,43 +297,4 @@ public class LocationManager : NSObject,  CLLocationManagerDelegate {
         self.authorizationStatusChangedPromise = nil
     }
     
-    public func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
-        let currentAuthorization = LocationManager.authorizationStatus()
-        let promise = Promise<Void>()
-        if currentAuthorization != authorization {
-            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
-            switch authorization {
-            case .AuthorizedAlways:
-                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
-                    if status == .AuthorizedAlways {
-                        Logger.debug("location AuthorizedAlways succcess")
-                        promise.success()
-                    } else {
-                        Logger.debug("location AuthorizedAlways failed")
-                        promise.failure(FLError.authoizationAlwaysFailed)
-                    }
-                }
-                self.requestAlwaysAuthorization()
-                break
-            case .AuthorizedWhenInUse:
-                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
-                    if status == .AuthorizedWhenInUse {
-                        Logger.debug("location AuthorizedWhenInUse succcess")
-                        promise.success()
-                    } else {
-                        Logger.debug("location AuthorizedWhenInUse failed")
-                        promise.failure(FLError.authoizationWhenInUseFailed)
-                    }
-                }
-                self.requestWhenInUseAuthorization()
-                break
-            default:
-                Logger.debug("location authorization invalid")
-                break
-            }
-        } else {
-            promise.success()
-        }
-        return promise.future
-    }
 }

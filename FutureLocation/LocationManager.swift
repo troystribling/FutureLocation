@@ -9,8 +9,17 @@
 import Foundation
 import CoreLocation
 
+// MARK: - Property Update Serialization -
 struct LocationManagerIO {
     static let queue = Queue("us.gnos.location-manager")
+}
+
+// MARK: - Errors -
+public enum LocationError : Int {
+    case NotAvailable               = 0
+    case UpdateFailed               = 1
+    case AuthorizationAlwaysFailed  = 2
+    case AuthorisedWhenInUseFailed  = 3
 }
 
 public struct FLError {
@@ -21,6 +30,7 @@ public struct FLError {
     public static let authoizationWhenInUseFailed = NSError(domain:domain, code:LocationError.AuthorisedWhenInUseFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Authorization when in use failed"])
 }
 
+// MARK: - CLLocationManagerInjectable -
 public protocol CLLocationManagerInjectable {
     static func authorizationStatus() -> CLAuthorizationStatus
     static func locationServicesEnabled() -> Bool
@@ -43,6 +53,7 @@ public protocol CLLocationManagerInjectable {
 
 extension CLLocationManager : CLLocationManagerInjectable {}
 
+// MARK: - LocationManagerAuthorizable -
 internal protocol LocationManagerAuthorizable: class {
     var clLocationManager: CLLocationManagerInjectable { get set }
     var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>? { get set }
@@ -108,17 +119,7 @@ internal extension LocationManagerAuthorizable {
 
 }
 
-public protocol LocationManagerConfigurable {
-
-}
-
-public enum LocationError : Int {
-    case NotAvailable               = 0
-    case UpdateFailed               = 1
-    case AuthorizationAlwaysFailed  = 2
-    case AuthorisedWhenInUseFailed  = 3
-}
-
+// MARK: - LocationManager -
 public class LocationManager : NSObject, CLLocationManagerDelegate, LocationManagerAuthorizable {
 
     private var locationUpdatePromise: StreamPromise<[CLLocation]>?
@@ -277,7 +278,6 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         self.clLocationManager.stopMonitoringSignificantLocationChanges()
     }
     
-    // CLLocationManagerDelegate
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations:[CLLocation]) {
         Logger.debug()
         self.locationUpdatePromise?.success(locations)

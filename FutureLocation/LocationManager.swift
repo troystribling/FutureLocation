@@ -32,95 +32,46 @@ public struct FLError {
 
 // MARK: - CLLocationManagerInjectable -
 public protocol CLLocationManagerInjectable {
-    static func authorizationStatus() -> CLAuthorizationStatus
-    static func locationServicesEnabled() -> Bool
-    static func significantLocationChangeMonitoringAvailable() -> Bool
-    static func deferredLocationUpdatesAvailable() -> Bool
+
     var delegate: CLLocationManagerDelegate? { get set }
+
+    static func authorizationStatus() -> CLAuthorizationStatus
+    func requestAlwaysAuthorization()
+    func requestWhenInUseAuthorization()
+
     var location: CLLocation? { get }
+
     var pausesLocationUpdatesAutomatically: Bool { get set }
     var allowsBackgroundLocationUpdates: Bool { get set}
     var activityType: CLActivityType { get set }
     var distanceFilter : CLLocationDistance { get set }
     var desiredAccuracy: CLLocationAccuracy { get set }
-    func requestAlwaysAuthorization()
-    func requestWhenInUseAuthorization()
+
+    static func locationServicesEnabled() -> Bool
     func startUpdatingLocation()
     func stopUpdatingLocation()
+    static func deferredLocationUpdatesAvailable() -> Bool
+
+    static func significantLocationChangeMonitoringAvailable() -> Bool
     func startMonitoringSignificantLocationChanges()
     func stopMonitoringSignificantLocationChanges()
+
+    var monitoredRegions: Set<CLRegion> { get }
+    var maximumRegionMonitoringDistance: CLLocationDistance { get }
+    func startMonitoringForRegion(region: CLRegion)
+    func stopMonitoringForRegion(region: CLRegion)
+
+    static func isRangingAvailable() -> Bool
+    var rangedRegions: Set<CLRegion> { get }
+    func startRangingBeaconsInRegion(region: CLBeaconRegion)
+    func stopRangingBeaconsInRegion(region: CLBeaconRegion)
+    func requestStateForRegion(region: CLRegion)
 }
 
 extension CLLocationManager : CLLocationManagerInjectable {}
 
-// MARK: - LocationManagerAuthorizable -
-internal protocol LocationManagerAuthorizable: class {
-    var clLocationManager: CLLocationManagerInjectable { get set }
-    var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>? { get set }
-
-    static func authorizationStatus() -> CLAuthorizationStatus
-    func requestWhenInUseAuthorization()
-    func requestAlwaysAuthorization()
-}
-
-internal extension LocationManagerAuthorizable {
-
-    static func authorizationStatus() -> CLAuthorizationStatus {
-        return CLLocationManager.authorizationStatus()
-    }
-
-    func requestWhenInUseAuthorization()  {
-        self.clLocationManager.requestWhenInUseAuthorization()
-    }
-
-    func requestAlwaysAuthorization() {
-        self.clLocationManager.requestAlwaysAuthorization()
-    }
-
-    func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
-        let currentAuthorization = LocationManager.authorizationStatus()
-        let promise = Promise<Void>()
-        if currentAuthorization != authorization {
-            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
-            switch authorization {
-            case .AuthorizedAlways:
-                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
-                    if status == .AuthorizedAlways {
-                        Logger.debug("location AuthorizedAlways succcess")
-                        promise.success()
-                    } else {
-                        Logger.debug("location AuthorizedAlways failed")
-                        promise.failure(FLError.authoizationAlwaysFailed)
-                    }
-                }
-                self.requestAlwaysAuthorization()
-                break
-            case .AuthorizedWhenInUse:
-                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
-                    if status == .AuthorizedWhenInUse {
-                        Logger.debug("location AuthorizedWhenInUse succcess")
-                        promise.success()
-                    } else {
-                        Logger.debug("location AuthorizedWhenInUse failed")
-                        promise.failure(FLError.authoizationWhenInUseFailed)
-                    }
-                }
-                self.requestWhenInUseAuthorization()
-                break
-            default:
-                Logger.debug("location authorization invalid")
-                break
-            }
-        } else {
-            promise.success()
-        }
-        return promise.future
-    }
-
-}
-
 // MARK: - LocationManager -
-public class LocationManager : NSObject, CLLocationManagerDelegate, LocationManagerAuthorizable {
+public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     private var locationUpdatePromise: StreamPromise<[CLLocation]>?
     private var _isUpdating = false
@@ -199,6 +150,72 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         }
     }
 
+    // MARK: Authorization
+    class func authorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManager.authorizationStatus()
+    }
+
+    func requestWhenInUseAuthorization()  {
+        self.clLocationManager.requestWhenInUseAuthorization()
+    }
+
+    func requestAlwaysAuthorization() {
+        self.clLocationManager.requestAlwaysAuthorization()
+    }
+
+    func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
+        let currentAuthorization = LocationManager.authorizationStatus()
+        let promise = Promise<Void>()
+        if currentAuthorization != authorization {
+            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
+            switch authorization {
+            case .AuthorizedAlways:
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
+                    if status == .AuthorizedAlways {
+                        Logger.debug("location AuthorizedAlways succcess")
+                        promise.success()
+                    } else {
+                        Logger.debug("location AuthorizedAlways failed")
+                        promise.failure(FLError.authoizationAlwaysFailed)
+                    }
+                }
+                self.requestAlwaysAuthorization()
+                break
+            case .AuthorizedWhenInUse:
+                self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
+                    if status == .AuthorizedWhenInUse {
+                        Logger.debug("location AuthorizedWhenInUse succcess")
+                        promise.success()
+                    } else {
+                        Logger.debug("location AuthorizedWhenInUse failed")
+                        promise.failure(FLError.authoizationWhenInUseFailed)
+                    }
+                }
+                self.requestWhenInUseAuthorization()
+                break
+            default:
+                Logger.debug("location authorization invalid")
+                break
+            }
+        } else {
+            promise.success()
+        }
+        return promise.future
+    }
+
+    public override init() {
+        super.init()
+        self.clLocationManager = CLLocationManager()
+        self.clLocationManager.delegate = self
+    }
+
+    public init(locationManager: CLLocationManagerInjectable) {
+        super.init()
+        self.clLocationManager = locationManager
+        self.clLocationManager.delegate = self
+    }
+
+    // MARK: Reverse Geocode
     public class func reverseGeocodeLocation(location: CLLocation) -> Future<[CLPlacemark]>  {
         let geocoder = CLGeocoder()
         let promise = Promise<[CLPlacemark]>()
@@ -215,18 +232,6 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         }
         return promise.future
     }
-    
-    public override init() {
-        super.init()
-        self.clLocationManager = CLLocationManager()
-        self.clLocationManager.delegate = self
-    }
-
-    public init(locationManager: CLLocationManagerInjectable) {
-        super.init()
-        self.clLocationManager = locationManager
-        self.clLocationManager.delegate = self
-    }
 
     public func reverseGeocodeLocation()  -> Future<[CLPlacemark]>  {
         if let location = self.location {
@@ -238,7 +243,8 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         }
     }
 
-    public func startUpdatingLocation(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
+    // MARK: Control Location Updates
+    public func startUpdatingLocation(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedWhenInUse) -> FutureStream<[CLLocation]> {
         self.locationUpdatePromise = StreamPromise<[CLLocation]>(capacity:capacity)
         let authoriztaionFuture = self.authorize(authorization)
         authoriztaionFuture.onSuccess {status in
@@ -258,6 +264,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         self.clLocationManager.stopUpdatingLocation()
     }
     
+    // MARK: Control Significant Change in Location Updates
     public func startMonitoringSignificantLocationChanges(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
         self.locationUpdatePromise = StreamPromise<[CLLocation]>(capacity:capacity)
         let authoriztaionFuture = self.authorize(authorization)
@@ -277,7 +284,8 @@ public class LocationManager : NSObject, CLLocationManagerDelegate, LocationMana
         self.locationUpdatePromise  = nil
         self.clLocationManager.stopMonitoringSignificantLocationChanges()
     }
-    
+
+    // MARK: CLLocationManagerDelegate
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations:[CLLocation]) {
         Logger.debug()
         self.locationUpdatePromise?.success(locations)

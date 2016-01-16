@@ -22,13 +22,11 @@ public class RegionManager : LocationManager {
     }
 
     public var regions: [Region] {
-        return LocationManagerIO.queue.sync {
-            return Array(self.configuredRegions.values)
-        }
+        return LocationManagerIO.queue.sync { return Array(self.configuredRegions.values) }
     }
 
     public func region(identifier: String) -> Region? {
-        return self.configuredRegions[identifier]
+        return LocationManagerIO.queue.sync { return self.configuredRegions[identifier] }
     }
 
     public override init() {
@@ -37,7 +35,7 @@ public class RegionManager : LocationManager {
 
     // MARK: Control
     public var isMonitoring : Bool {
-        return Array(self.regionMonitorStatus.values).filter{$0}.count > 0
+        return LocationManagerIO.queue.sync { return Array(self.regionMonitorStatus.values).filter{$0}.count > 0 }
     }
 
     public func isMonitoringRegion(identifier: String) -> Bool {

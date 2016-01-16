@@ -21,7 +21,7 @@ public class BeaconManager : RegionManager {
     }
 
     public var beaconRegions: [BeaconRegion] {
-        return Array(self.configuredBeaconRegions.values)
+        return LocationManagerIO.queue.sync { Array(self.configuredBeaconRegions.values) }
     }
 
     public func beaconRegion(identifier: String) -> BeaconRegion? {
@@ -34,7 +34,7 @@ public class BeaconManager : RegionManager {
 
     // MARK: Control
     public var isRanging: Bool {
-        return Array(self.regionRangingStatus.values).filter{$0}.count > 0
+        return LocationManagerIO.queue.sync { Array(self.regionRangingStatus.values).filter{$0}.count > 0 }
     }
 
     public func isRangingRegion(identifier:String) -> Bool {

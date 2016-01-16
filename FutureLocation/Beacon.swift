@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 // MARK: - CLBeaconInjectable -
-protocol CLBeaconInjectable {
+public protocol CLBeaconInjectable {
     var proximityUUID: NSUUID { get }
     var major: NSNumber { get }
     var minor: NSNumber { get }

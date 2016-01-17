@@ -13,8 +13,8 @@ import CoreLocation
 public class RegionManager : LocationManager {
 
     // MARK: Properties
-    internal var regionMonitorStatus = [String: Bool]()
-    internal var configuredRegions: [String: Region] = [:]
+    internal var regionMonitorStatus = SerialDictionary<String, Bool>(LocationManagerIO.queue)
+    internal var configuredRegions = SerialDictionary<String, Region>(LocationManagerIO.queue)
 
     // MARK: Configure
     public var maximumRegionMonitoringDistance: CLLocationDistance {
@@ -22,11 +22,11 @@ public class RegionManager : LocationManager {
     }
 
     public var regions: [Region] {
-        return LocationManagerIO.queue.sync { return Array(self.configuredRegions.values) }
+        return self.configuredRegions.values
     }
 
     public func region(identifier: String) -> Region? {
-        return LocationManagerIO.queue.sync { return self.configuredRegions[identifier] }
+        return self.configuredRegions[identifier]
     }
 
     public override init() {
@@ -35,7 +35,7 @@ public class RegionManager : LocationManager {
 
     // MARK: Control
     public var isMonitoring : Bool {
-        return LocationManagerIO.queue.sync { return Array(self.regionMonitorStatus.values).filter{$0}.count > 0 }
+        return self.regionMonitorStatus.values.filter{$0}.count > 0
     }
 
     public func isMonitoringRegion(identifier: String) -> Bool {
@@ -56,11 +56,9 @@ public class RegionManager : LocationManager {
     }
 
     public func stopMonitoringForRegion(region: Region) {
-        LocationManagerIO.queue.sync {
-            self.regionMonitorStatus.removeValueForKey(region.identifier)
-            self.configuredRegions.removeValueForKey(region.identifier)
-            self.clLocationManager.stopMonitoringForRegion(region.clRegion)
-        }
+        self.regionMonitorStatus.removeValueForKey(region.identifier)
+        self.configuredRegions.removeValueForKey(region.identifier)
+        self.clLocationManager.stopMonitoringForRegion(region.clRegion)
     }
 
     public func stopMonitoringAllRegions() {
@@ -72,19 +70,15 @@ public class RegionManager : LocationManager {
     // MARK: CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didEnterRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
-        LocationManagerIO.queue.sync {
-            if let flRegion = self.configuredRegions[region.identifier] {
-                flRegion.regionPromise.success(.Inside)
-            }
+        if let flRegion = self.configuredRegions[region.identifier] {
+            flRegion.regionPromise.success(.Inside)
         }
     }
     
     public func locationManager(_: CLLocationManager, didExitRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
-        LocationManagerIO.queue.sync {
-            if let flRegion = self.configuredRegions[region.identifier] {
-                flRegion.regionPromise.success(.Outside)
-            }
+        if let flRegion = self.configuredRegions[region.identifier] {
+            flRegion.regionPromise.success(.Outside)
         }
     }
     
@@ -93,20 +87,16 @@ public class RegionManager : LocationManager {
     }
     
     public func locationManager(_:CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error:NSError) {
-        LocationManagerIO.queue.sync {
-            if let region = region, flRegion = self.configuredRegions[region.identifier] {
-                Logger.debug("region identifier \(region.identifier)")
-                flRegion.regionPromise.failure(error)
-            }
+        if let region = region, flRegion = self.configuredRegions[region.identifier] {
+            Logger.debug("region identifier \(region.identifier)")
+            flRegion.regionPromise.failure(error)
         }
     }
     
     public func locationManager(_: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
-        LocationManagerIO.queue.sync {
-            if let flRegion = self.configuredRegions[region.identifier] {
-                flRegion.regionPromise.success(.Start)
-            }
+        if let flRegion = self.configuredRegions[region.identifier] {
+            flRegion.regionPromise.success(.Start)
         }
     }
 }

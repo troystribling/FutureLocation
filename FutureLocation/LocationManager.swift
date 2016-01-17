@@ -13,17 +13,38 @@ import CoreLocation
 struct LocationManagerIO {
     static let queue = Queue("us.gnos.location-manager")
     static let context = QueueContext(queue: queue)
-
-    static func serialSet<T, U>(inout dictionary: [T: U], key: T, value: U) {
-        self.queue.sync { dictionary[key] = value }
-    }
-
-    static func serialGet<T, U>(dictionary: [T: U], key: T) -> U? {
-        return self.queue.sync { return dictionary[key] }
-    }
 }
 
+class SerialDictionary<T, U where T: Hashable> {
 
+    var data = [T: U]()
+    let queue: Queue
+
+    init(_ queue: Queue) {
+        self.queue = queue
+    }
+
+    var values: [U] {
+        return self.queue.sync { return Array(self.data.values) }
+    }
+
+    var keys: [T] {
+        return self.queue.sync { return Array(self.data.keys) }
+    }
+
+    subscript(key: T) -> U? {
+        get {
+            return self.queue.sync { return self.data[key] }
+        }
+        set {
+            self.queue.sync { self.data[key] = newValue }
+        }
+    }
+
+    func removeValueForKey(key: T) {
+        self.queue.sync { self.data.removeValueForKey(key) }
+    }
+}
 
 // MARK: - Errors -
 public enum LocationError : Int {
@@ -359,9 +380,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     // MARK: CLLocationManagerDelegate
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations:[CLLocation]) {
         Logger.debug()
-        if let requestLocationPromise = self.requestLocationPromise {
-            requestLocationPromise.success(locations)
-        }
+        self.requestLocationPromise?.success(locations)
         self.requestLocationPromise = nil
         self.locationUpdatePromise?.success(locations)
     }

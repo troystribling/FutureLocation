@@ -13,15 +13,15 @@ import CoreLocation
 public class BeaconManager : RegionManager {
 
     // MARK: Properties
-    private var regionRangingStatus = [String:Bool]()
-    internal var configuredBeaconRegions = [String:BeaconRegion]()
+    private var regionRangingStatus = SerialDictionary<String, Bool>(LocationManagerIO.queue)
+    internal var configuredBeaconRegions = SerialDictionary<String, BeaconRegion>(LocationManagerIO.queue)
 
     public class func isRangingAvailable() -> Bool {
         return CLLocationManager.isRangingAvailable()
     }
 
     public var beaconRegions: [BeaconRegion] {
-        return LocationManagerIO.queue.sync { Array(self.configuredBeaconRegions.values) }
+        return self.configuredBeaconRegions.values
     }
 
     public func beaconRegion(identifier: String) -> BeaconRegion? {

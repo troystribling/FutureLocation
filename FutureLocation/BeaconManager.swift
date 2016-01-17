@@ -68,10 +68,6 @@ public class BeaconManager : RegionManager {
             self.stopRangingBeaconsInRegion(beaconRegion)
         }
     }
-
-    public func requestStateForRegion(beaconMonitor: BeaconRegion) {
-        self.clLocationManager.requestStateForRegion(beaconMonitor.clRegion)
-    }
     
     // CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {

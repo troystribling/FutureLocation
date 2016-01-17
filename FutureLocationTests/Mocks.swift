@@ -10,47 +10,144 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
-//class CLLocationManagerMock : CLLocationManagerInjectable {
-//    
-//    var delegate: CLLocationManagerDelegate?
-//
-//    static func authorizationStatus() -> CLAuthorizationStatus
-//    func requestAlwaysAuthorization()
-//    func requestWhenInUseAuthorization()
-//
-//    var location: CLLocation? { get }
-//
-//    var pausesLocationUpdatesAutomatically: Bool { get set }
-//    var allowsBackgroundLocationUpdates: Bool { get set}
-//    var activityType: CLActivityType { get set }
-//    var distanceFilter : CLLocationDistance { get set }
-//    var desiredAccuracy: CLLocationAccuracy { get set }
-//
-//    static func locationServicesEnabled() -> Bool
-//    func startUpdatingLocation()
-//    func stopUpdatingLocation()
-//    func requestLocation()
-//
-//    static func deferredLocationUpdatesAvailable() -> Bool
-//    func allowDeferredLocationUpdatesUntilTraveled(distance: CLLocationDistance, timeout: NSTimeInterval)
-//
-//    static func significantLocationChangeMonitoringAvailable() -> Bool
-//    func startMonitoringSignificantLocationChanges()
-//    func stopMonitoringSignificantLocationChanges()
-//
-//    var monitoredRegions: Set<CLRegion> { get }
-//    var maximumRegionMonitoringDistance: CLLocationDistance { get }
-//    func startMonitoringForRegion(region: CLRegion)
-//    func stopMonitoringForRegion(region: CLRegion)
-//
-//    static func isRangingAvailable() -> Bool
-//    var rangedRegions: Set<CLRegion> { get }
-//    func startRangingBeaconsInRegion(region: CLBeaconRegion)
-//    func stopRangingBeaconsInRegion(region: CLBeaconRegion)
-//    func requestStateForRegion(region: CLRegion)
-//
-//}
+// MARK: - CLLocationManagerMock -
+class CLLocationManagerMock : CLLocationManagerInjectable {
 
+    static var _authorizationStatus = CLAuthorizationStatus.NotDetermined
+    static var _isRangingAvailable = true
+    static var _significantLocationChangeMonitoringAvailable = true
+    static var _deferredLocationUpdatesAvailable = true
+    static var _locationServicesEnabled = true
+
+    var requestAlwaysAuthorizationCalled = false
+    var requestWhenInUseAuthorizationCalled = false
+    var startUpdatingLocationCalled = false
+    var stopUpdatingLocationCalled = false
+    var requestLocationCalled = false
+    var allowDeferredLocationUpdatesUntilTraveledCalled = false
+    var startMonitoringSignificantLocationChangesCalled = false
+    var stopMonitoringSignificantLocationChangesCalled = false
+    var startMonitoringForRegionCalled = false
+    var stopMonitoringForRegionCalled = false
+    var startRangingBeaconsInRegionCalled = false
+    var stopRangingBeaconsInRegionCalled = false
+    var requestStateForRegionCalled = false
+
+    var allowDeferredLocationUpdatesUntilTraveledDistance: CLLocationDistance?
+    var allowDeferredLocationUpdatesUntilTraveledTimeout: NSTimeInterval?
+    var startMonitoringForRegionRegion: CLRegion?
+    var stopMonitoringForRegionRegion: CLRegion?
+    var requestStateForRegionRegion: CLRegion?
+    var startRangingBeaconsInRegionRegion: CLBeaconRegion?
+    var stopRangingBeaconsInRegionRegion: CLBeaconRegion?
+
+    var delegate: CLLocationManagerDelegate?
+
+    // MARK: Authorization
+    class func authorizationStatus() -> CLAuthorizationStatus {
+        return self._authorizationStatus
+    }
+
+    func requestAlwaysAuthorization() {
+        self.requestAlwaysAuthorizationCalled = true
+    }
+
+    func requestWhenInUseAuthorization() {
+        self.requestWhenInUseAuthorizationCalled = true
+    }
+
+    // MARK: Configure
+    var pausesLocationUpdatesAutomatically = false
+    var allowsBackgroundLocationUpdates = false
+    var activityType = CLActivityType.Fitness
+    var distanceFilter: CLLocationDistance = kCLDistanceFilterNone
+    var desiredAccuracy: CLLocationAccuracy = kCLLocationAccuracyBest
+
+    // MARK: Location Updates
+    var location: CLLocation?
+
+    static func locationServicesEnabled() -> Bool {
+        return self._locationServicesEnabled
+    }
+
+    func startUpdatingLocation() {
+        self.startUpdatingLocationCalled = true
+    }
+
+    func stopUpdatingLocation() {
+        self.stopUpdatingLocationCalled = true
+    }
+
+    func requestLocation() {
+        self.requestLocationCalled = true
+    }
+
+    // MARK: Deferred Location Updates
+    class func deferredLocationUpdatesAvailable() -> Bool {
+        return self._deferredLocationUpdatesAvailable
+    }
+
+    func allowDeferredLocationUpdatesUntilTraveled(distance: CLLocationDistance, timeout: NSTimeInterval) {
+        self.allowDeferredLocationUpdatesUntilTraveledCalled = true
+        self.allowDeferredLocationUpdatesUntilTraveledDistance = distance
+        self.allowDeferredLocationUpdatesUntilTraveledTimeout = timeout
+    }
+
+    // MARK: Significant Change in Location
+    class func significantLocationChangeMonitoringAvailable() -> Bool {
+        return self._significantLocationChangeMonitoringAvailable
+    }
+
+    func startMonitoringSignificantLocationChanges() {
+        self.startMonitoringSignificantLocationChangesCalled = true
+    }
+
+    func stopMonitoringSignificantLocationChanges() {
+        self.stopMonitoringSignificantLocationChangesCalled = true
+    }
+
+    // MARK: Region Monitoring
+    var maximumRegionMonitoringDistance: CLLocationDistance = 1000.0
+
+    var monitoredRegions = Set<CLRegion>()
+
+    func startMonitoringForRegion(region: CLRegion) {
+        self.startMonitoringForRegionCalled = true
+        self.startMonitoringForRegionRegion = region
+    }
+
+    func stopMonitoringForRegion(region: CLRegion) {
+        self.stopMonitoringForRegionCalled = true
+        self.stopMonitoringForRegionRegion = region
+    }
+
+    func requestStateForRegion(region: CLRegion) {
+        self.requestStateForRegionCalled = true
+        self.requestStateForRegionRegion = region
+    }
+
+    // MARK: Beacons
+    class func isRangingAvailable() -> Bool {
+        return self._isRangingAvailable
+    }
+
+    var rangedRegions = Set<CLRegion>()
+
+    func startRangingBeaconsInRegion(region: CLBeaconRegion) {
+        self.startRangingBeaconsInRegionCalled = true
+        self.startRangingBeaconsInRegionRegion = region
+    }
+
+    func stopRangingBeaconsInRegion(region: CLBeaconRegion) {
+        self.stopRangingBeaconsInRegionCalled = true
+        self.stopRangingBeaconsInRegionRegion = region
+    }
+
+    init() {}
+
+}
+
+// MARK: - CLBeaconMock -
 class CLBeaconMock : CLBeaconInjectable {
     let proximityUUID: NSUUID
     let major: NSNumber

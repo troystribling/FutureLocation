@@ -67,35 +67,41 @@ public protocol CLLocationManagerInjectable {
 
     var delegate: CLLocationManagerDelegate? { get set }
 
+    // MARK: Authorization
     static func authorizationStatus() -> CLAuthorizationStatus
     func requestAlwaysAuthorization()
     func requestWhenInUseAuthorization()
 
-    var location: CLLocation? { get }
-
+    // MARK: Configure
     var pausesLocationUpdatesAutomatically: Bool { get set }
     var allowsBackgroundLocationUpdates: Bool { get set}
     var activityType: CLActivityType { get set }
     var distanceFilter : CLLocationDistance { get set }
     var desiredAccuracy: CLLocationAccuracy { get set }
 
+    // MARK: Location Updates
+    var location: CLLocation? { get }
     static func locationServicesEnabled() -> Bool
     func startUpdatingLocation()
     func stopUpdatingLocation()
     func requestLocation()
 
+     // MARK: Deferred Location Updates
     static func deferredLocationUpdatesAvailable() -> Bool
     func allowDeferredLocationUpdatesUntilTraveled(distance: CLLocationDistance, timeout: NSTimeInterval)
 
+    // MARK: Significant Change in Location
     static func significantLocationChangeMonitoringAvailable() -> Bool
     func startMonitoringSignificantLocationChanges()
     func stopMonitoringSignificantLocationChanges()
 
-    var monitoredRegions: Set<CLRegion> { get }
+    // MARK: Region Monitoring
     var maximumRegionMonitoringDistance: CLLocationDistance { get }
+    var monitoredRegions: Set<CLRegion> { get }
     func startMonitoringForRegion(region: CLRegion)
     func stopMonitoringForRegion(region: CLRegion)
 
+    // MARK: Beacons
     static func isRangingAvailable() -> Bool
     var rangedRegions: Set<CLRegion> { get }
     func startRangingBeaconsInRegion(region: CLBeaconRegion)
@@ -120,10 +126,6 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     public var isUpdating: Bool {
         return self.updating
-    }
-
-    public var location: CLLocation? {
-        return self.clLocationManager.location
     }
 
     private var locationUpdatePromise: StreamPromise<[CLLocation]>? {
@@ -199,7 +201,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
 
-    public var distanceFilter : CLLocationDistance {
+    public var distanceFilter: CLLocationDistance {
         get {
             return self.clLocationManager.distanceFilter
         }
@@ -310,7 +312,11 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
 
-    // MARK: Control Location Updates
+    // MARK: Location Updates
+    public var location: CLLocation? {
+        return self.clLocationManager.location
+    }
+
     public class func locationServicesEnabled() -> Bool {
         return CLLocationManager.locationServicesEnabled()
     }
@@ -341,7 +347,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         return self.requestLocationPromise!.future
     }
 
-    // MARK: Control Significant Change in Location Updates
+    // MARK: Significant Change in Location
     public class func significantLocationChangeMonitoringAvailable() -> Bool {
         return CLLocationManager.significantLocationChangeMonitoringAvailable()
     }

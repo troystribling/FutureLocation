@@ -67,6 +67,10 @@ public class RegionManager : LocationManager {
         }
     }
 
+    public func requestStateForRegion(beaconMonitor: BeaconRegion) {
+        self.clLocationManager.requestStateForRegion(beaconMonitor.clRegion)
+    }
+
     // MARK: CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didEnterRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")

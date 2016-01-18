@@ -15,6 +15,7 @@ struct LocationManagerIO {
     static let context = QueueContext(queue: queue)
 }
 
+// MARK: Serialize Dictionary Access
 class SerialDictionary<T, U where T: Hashable> {
 
     var data = [T: U]()
@@ -220,20 +221,20 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     // MARK: Authorization
-    class func authorizationStatus() -> CLAuthorizationStatus {
+    public func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManager.authorizationStatus()
     }
 
-    func requestWhenInUseAuthorization()  {
+    private func requestWhenInUseAuthorization()  {
         self.clLocationManager.requestWhenInUseAuthorization()
     }
 
-    func requestAlwaysAuthorization() {
+    private func requestAlwaysAuthorization() {
         self.clLocationManager.requestAlwaysAuthorization()
     }
 
-    func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
-        let currentAuthorization = LocationManager.authorizationStatus()
+    public func authorize(authorization: CLAuthorizationStatus) -> Future<Void> {
+        let currentAuthorization = self.authorizationStatus()
         let promise = Promise<Void>()
         if currentAuthorization != authorization {
             self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
@@ -272,14 +273,15 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         return promise.future
     }
 
+    //MARK: Initialize
     public override init() {
         self.clLocationManager = CLLocationManager()
         super.init()
         self.clLocationManager.delegate = self
     }
 
-    public init(locationManager: CLLocationManagerInjectable) {
-        self.clLocationManager = locationManager
+    public init(clLocationManager: CLLocationManagerInjectable) {
+        self.clLocationManager = clLocationManager
         super.init()
         self.clLocationManager.delegate = self
     }
@@ -385,13 +387,29 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     // MARK: CLLocationManagerDelegate
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        self.didUpdateLocations(locations)
+    }
+
+    public func locationManager(_: CLLocationManager, didFailWithError error: NSError) {
+        self.didFailWithError(error)
+    }
+
+    public func locationManager(_: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?) {
+        self.didFinishDeferredUpdatesWithError(error)
+    }
+        
+    public func locationManager(_: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        self.didChangeAuthorizationStatus(status)
+    }
+
+    public func didUpdateLocations(locations:[CLLocation]) {
         Logger.debug()
         self.requestLocationPromise?.success(locations)
         self.requestLocationPromise = nil
         self.locationUpdatePromise?.success(locations)
     }
 
-    public func locationManager(_: CLLocationManager, didFailWithError error: NSError) {
+    public func didFailWithError(error: NSError) {
         Logger.debug("error \(error.localizedDescription)")
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.failure(error)
@@ -400,7 +418,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         self.locationUpdatePromise?.failure(error)
     }
 
-    public func locationManager(_: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?) {
+    public func didFinishDeferredUpdatesWithError(error: NSError?) {
         if let error = error {
             self.deferredLocationUpdatePromise?.failure(error)
         } else {
@@ -408,8 +426,8 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         }
         self.deferredLocationUpdatePromise = nil
     }
-        
-    public func locationManager(_: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+
+    public func didChangeAuthorizationStatus(status: CLAuthorizationStatus) {
         Logger.debug("status: \(status)")
         self.authorizationStatusChangedPromise?.success(status)
         self.authorizationStatusChangedPromise = nil

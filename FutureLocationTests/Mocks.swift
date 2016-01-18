@@ -147,6 +147,14 @@ class CLLocationManagerMock : CLLocationManagerInjectable {
 
 }
 
+// MARK: - LocationManagerUT -
+class LocationManagerUT : LocationManager {
+
+    override func authorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManagerMock.authorizationStatus()
+    }
+}
+
 // MARK: - CLBeaconMock -
 class CLBeaconMock : CLBeaconInjectable {
     let proximityUUID: NSUUID

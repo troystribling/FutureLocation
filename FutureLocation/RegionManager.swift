@@ -15,6 +15,8 @@ public class RegionManager : LocationManager {
     // MARK: Properties
     internal var regionMonitorStatus = SerialDictionary<String, Bool>(LocationManagerIO.queue)
     internal var configuredRegions = SerialDictionary<String, Region>(LocationManagerIO.queue)
+    private var requestStateForRegionPromises = SerialDictionary<String, Promise<CLRegionState>>(LocationManagerIO.queue)
+
 
     // MARK: Configure
     public var maximumRegionMonitoringDistance: CLLocationDistance {
@@ -67,27 +69,27 @@ public class RegionManager : LocationManager {
         }
     }
 
-    public func requestStateForRegion(beaconMonitor: BeaconRegion) {
-        self.clLocationManager.requestStateForRegion(beaconMonitor.clRegion)
+    public func requestStateForRegion(region: Region) -> Future<CLRegionState> {
+        self.requestStateForRegionPromises[region.identifier] = Promise<CLRegionState>()
+        self.clLocationManager.requestStateForRegion(region.clRegion)
+        return self.requestStateForRegionPromises[region.identifier]!.future
     }
 
     // MARK: CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didEnterRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
-        if let flRegion = self.configuredRegions[region.identifier] {
-            flRegion.regionPromise.success(.Inside)
-        }
+        self.configuredRegions[region.identifier]?.regionPromise.success(.Inside)
     }
     
     public func locationManager(_: CLLocationManager, didExitRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
-        if let flRegion = self.configuredRegions[region.identifier] {
-            flRegion.regionPromise.success(.Outside)
-        }
+        self.configuredRegions[region.identifier]?.regionPromise.success(.Outside)
     }
     
     public func locationManager(_: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
         Logger.debug("region identifier \(region.identifier)")
+        self.requestStateForRegionPromises[region.identifier]?.success(state)
+        self.requestStateForRegionPromises.removeValueForKey(region.identifier)
     }
     
     public func locationManager(_:CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error:NSError) {

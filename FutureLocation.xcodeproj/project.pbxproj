@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF11AC889AD00861D0A /* RegionManagerTests.swift */; };
 		05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF31AC8949300861D0A /* BeaconManagerTests.swift */; };
+		0553BC241C4ED80500DBF416 /* SimpleFutures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553BC231C4ED80500DBF416 /* SimpleFutures.swift */; };
 		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
-		058BA8C01B13937E005CF0FE /* SimpleFutures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058BA8BF1B13937E005CF0FE /* SimpleFutures.swift */; };
 		0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */; };
@@ -39,8 +39,8 @@
 /* Begin PBXFileReference section */
 		05250BF11AC889AD00861D0A /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManagerTests.swift; sourceTree = "<group>"; };
 		05250BF31AC8949300861D0A /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManagerTests.swift; sourceTree = "<group>"; };
+		0553BC231C4ED80500DBF416 /* SimpleFutures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleFutures.swift; sourceTree = "<group>"; };
 		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
-		058BA8BF1B13937E005CF0FE /* SimpleFutures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleFutures.swift; path = ../../../BlueCap/BlueCapKit/External/SimpleFutures/SimpleFutures.swift; sourceTree = "<group>"; };
 		0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLProximityExtension.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 		05BAEACD1A9AA331003C0C1C /* SimpleFutures */ = {
 			isa = PBXGroup;
 			children = (
-				058BA8BF1B13937E005CF0FE /* SimpleFutures.swift */,
+				0553BC231C4ED80500DBF416 /* SimpleFutures.swift */,
 			);
 			name = SimpleFutures;
 			path = External/SimpleFutures;
@@ -275,12 +275,12 @@
 				05BAEAC01A9AA212003C0C1C /* Beacon.swift in Sources */,
 				05BAEAC51A9AA212003C0C1C /* LocationManager.swift in Sources */,
 				0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */,
+				0553BC241C4ED80500DBF416 /* SimpleFutures.swift in Sources */,
 				05BAEAC11A9AA212003C0C1C /* BeaconManager.swift in Sources */,
 				05BAEAC61A9AA212003C0C1C /* Region.swift in Sources */,
 				05BAEAC71A9AA212003C0C1C /* RegionManager.swift in Sources */,
 				05BAEAF11A9AA59A003C0C1C /* Logger.swift in Sources */,
 				05BAEAC21A9AA212003C0C1C /* BeaconRegion.swift in Sources */,
-				058BA8C01B13937E005CF0FE /* SimpleFutures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

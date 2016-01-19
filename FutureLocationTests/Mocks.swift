@@ -10,6 +10,11 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
+// MARK: Errors
+struct TestFailure {
+    static let error = NSError(domain:"Future Location Tests", code:100, userInfo:[NSLocalizedDescriptionKey:"Testing"])
+}
+
 // MARK: - CLLocationManagerMock -
 class CLLocationManagerMock : CLLocationManagerInjectable {
 
@@ -147,12 +152,28 @@ class CLLocationManagerMock : CLLocationManagerInjectable {
 
 }
 
-// MARK: - LocationManagerUT -
+// MARK: - Test Classes -
 class LocationManagerUT : LocationManager {
 
     override func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManagerMock.authorizationStatus()
     }
+}
+
+class RegionManagerUT : RegionManager {
+
+    override func authorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManagerMock.authorizationStatus()
+    }
+
+}
+
+class BeaconManagerUT : BeaconManager {
+
+    override func authorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManagerMock.authorizationStatus()
+    }
+
 }
 
 // MARK: - CLBeaconMock -

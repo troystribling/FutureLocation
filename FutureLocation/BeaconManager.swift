@@ -28,8 +28,13 @@ public class BeaconManager : RegionManager {
         return self.configuredBeaconRegions[identifier]
     }
 
-    public override init() {
-        super.init()
+    //MARK: Initialize
+    public convenience init() {
+        self.init(clLocationManager: CLLocationManager())
+    }
+
+    public override init(clLocationManager: CLLocationManagerInjectable) {
+        super.init(clLocationManager: clLocationManager)
     }
 
     // MARK: Control
@@ -41,16 +46,16 @@ public class BeaconManager : RegionManager {
         return self.regionRangingStatus[identifier] ?? false
     }
 
-    public func startRangingBeaconsInRegion(beaconRegion: BeaconRegion) -> FutureStream<[Beacon]> {
+    public func startRangingBeaconsInRegion(beaconRegion: BeaconRegion, context: ExecutionContext = QueueContext.main) -> FutureStream<[Beacon]> {
         let authoriztaionFuture = self.authorize(CLAuthorizationStatus.AuthorizedAlways)
-        authoriztaionFuture.onSuccess {status in
+        authoriztaionFuture.onSuccess(context) {status in
             Logger.debug("authorization status: \(status)")
             self.regionRangingStatus[beaconRegion.identifier] = true
             self.configuredBeaconRegions[beaconRegion.identifier] = beaconRegion
             self.configuredRegions[beaconRegion.identifier] = beaconRegion
             self.clLocationManager.startRangingBeaconsInRegion(beaconRegion.clBeaconRegion)
         }
-        authoriztaionFuture.onFailure {error in
+        authoriztaionFuture.onFailure(context) {error in
             beaconRegion.beaconPromise.failure(error)
         }
         return beaconRegion.beaconPromise.future

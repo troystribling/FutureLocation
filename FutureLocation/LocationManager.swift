@@ -274,10 +274,8 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     //MARK: Initialize
-    public override init() {
-        self.clLocationManager = CLLocationManager()
-        super.init()
-        self.clLocationManager.delegate = self
+    public convenience override init() {
+        self.init(clLocationManager: CLLocationManager())
     }
 
     public init(clLocationManager: CLLocationManagerInjectable) {
@@ -323,14 +321,14 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         return CLLocationManager.locationServicesEnabled()
     }
 
-    public func startUpdatingLocation(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedWhenInUse) -> FutureStream<[CLLocation]> {
+    public func startUpdatingLocation(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedWhenInUse, context: ExecutionContext = QueueContext.main) -> FutureStream<[CLLocation]> {
             self.locationUpdatePromise = StreamPromise<[CLLocation]>(capacity:capacity)
             let authoriztaionFuture = self.authorize(authorization)
-            authoriztaionFuture.onSuccess {status in
+            authoriztaionFuture.onSuccess(context) {status in
                 self.updating = true
                 self.clLocationManager.startUpdatingLocation()
             }
-            authoriztaionFuture.onFailure {error in
+            authoriztaionFuture.onFailure(context) {error in
                 self.updating = false
                 self.locationUpdatePromise!.failure(error)
             }
@@ -354,14 +352,14 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         return CLLocationManager.significantLocationChangeMonitoringAvailable()
     }
 
-    public func startMonitoringSignificantLocationChanges(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedAlways) -> FutureStream<[CLLocation]> {
+    public func startMonitoringSignificantLocationChanges(capacity: Int? = nil, authorization: CLAuthorizationStatus = .AuthorizedAlways, context: ExecutionContext = QueueContext.main) -> FutureStream<[CLLocation]> {
         self.locationUpdatePromise = StreamPromise<[CLLocation]>(capacity:capacity)
         let authoriztaionFuture = self.authorize(authorization)
-        authoriztaionFuture.onSuccess {status in
+        authoriztaionFuture.onSuccess(context) {status in
             self.updating = true
             self.clLocationManager.startMonitoringSignificantLocationChanges()
         }
-        authoriztaionFuture.onFailure {error in
+        authoriztaionFuture.onFailure(context) {error in
             self.updating = false
             self.locationUpdatePromise!.failure(error)
         }

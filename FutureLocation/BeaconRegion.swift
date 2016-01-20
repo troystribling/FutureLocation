@@ -58,7 +58,7 @@ public class BeaconRegion : Region {
         }
     }
     
-    internal init(region:CLBeaconRegion, capacity:Int? = nil) {
+    public init(region:CLBeaconRegion, capacity:Int? = nil) {
         self.clBeaconRegion = region
         if let capacity = capacity {
             self.beaconPromise = StreamPromise<[Beacon]>(capacity:capacity)

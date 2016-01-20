@@ -74,8 +74,16 @@ public class BeaconManager : RegionManager {
         }
     }
     
-    // CLLocationManagerDelegate
+    // MARK: CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        self.didRangeBeacons(beacons.map{$0 as CLBeaconInjectable}, inRegion: region)
+    }
+    
+    public func locationManager(_: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
+        self.rangingBeaconsDidFailForRegion(region, withError: error)
+    }
+
+    public func didRangeBeacons(beacons: [CLBeaconInjectable], inRegion region: CLBeaconRegion) {
         Logger.debug("region identifier \(region.identifier)")
         if let beaconRegion = self.configuredBeaconRegions[region.identifier] {
             let flBeacons = beacons.map{Beacon(clBeacon:$0)}
@@ -83,12 +91,10 @@ public class BeaconManager : RegionManager {
             beaconRegion.beaconPromise.success(flBeacons)
         }
     }
-    
-    public func locationManager(_: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
+
+    public func rangingBeaconsDidFailForRegion(region: CLBeaconRegion, withError error: NSError) {
         Logger.debug("region identifier \(region.identifier)")
-        if let beaconRegion = self.configuredBeaconRegions[region.identifier] {
-            beaconRegion.beaconPromise.failure(error)
-        }
+        self.configuredBeaconRegions[region.identifier]?.beaconPromise.failure(error)
     }
     
 }

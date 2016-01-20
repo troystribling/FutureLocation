@@ -43,14 +43,14 @@ class ViewController: UITableViewController {
     }
 
     override func viewDidAppear(animated:Bool) {
-        super.viewDidAppear(animated)        
-        if !CircularRegion.isMonitoringAvailableForClass() || !RegionManager.locationServicesEnabled() || RegionManager.authorizationStatus() == .Denied {
+        super.viewDidAppear(animated)
+        if !CircularRegion.isMonitoringAvailableForClass() || !appDelegate.regionManager.locationServicesEnabled() || appDelegate.regionManager.authorizationStatus() == .Denied {
             self.createRegionButton.enabled = false
             self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
             var message = "Region monitoring not availble"
-            if !RegionManager.locationServicesEnabled() {
+            if !appDelegate.regionManager.locationServicesEnabled() {
                 message = "Location services not enabled"
-            } else if RegionManager.authorizationStatus() == .Denied {
+            } else if appDelegate.regionManager.authorizationStatus() == .Denied {
                 message = "Autorization status is denied"
             }
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)

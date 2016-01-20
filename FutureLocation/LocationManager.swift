@@ -317,7 +317,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         return self.clLocationManager.location
     }
 
-    public class func locationServicesEnabled() -> Bool {
+    public func locationServicesEnabled() -> Bool {
         return CLLocationManager.locationServicesEnabled()
     }
 

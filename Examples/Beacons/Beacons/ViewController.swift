@@ -45,11 +45,11 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated:Bool) {
         super.viewDidAppear(animated)
-        if !BeaconManager.isRangingAvailable() || !BeaconManager.locationServicesEnabled() {
+        if !self.beaconManager.isRangingAvailable() || !self.beaconManager.locationServicesEnabled() {
             self.startMonitoringSwitch.enabled = false
             self.uuidTextField.enabled = false
             self.startMonitoringLabel.textColor = UIColor.lightGrayColor()
-            let message = BeaconManager.locationServicesEnabled() ? "Beacon ranging not available" : "Location services not enabled"
+            let message = self.beaconManager.locationServicesEnabled() ? "Beacon ranging not available" : "Location services not enabled"
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
         }
     }

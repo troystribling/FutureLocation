@@ -241,4 +241,20 @@ class LocationManagerTests: XCTestCase {
         }
     }
 
+    func testRequestLocationSuccess() {
+        
+    }
+
+    func testRequestLocationFailure() {
+
+    }
+
+    func testDeferrLocationUpdatesSuccess() {
+
+    }
+
+    func testDeferrLocationUpdatesFailure() {
+
+    }
+
 }

@@ -39,18 +39,18 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if !LocationManager.locationServicesEnabled() || LocationManager.authorizationStatus() == .Denied {
+        if !self.locationManager.locationServicesEnabled() || self.locationManager.authorizationStatus() == .Denied {
             self.startUpdatesLabel.textColor = UIColor.lightGrayColor()
             self.startUpdatesSwitch.enabled = false
             self.getAddressButton.enabled = false
             var message = "Location services disabled"
-            if LocationManager.authorizationStatus() == .Denied {
+            if self.locationManager.authorizationStatus() == .Denied {
                 message = "Authorization status is denied"
             }
             self.getAddressButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Disabled)
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
         } else {
-            if LocationManager.locationServicesEnabled() {
+            if self.locationManager.locationServicesEnabled() {
                 if self.locationManager.isUpdating {
                     self.startUpdatesSwitch.on = true
                 } else {
@@ -69,7 +69,7 @@ class ViewController: UITableViewController {
                                  self.addressManager.stopUpdatingLocation()
                                  return self.addressManager.reverseGeocodeLocation()
                              }
-        addressFuture.onSuccess {placemarks in
+        addressFuture.onSuccess { placemarks in
             if let placemark = placemarks.first {
                 self.addressProgressView.remove()
                 if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
@@ -83,7 +83,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        addressFuture.onFailure {error in
+        addressFuture.onFailure { error in
             self.addressProgressView.remove()
             self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
         }
@@ -95,14 +95,14 @@ class ViewController: UITableViewController {
         } else {
             self.locationProgressView.show()
             let locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
-            locationFuture.onSuccess {locations in
+            locationFuture.onSuccess { locations in
                 if let location = locations.first {
                     self.locationProgressView.remove()
                     self.latituteLabel.text =  NSString(format: "%.6f", location.coordinate.latitude) as String
                     self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
                 }
             }
-            locationFuture.onFailure {error in
+            locationFuture.onFailure { error in
                 self.locationProgressView.remove()
                 self.startUpdatesSwitch.on = false
                 self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)

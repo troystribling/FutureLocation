@@ -288,7 +288,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     public class func reverseGeocodeLocation(location: CLLocation) -> Future<[CLPlacemark]>  {
         let geocoder = CLGeocoder()
         let promise = Promise<[CLPlacemark]>()
-        geocoder.reverseGeocodeLocation(location){(placemarks:[CLPlacemark]?, error:NSError?) in
+        geocoder.reverseGeocodeLocation(location){ (placemarks:[CLPlacemark]?, error:NSError?) in
             if let error = error {
                 promise.failure(error)
             } else {
@@ -373,7 +373,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     // MARK: Deferred Location Updates
-    public class func deferredLocationUpdatesAvailable() -> Bool {
+    public func deferredLocationUpdatesAvailable() -> Bool {
         return CLLocationManager.deferredLocationUpdatesAvailable()
     }
 

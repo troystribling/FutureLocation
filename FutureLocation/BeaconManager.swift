@@ -16,7 +16,7 @@ public class BeaconManager : RegionManager {
     private var regionRangingStatus = SerialDictionary<String, Bool>(LocationManagerIO.queue)
     internal var configuredBeaconRegions = SerialDictionary<String, BeaconRegion>(LocationManagerIO.queue)
 
-    public class func isRangingAvailable() -> Bool {
+    public func isRangingAvailable() -> Bool {
         return CLLocationManager.isRangingAvailable()
     }
 

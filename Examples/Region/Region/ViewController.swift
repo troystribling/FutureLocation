@@ -22,8 +22,8 @@ class ViewController: UITableViewController {
     @IBOutlet var startMonitoringLabel  : UILabel!
     @IBOutlet var createRegionButton    : UIButton!
     
-    var region                      : CircularRegion?
-    
+    var region: CircularRegion?
+
     let locationManager = LocationManager()
     let regionManager   = RegionManager()
     
@@ -44,13 +44,13 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(animated:Bool) {
         super.viewDidAppear(animated)
-        if !CircularRegion.isMonitoringAvailableForClass() || !appDelegate.regionManager.locationServicesEnabled() || appDelegate.regionManager.authorizationStatus() == .Denied {
+        if !CircularRegion.isMonitoringAvailableForClass() || !self.regionManager.locationServicesEnabled() || self.regionManager.authorizationStatus() == .Denied {
             self.createRegionButton.enabled = false
             self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Normal)
             var message = "Region monitoring not availble"
-            if !appDelegate.regionManager.locationServicesEnabled() {
+            if !self.regionManager.locationServicesEnabled() {
                 message = "Location services not enabled"
-            } else if appDelegate.regionManager.authorizationStatus() == .Denied {
+            } else if self.regionManager.authorizationStatus() == .Denied {
                 message = "Autorization status is denied"
             }
             self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)

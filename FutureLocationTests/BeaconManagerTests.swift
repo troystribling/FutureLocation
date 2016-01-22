@@ -82,7 +82,7 @@ class BeaconManagerTests: XCTestCase {
             XCTAssert(false, "onSuccess called")
         }
         future.onFailure {error in
-            XCTAssertEqual(error.code, LocationError.AuthorizationAlwaysFailed.rawValue, "Error code invalid")
+            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
             XCTAssertFalse(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 0, "Region Beacon count invalid")
             expectation.fulfill()

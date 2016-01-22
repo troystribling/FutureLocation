@@ -28,7 +28,6 @@ class CLLocationManagerMock : CLLocationManagerInjectable {
     var requestWhenInUseAuthorizationCalled = false
     var startUpdatingLocationCalled = false
     var stopUpdatingLocationCalled = false
-    var requestLocationCalled = false
     var allowDeferredLocationUpdatesUntilTraveledCalled = false
     var startMonitoringSignificantLocationChangesCalled = false
     var stopMonitoringSignificantLocationChangesCalled = false
@@ -81,10 +80,6 @@ class CLLocationManagerMock : CLLocationManagerInjectable {
 
     func stopUpdatingLocation() {
         self.stopUpdatingLocationCalled = true
-    }
-
-    func requestLocation() {
-        self.requestLocationCalled = true
     }
 
     // MARK: Deferred Location Updates

@@ -119,7 +119,7 @@ class LocationManagerTests: XCTestCase {
         }
         future.onFailure{error in
             XCTAssert(self.mock.requestWhenInUseAuthorizationCalled, "requestWhenInUseAuthorization not called")
-            XCTAssert(error.code == LocationError.AuthorisedWhenInUseFailed.rawValue, "Error code invalid")
+            XCTAssertEqual(error.code, FLError.authorizationWhenInUseFailed.code, "Error code invalid")
             expectation.fulfill()
         }
         locationManager.didChangeAuthorizationStatus(.Denied)
@@ -137,6 +137,7 @@ class LocationManagerTests: XCTestCase {
         future.onSuccess(context) {locations in
             XCTAssert(locations.count == 2, "locations count invalid")
             XCTAssert(self.mock.startUpdatingLocationCalled, "startUpdatingLocation not called")
+            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         future.onFailure(context) {error in
@@ -159,6 +160,7 @@ class LocationManagerTests: XCTestCase {
         future.onFailure(context) {error in
             XCTAssert(self.mock.startUpdatingLocationCalled, "startUpdatingLocation not called")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
+            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didFailWithError(TestFailure.error)
@@ -176,7 +178,8 @@ class LocationManagerTests: XCTestCase {
         }
         future.onFailure {error in
             XCTAssertFalse(self.mock.startUpdatingLocationCalled, "startUpdatingLocation called")
-            XCTAssert(error.code == LocationError.AuthorizationAlwaysFailed.rawValue, "Error code invalid")
+            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
+            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didChangeAuthorizationStatus(.Denied)
@@ -193,6 +196,7 @@ class LocationManagerTests: XCTestCase {
         future.onSuccess(context) {locations in
             XCTAssert(locations.count == 2, "locations count invalid")
             XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled, "startMonitoringSignificantLocationChanges called")
+            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         future.onFailure(context) {error in
@@ -215,6 +219,7 @@ class LocationManagerTests: XCTestCase {
         future.onFailure(context) {error in
             XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled, "startUpdatingLocation called")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
+            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didFailWithError(TestFailure.error)
@@ -232,7 +237,8 @@ class LocationManagerTests: XCTestCase {
         }
         future.onFailure {error in
             XCTAssertFalse(self.mock.startMonitoringSignificantLocationChangesCalled, "startUpdatingLocation called")
-            XCTAssert(error.code == LocationError.AuthorizationAlwaysFailed.rawValue, "Error code invalid")
+            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
+            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didChangeAuthorizationStatus(.Denied)
@@ -241,12 +247,22 @@ class LocationManagerTests: XCTestCase {
         }
     }
 
-    func testRequestLocationSuccess() {
-        
-    }
-
-    func testRequestLocationFailure() {
-
+    func testRequestLocationCastFailure() {
+        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
+        let expectation = expectationWithDescription("onFailure fulfilled for future")
+        let context = ImmediateContext()
+        let future = self.locationManager.requestLocation(.AuthorizedAlways, context: context)
+        future.onSuccess(context) {locations in
+            XCTAssert(false, "onFailure called")
+        }
+        future.onFailure(context) {error in
+            XCTAssertEqual(error.code, FLError.notSupportedForIOSVersion.code, "Error code invalid")
+            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(2) {error in
+            XCTAssertNil(error, "\(error)")
+        }
     }
 
     func testDeferrLocationUpdatesSuccess() {

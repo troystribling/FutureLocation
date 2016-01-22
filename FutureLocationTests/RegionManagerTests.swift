@@ -78,7 +78,7 @@ class RegionManagerTests: XCTestCase {
             XCTAssert(false, "onSuccess called")
         }
         future.onFailure {error in
-            XCTAssertEqual(error.code, LocationError.AuthorizationAlwaysFailed.rawValue, "Error code invalid")
+            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
             XCTAssertFalse(self.mock.startMonitoringForRegionCalled, "startMonitoringForRegion called")
             XCTAssertEqual(self.regionManager.regions.count, 0, "Region count invalid")
             expectation.fulfill()

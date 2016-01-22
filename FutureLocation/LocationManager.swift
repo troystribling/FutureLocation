@@ -48,19 +48,21 @@ class SerialDictionary<T, U where T: Hashable> {
 }
 
 // MARK: - Errors -
-public enum LocationError : Int {
+public enum FLErrorCode : Int {
     case NotAvailable               = 0
     case UpdateFailed               = 1
     case AuthorizationAlwaysFailed  = 2
     case AuthorisedWhenInUseFailed  = 3
+    case NotSupportedForIOSVersion = 4
 }
 
 public struct FLError {
     public static let domain = "FutureLocation"
-    public static let locationUpdateFailed = NSError(domain:domain, code:LocationError.UpdateFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Location not available"])
-    public static let locationNotAvailable = NSError(domain:domain, code:LocationError.NotAvailable.rawValue, userInfo:[NSLocalizedDescriptionKey:"Location update failed"])
-    public static let authoizationAlwaysFailed = NSError(domain:domain, code:LocationError.AuthorizationAlwaysFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Authorization failed"])
-    public static let authoizationWhenInUseFailed = NSError(domain:domain, code:LocationError.AuthorisedWhenInUseFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Authorization when in use failed"])
+    public static let locationUpdateFailed = NSError(domain:domain, code:FLErrorCode.UpdateFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Location not available"])
+    public static let locationNotAvailable = NSError(domain:domain, code:FLErrorCode.NotAvailable.rawValue, userInfo:[NSLocalizedDescriptionKey:"Location update failed"])
+    public static let authorizationAlwaysFailed = NSError(domain:domain, code:FLErrorCode.AuthorizationAlwaysFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Authorization failed"])
+    public static let authorizationWhenInUseFailed = NSError(domain:domain, code:FLErrorCode.AuthorisedWhenInUseFailed.rawValue, userInfo:[NSLocalizedDescriptionKey:"Authorization when in use failed"])
+    public static let notSupportedForIOSVersion = NSError(domain:domain, code:FLErrorCode.NotSupportedForIOSVersion.rawValue, userInfo:[NSLocalizedDescriptionKey:"Feature not supported for this iOS version"])
 }
 
 // MARK: - CLLocationManagerInjectable -
@@ -75,7 +77,6 @@ public protocol CLLocationManagerInjectable {
 
     // MARK: Configure
     var pausesLocationUpdatesAutomatically: Bool { get set }
-    var allowsBackgroundLocationUpdates: Bool { get set}
     var activityType: CLActivityType { get set }
     var distanceFilter : CLLocationDistance { get set }
     var desiredAccuracy: CLLocationAccuracy { get set }
@@ -85,7 +86,6 @@ public protocol CLLocationManagerInjectable {
     static func locationServicesEnabled() -> Bool
     func startUpdatingLocation()
     func stopUpdatingLocation()
-    func requestLocation()
 
      // MARK: Deferred Location Updates
     static func deferredLocationUpdatesAvailable() -> Bool
@@ -186,10 +186,22 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     public var allowsBackgroundLocationUpdates: Bool {
         get {
-            return self.clLocationManager.allowsBackgroundLocationUpdates
+            if #available(iOS 9.0, *) {
+                if let locationManager = self.clLocationManager as? CLLocationManager {
+                    return locationManager.allowsBackgroundLocationUpdates
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
         }
         set {
-            self.clLocationManager.allowsBackgroundLocationUpdates = newValue
+            if  #available(iOS 9.0, *) {
+                if let locationManager = self.clLocationManager as? CLLocationManager {
+                    locationManager.allowsBackgroundLocationUpdates = newValue
+                }
+            }
         }
     }
 
@@ -246,7 +258,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
                         promise.success()
                     } else {
                         Logger.debug("location AuthorizedAlways failed")
-                        promise.failure(FLError.authoizationAlwaysFailed)
+                        promise.failure(FLError.authorizationAlwaysFailed)
                     }
                 }
                 self.requestAlwaysAuthorization()
@@ -258,7 +270,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
                         promise.success()
                     } else {
                         Logger.debug("location AuthorizedWhenInUse failed")
-                        promise.failure(FLError.authoizationWhenInUseFailed)
+                        promise.failure(FLError.authorizationWhenInUseFailed)
                     }
                 }
                 self.requestWhenInUseAuthorization()
@@ -341,9 +353,26 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         self.clLocationManager.stopUpdatingLocation()
     }
 
-    public func requestLocation() -> Future<[CLLocation]> {
+    public func requestLocation(authorization: CLAuthorizationStatus = .AuthorizedAlways, context: ExecutionContext = QueueContext.main) -> Future<[CLLocation]> {
         self.requestLocationPromise = Promise<[CLLocation]>()
-        self.clLocationManager.requestLocation()
+        guard #available(iOS 9.0, *) else {
+            self.requestLocationPromise?.failure(FLError.notSupportedForIOSVersion)
+            return self.requestLocationPromise!.future
+        }
+        guard let clLocationManager = self.clLocationManager as? CLLocationManager else {
+            self.requestLocationPromise?.failure(FLError.notSupportedForIOSVersion)
+            return self.requestLocationPromise!.future
+        }
+        self.requestLocationPromise = Promise<[CLLocation]>()
+        let authoriztaionFuture = self.authorize(authorization)
+        authoriztaionFuture.onSuccess(context) {status in
+            self.updating = true
+            clLocationManager.requestLocation()
+        }
+        authoriztaionFuture.onFailure(context) {error in
+            self.updating = false
+            self.requestLocationPromise!.failure(error)
+        }
         return self.requestLocationPromise!.future
     }
 
@@ -402,8 +431,10 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     public func didUpdateLocations(locations:[CLLocation]) {
         Logger.debug()
-        self.requestLocationPromise?.success(locations)
-        self.requestLocationPromise = nil
+        if let requestLocationPromise = self.requestLocationPromise {
+            requestLocationPromise.success(locations)
+            self.updating = false
+        }
         self.locationUpdatePromise?.success(locations)
     }
 
@@ -411,8 +442,8 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         Logger.debug("error \(error.localizedDescription)")
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.failure(error)
+            self.updating = false
         }
-        self.requestLocationPromise = nil
         self.locationUpdatePromise?.failure(error)
     }
 
@@ -422,13 +453,11 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         } else {
             self.deferredLocationUpdatePromise?.success()
         }
-        self.deferredLocationUpdatePromise = nil
     }
 
     public func didChangeAuthorizationStatus(status: CLAuthorizationStatus) {
         Logger.debug("status: \(status)")
         self.authorizationStatusChangedPromise?.success(status)
-        self.authorizationStatusChangedPromise = nil
     }
     
 }

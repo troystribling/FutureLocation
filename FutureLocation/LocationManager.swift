@@ -433,7 +433,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         Logger.debug()
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.success(locations)
-            self.updating = false
+            self.requestLocationPromise = nil
         }
         self.locationUpdatePromise?.success(locations)
     }
@@ -442,7 +442,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
         Logger.debug("error \(error.localizedDescription)")
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.failure(error)
-            self.updating = false
+            self.requestLocationPromise = nil
         }
         self.locationUpdatePromise?.failure(error)
     }

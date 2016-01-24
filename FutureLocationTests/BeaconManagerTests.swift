@@ -32,12 +32,18 @@ class BeaconManagerTests: XCTestCase {
         super.tearDown()
     }
 
+    func waitForExpectations(timeout: Double = 2.0) {
+        waitForExpectationsWithTimeout(timeout) { error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+
     func testStartRangingRegionSuccess() {
         CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
         let expectation = expectationWithDescription("onSuccess fulfilled for future")
         let context = ImmediateContext()
         let future = self.beaconManager.startRangingBeaconsInRegion(self.testBeaconRegion, context: context)
-        future.onSuccess(context) {beacons in
+        future.onSuccess(context) { beacons in
             XCTAssertEqual(beacons.count, 2, "Beacon count invalid")
             XCTAssertEqual(self.beaconManager.beaconRegions.count, 1, "BeaconRegion count invalid")
             XCTAssertEqual(self.beaconManager.regions.count, 1, "Region count invalid")
@@ -45,13 +51,11 @@ class BeaconManagerTests: XCTestCase {
             XCTAssert(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             expectation.fulfill()
         }
-        future.onFailure(context) {error in
+        future.onFailure(context) { error in
             XCTAssert(false, "onFailure called")
         }
         self.beaconManager.didRangeBeacons(self.testCLBeacons.map{$0 as CLBeaconInjectable}, inRegion: self.testCLBeaconRegion)
-        waitForExpectationsWithTimeout(2) {error in
-            XCTAssertNil(error, "\(error)")
-        }
+        waitForExpectations()
     }
     
     func testStartRangingRegionFailure() {
@@ -59,19 +63,17 @@ class BeaconManagerTests: XCTestCase {
         let expectation = expectationWithDescription("onFailure fulfilled for future")
         let context = ImmediateContext()
         let future = self.beaconManager.startRangingBeaconsInRegion(self.testBeaconRegion, context: context)
-        future.onSuccess(context) {beacons in
+        future.onSuccess(context) { beacons in
             XCTAssert(false, "onSuccess called")
         }
-        future.onFailure(context) {error in
+        future.onFailure(context) { error in
             XCTAssert(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 0, "Region Beacon count invalid")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
             expectation.fulfill()
         }
         self.beaconManager.rangingBeaconsDidFailForRegion(self.testCLBeaconRegion, withError: TestFailure.error)
-        waitForExpectationsWithTimeout(2) {error in
-            XCTAssertNil(error, "\(error)")
-        }
+        waitForExpectations()
     }
     
     func testStartRangingAuthorizationFailure() {
@@ -81,16 +83,14 @@ class BeaconManagerTests: XCTestCase {
         future.onSuccess {state in
             XCTAssert(false, "onSuccess called")
         }
-        future.onFailure {error in
+        future.onFailure { error in
             XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
             XCTAssertFalse(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 0, "Region Beacon count invalid")
             expectation.fulfill()
         }
         self.beaconManager.didChangeAuthorizationStatus(.Denied)
-        waitForExpectationsWithTimeout(2) {error in
-            XCTAssertNil(error, "\(error)")
-        }
-    }    
+        waitForExpectations()
+    }
 
 }

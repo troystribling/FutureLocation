@@ -45,6 +45,7 @@ class RegionManagerTests: XCTestCase {
         future.onSuccess(context) { state in
             XCTAssert(state == .Start, "region state invalid")
             XCTAssert(self.mock.startMonitoringForRegionCalled, "startMonitoringForRegion not called")
+            XCTAssert(self.regionManager.isMonitoring, "isMonitoring vaoue invalid")
             expectation.fulfill()
         }
         future.onFailure(context) { error in
@@ -66,6 +67,7 @@ class RegionManagerTests: XCTestCase {
             XCTAssert(self.mock.startMonitoringForRegionCalled, "startMonitoringForRegion not called")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
             XCTAssertEqual(self.regionManager.regions.count, 1, "Region count invalid")
+            XCTAssertFalse(self.regionManager.isMonitoring, "isMonitoring vaoue invalid")
             expectation.fulfill()
         }
         self.regionManager.monitoringDidFailForRegion(self.testCLRegion, withError: TestFailure.error)
@@ -83,6 +85,7 @@ class RegionManagerTests: XCTestCase {
             XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
             XCTAssertFalse(self.mock.startMonitoringForRegionCalled, "startMonitoringForRegion called")
             XCTAssertEqual(self.regionManager.regions.count, 0, "Region count invalid")
+            XCTAssertFalse(self.regionManager.isMonitoring, "isMonitoring vaoue invalid")
             expectation.fulfill()
         }
         self.regionManager.didChangeAuthorizationStatus(.Denied)
@@ -145,5 +148,25 @@ class RegionManagerTests: XCTestCase {
         self.regionManager.didStartMonitoringForRegion(self.testCLRegion)
         waitForExpectations()
 
+    }
+
+    func testStopMonitoringRegion() {
+        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let context = ImmediateContext()
+        let future = self.regionManager.startMonitoringForRegion(self.testRegion, authorization: .AuthorizedAlways, context: context)
+        future.onSuccess(context) { state in
+            XCTAssertFalse(self.mock.stopMonitoringForRegionCalled, "stopMonitoringForRegion called")
+            XCTAssert(self.regionManager.isMonitoring, "isMonitoring vaoue invalid")
+            expectation.fulfill()
+        }
+        future.onFailure(context) { error in
+            XCTAssert(false, "onFailure called")
+        }
+        self.regionManager.didStartMonitoringForRegion(self.testCLRegion)
+        self.regionManager.stopMonitoringForRegion(self.testRegion)
+        XCTAssert(self.mock.stopMonitoringForRegionCalled, "stopMonitoringForRegion not called")
+        XCTAssertFalse(self.regionManager.isMonitoring, "isMonitoring vaoue invalid")
+        waitForExpectations()
     }
 }

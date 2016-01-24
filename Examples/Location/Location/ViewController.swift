@@ -12,14 +12,14 @@ import FutureLocation
 
 class ViewController: UITableViewController {
 
-    @IBOutlet var latituteLabel      : UILabel!
-    @IBOutlet var longitudeLabel     : UILabel!
-    @IBOutlet var address1Label      : UILabel!
-    @IBOutlet var address2Label      : UILabel!
-    @IBOutlet var address3Label      : UILabel!
-    @IBOutlet var getAddressButton   : UIButton!
-    @IBOutlet var startUpdatesSwitch : UISwitch!
-    @IBOutlet var startUpdatesLabel  : UILabel!
+    @IBOutlet var latituteLabel: UILabel!
+    @IBOutlet var longitudeLabel: UILabel!
+    @IBOutlet var address1Label: UILabel!
+    @IBOutlet var address2Label: UILabel!
+    @IBOutlet var address3Label: UILabel!
+    @IBOutlet var getAddressButton: UIButton!
+    @IBOutlet var startUpdatesSwitch: UISwitch!
+    @IBOutlet var startUpdatesLabel: UILabel!
     
     let locationManager = LocationManager()
     let addressManager  = LocationManager()
@@ -47,8 +47,8 @@ class ViewController: UITableViewController {
             if self.locationManager.authorizationStatus() == .Denied {
                 message = "Authorization status is denied"
             }
-            self.getAddressButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Disabled)
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated:true, completion:nil)
+            self.getAddressButton.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Disabled)
+            self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated: true, completion: nil)
         } else {
             if self.locationManager.locationServicesEnabled() {
                 if self.locationManager.isUpdating {
@@ -65,7 +65,7 @@ class ViewController: UITableViewController {
 
     @IBAction func getAddress(sender:AnyObject) {
         self.addressProgressView.show()
-        let addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap {_ -> Future<[CLPlacemark]> in
+        let addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap { _ -> Future<[CLPlacemark]> in
                                  self.addressManager.stopUpdatingLocation()
                                  return self.addressManager.reverseGeocodeLocation()
                              }
@@ -85,16 +85,16 @@ class ViewController: UITableViewController {
         }
         addressFuture.onFailure { error in
             self.addressProgressView.remove()
-            self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
+            self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
         }
     }
     
-    @IBAction func startUpdatingLocation(sender:AnyObject) {
+    @IBAction func startUpdatingLocation(sender: AnyObject) {
         if self.locationManager.isUpdating {
             self.locationManager.stopUpdatingLocation()
         } else {
             self.locationProgressView.show()
-            let locationFuture = self.locationManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse)
+            let locationFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedWhenInUse)
             locationFuture.onSuccess { locations in
                 if let location = locations.first {
                     self.locationProgressView.remove()
@@ -105,7 +105,7 @@ class ViewController: UITableViewController {
             locationFuture.onFailure { error in
                 self.locationProgressView.remove()
                 self.startUpdatesSwitch.on = false
-                self.presentViewController(UIAlertController.alertOnError(error), animated:true, completion:nil)
+                self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
             }
         }
     }

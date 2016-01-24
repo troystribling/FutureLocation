@@ -39,7 +39,7 @@ public class BeaconManager : RegionManager {
 
     // MARK: Control
     public var isRanging: Bool {
-        return LocationManagerIO.queue.sync { Array(self.regionRangingStatus.values).filter{$0}.count > 0 }
+        return Array(self.regionRangingStatus.values).filter{$0}.count > 0
     }
 
     public func isRangingRegion(identifier:String) -> Bool {
@@ -64,6 +64,7 @@ public class BeaconManager : RegionManager {
 
     public func stopRangingBeaconsInRegion(beaconRegion: BeaconRegion) {
         self.configuredBeaconRegions.removeValueForKey(beaconRegion.identifier)
+        self.regionRangingStatus[beaconRegion.identifier] = false
         self.configuredRegions.removeValueForKey(beaconRegion.identifier)
         self.clLocationManager.stopRangingBeaconsInRegion(beaconRegion.clBeaconRegion)
     }
@@ -94,6 +95,7 @@ public class BeaconManager : RegionManager {
 
     public func rangingBeaconsDidFailForRegion(region: CLBeaconRegion, withError error: NSError) {
         Logger.debug("region identifier \(region.identifier)")
+        self.regionRangingStatus[region.identifier] = false
         self.configuredBeaconRegions[region.identifier]?.beaconPromise.failure(error)
     }
     

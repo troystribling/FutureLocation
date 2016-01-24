@@ -48,6 +48,7 @@ class BeaconManagerTests: XCTestCase {
             XCTAssertEqual(self.beaconManager.beaconRegions.count, 1, "BeaconRegion count invalid")
             XCTAssertEqual(self.beaconManager.regions.count, 1, "Region count invalid")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 2, "Region Beacon count invalid")
+            XCTAssert(self.beaconManager.isRanging, "isRanging invalid")
             XCTAssert(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             expectation.fulfill()
         }
@@ -70,6 +71,7 @@ class BeaconManagerTests: XCTestCase {
             XCTAssert(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 0, "Region Beacon count invalid")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
+            XCTAssertFalse(self.beaconManager.isRanging, "isRanging invalid")
             expectation.fulfill()
         }
         self.beaconManager.rangingBeaconsDidFailForRegion(self.testCLBeaconRegion, withError: TestFailure.error)
@@ -87,10 +89,30 @@ class BeaconManagerTests: XCTestCase {
             XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
             XCTAssertFalse(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 0, "Region Beacon count invalid")
+            XCTAssertFalse(self.beaconManager.isRanging, "isRanging invalid")
             expectation.fulfill()
         }
         self.beaconManager.didChangeAuthorizationStatus(.Denied)
         waitForExpectations()
     }
 
+    func testStopRangingRegion() {
+        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
+        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+        let context = ImmediateContext()
+        let future = self.beaconManager.startRangingBeaconsInRegion(self.testBeaconRegion, context: context)
+        future.onSuccess(context) { beacons in
+            XCTAssert(self.beaconManager.isRanging, "isRanging invalid")
+            XCTAssertFalse(self.mock.stopRangingBeaconsInRegionCalled, "stopRangingBeaconsInRegion called")
+            expectation.fulfill()
+        }
+        future.onFailure(context) { error in
+            XCTAssert(false, "onFailure called")
+        }
+        self.beaconManager.didRangeBeacons(self.testCLBeacons.map{$0 as CLBeaconInjectable}, inRegion: self.testCLBeaconRegion)
+        self.beaconManager.stopRangingBeaconsInRegion(self.testBeaconRegion)
+        XCTAssert(self.mock.stopRangingBeaconsInRegionCalled, "stopRangingBeaconsInRegion not called")
+        XCTAssertFalse(self.beaconManager.isRanging, "isRanging invalid")
+        waitForExpectations()
+    }
 }

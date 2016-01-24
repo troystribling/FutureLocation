@@ -183,6 +183,7 @@ class LocationManagerTests: XCTestCase {
         let future = self.locationManager.startUpdatingLocation(authorization: .AuthorizedAlways, context: context)
         future.onSuccess(context) {locations in
             XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
+            XCTAssertFalse(self.mock.stopUpdatingLocationCalled, "stopUpdatingLocation not called")
             expectation.fulfill()
         }
         future.onFailure(context) {error in

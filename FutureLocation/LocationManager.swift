@@ -11,7 +11,7 @@ import CoreLocation
 
 // MARK: - Property Update Serialization -
 struct LocationManagerIO {
-    static let queue = Queue("us.gnos.futureLocation.location-manager")
+    static let queue = Queue("us.gnos.futureLocation.location-manager.io")
     static let context = QueueContext(queue: queue)
 }
 

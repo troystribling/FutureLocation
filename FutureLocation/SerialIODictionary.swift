@@ -38,4 +38,9 @@ public class SerialIODictionary<T, U where T: Hashable> {
     func removeValueForKey(key: T) {
         self.queue.sync { self.data.removeValueForKey(key) }
     }
+
+    func removeAll() {
+        self.queue.sync { self.data.removeAll() }
+    }
+
 }

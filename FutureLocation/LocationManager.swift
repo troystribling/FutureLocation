@@ -11,7 +11,7 @@ import CoreLocation
 
 // MARK: - Property Update Serialization -
 struct LocationManagerIO {
-    static let queue = Queue("us.gnos.location-manager")
+    static let queue = Queue("us.gnos.futureLocation.location-manager")
     static let context = QueueContext(queue: queue)
 }
 
@@ -21,7 +21,7 @@ public enum FLErrorCode : Int {
     case UpdateFailed               = 1
     case AuthorizationAlwaysFailed  = 2
     case AuthorisedWhenInUseFailed  = 3
-    case NotSupportedForIOSVersion = 4
+    case NotSupportedForIOSVersion  = 4
 }
 
 public struct FLError {

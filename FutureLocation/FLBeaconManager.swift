@@ -1,5 +1,5 @@
 //
-//  BeaconManager.swift
+//  FLBeaconManager.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 8/22/14.
@@ -13,8 +13,8 @@ import CoreLocation
 public class FLBeaconManager : FLRegionManager {
 
     // MARK: Properties
-    private var regionRangingStatus = SerialIODictionary<String, Bool>(FLLocationManager.ioQueue)
-    internal var configuredBeaconRegions = SerialIODictionary<String, FLBeaconRegion>(FLLocationManager.ioQueue)
+    private var regionRangingStatus = FLSerialIODictionary<String, Bool>(FLLocationManager.ioQueue)
+    internal var configuredBeaconRegions = FLSerialIODictionary<String, FLBeaconRegion>(FLLocationManager.ioQueue)
 
     public func isRangingAvailable() -> Bool {
         return CLLocationManager.isRangingAvailable()
@@ -49,7 +49,7 @@ public class FLBeaconManager : FLRegionManager {
     public func startRangingBeaconsInRegion(beaconRegion: FLBeaconRegion, context: ExecutionContext = QueueContext.main) -> FutureStream<[FLBeacon]> {
         let authoriztaionFuture = self.authorize(CLAuthorizationStatus.AuthorizedAlways)
         authoriztaionFuture.onSuccess(context) {status in
-            Logger.debug("authorization status: \(status)")
+            FLLogger.debug("authorization status: \(status)")
             self.regionRangingStatus[beaconRegion.identifier] = true
             self.configuredBeaconRegions[beaconRegion.identifier] = beaconRegion
             self.configuredRegions[beaconRegion.identifier] = beaconRegion
@@ -85,7 +85,7 @@ public class FLBeaconManager : FLRegionManager {
     }
 
     public func didRangeBeacons(beacons: [CLBeaconInjectable], inRegion region: CLBeaconRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         if let beaconRegion = self.configuredBeaconRegions[region.identifier] {
             let flBeacons = beacons.map{FLBeacon(clBeacon:$0)}
             beaconRegion._beacons = flBeacons
@@ -94,7 +94,7 @@ public class FLBeaconManager : FLRegionManager {
     }
 
     public func rangingBeaconsDidFailForRegion(region: CLBeaconRegion, withError error: NSError) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         self.regionRangingStatus[region.identifier] = false
         self.configuredBeaconRegions[region.identifier]?.beaconPromise.failure(error)
     }

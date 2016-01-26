@@ -1,5 +1,5 @@
 //
-//  CircularRegion.swift
+//  FLCircularRegion.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 10/6/14.

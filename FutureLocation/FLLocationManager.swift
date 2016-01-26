@@ -1,5 +1,5 @@
 //
-//  LocationManager.swift
+//  FLLocationManager.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 9/1/14.
@@ -220,10 +220,10 @@ public class FLLocationManager : NSObject, CLLocationManagerDelegate {
             case .AuthorizedAlways:
                 self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
                     if status == .AuthorizedAlways {
-                        Logger.debug("location AuthorizedAlways succcess")
+                        FLLogger.debug("location AuthorizedAlways succcess")
                         promise.success()
                     } else {
-                        Logger.debug("location AuthorizedAlways failed")
+                        FLLogger.debug("location AuthorizedAlways failed")
                         promise.failure(FLError.authorizationAlwaysFailed)
                     }
                 }
@@ -232,17 +232,17 @@ public class FLLocationManager : NSObject, CLLocationManagerDelegate {
             case .AuthorizedWhenInUse:
                 self.authorizationStatusChangedPromise?.future.onSuccess {(status) in
                     if status == .AuthorizedWhenInUse {
-                        Logger.debug("location AuthorizedWhenInUse succcess")
+                        FLLogger.debug("location AuthorizedWhenInUse succcess")
                         promise.success()
                     } else {
-                        Logger.debug("location AuthorizedWhenInUse failed")
+                        FLLogger.debug("location AuthorizedWhenInUse failed")
                         promise.failure(FLError.authorizationWhenInUseFailed)
                     }
                 }
                 self.requestWhenInUseAuthorization()
                 break
             default:
-                Logger.debug("location authorization invalid")
+                FLLogger.debug("location authorization invalid")
                 break
             }
         } else {
@@ -396,7 +396,7 @@ public class FLLocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     public func didUpdateLocations(locations:[CLLocation]) {
-        Logger.debug()
+        FLLogger.debug()
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.success(locations)
             self.requestLocationPromise = nil
@@ -405,7 +405,7 @@ public class FLLocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     public func didFailWithError(error: NSError) {
-        Logger.debug("error \(error.localizedDescription)")
+        FLLogger.debug("error \(error.localizedDescription)")
         if let requestLocationPromise = self.requestLocationPromise {
             requestLocationPromise.failure(error)
             self.requestLocationPromise = nil
@@ -422,7 +422,7 @@ public class FLLocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     public func didChangeAuthorizationStatus(status: CLAuthorizationStatus) {
-        Logger.debug("status: \(status)")
+        FLLogger.debug("status: \(status)")
         self.authorizationStatusChangedPromise?.success(status)
     }
     

@@ -1,5 +1,5 @@
 //
-//  LocationRegionManager.swift
+//  FLLocationRegionManager.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 8/22/14.
@@ -13,9 +13,9 @@ import CoreLocation
 public class FLRegionManager : FLLocationManager {
 
     // MARK: Properties
-    internal var regionMonitorStatus = SerialIODictionary<String, Bool>(FLLocationManager.ioQueue)
-    internal var configuredRegions = SerialIODictionary<String, FLRegion>(FLLocationManager.ioQueue)
-    private var requestStateForRegionPromises = SerialIODictionary<String, Promise<CLRegionState>>(FLLocationManager.ioQueue)
+    internal var regionMonitorStatus = FLSerialIODictionary<String, Bool>(FLLocationManager.ioQueue)
+    internal var configuredRegions = FLSerialIODictionary<String, FLRegion>(FLLocationManager.ioQueue)
+    private var requestStateForRegionPromises = FLSerialIODictionary<String, Promise<CLRegionState>>(FLLocationManager.ioQueue)
 
 
     // MARK: Configure
@@ -101,31 +101,31 @@ public class FLRegionManager : FLLocationManager {
     }
 
     public func didEnterRegion(region: CLRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         self.configuredRegions[region.identifier]?.regionPromise.success(.Inside)
     }
 
     public func didExitRegion(region: CLRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         self.configuredRegions[region.identifier]?.regionPromise.success(.Outside)
     }
 
     public func didDetermineState(state: CLRegionState, forRegion region: CLRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         self.requestStateForRegionPromises[region.identifier]?.success(state)
         self.requestStateForRegionPromises.removeValueForKey(region.identifier)
     }
 
     public func monitoringDidFailForRegion(region: CLRegion?, withError error:NSError) {
         if let region = region, flRegion = self.configuredRegions[region.identifier] {
-            Logger.debug("region identifier '\(region.identifier)'")
+            FLLogger.debug("region identifier '\(region.identifier)'")
             self.regionMonitorStatus[region.identifier] = false
             flRegion.regionPromise.failure(error)
         }
     }
 
     public func didStartMonitoringForRegion(region: CLRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        FLLogger.debug("region identifier \(region.identifier)")
         self.regionMonitorStatus[region.identifier] = true
         self.configuredRegions[region.identifier]?.regionPromise.success(.Start)
     }

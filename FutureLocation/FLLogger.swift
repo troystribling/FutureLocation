@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  FLLogger.swift
 //  FutureLocation
 //
 //  Created by Troy Stribling on 2/22/15.
@@ -7,7 +7,7 @@
 //
 import Foundation
 
-public class Logger {
+public class FLLogger {
     public class func debug(message:String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
 #if DEBUG
         if let message = message {

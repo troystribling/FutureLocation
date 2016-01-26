@@ -1,5 +1,5 @@
 //
-//  BeaconRegion.swift
+//  FLBeaconRegion.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 9/14/14.

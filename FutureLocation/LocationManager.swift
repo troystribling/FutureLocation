@@ -9,12 +9,6 @@
 import Foundation
 import CoreLocation
 
-// MARK: - Property Update Serialization -
-struct LocationManagerIO {
-    static let queue = Queue("us.gnos.futureLocation.location-manager.io")
-    static let context = QueueContext(queue: queue)
-}
-
 // MARK: - Errors -
 public enum FLErrorCode : Int {
     case NotAvailable               = 0
@@ -80,8 +74,12 @@ public protocol CLLocationManagerInjectable {
 
 extension CLLocationManager : CLLocationManagerInjectable {}
 
-// MARK: - LocationManager -
-public class LocationManager : NSObject, CLLocationManagerDelegate {
+// MARK: - FLLocationManager -
+public class FLLocationManager : NSObject, CLLocationManagerDelegate {
+
+    // MARK: Serilaize Property IO
+    static let ioQueue = Queue("us.gnos.futureLocation.location-manager.io")
+
 
     // MARK: Properties
     private var _locationUpdatePromise: StreamPromise<[CLLocation]>?
@@ -99,46 +97,46 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     private var locationUpdatePromise: StreamPromise<[CLLocation]>? {
         get {
-            return LocationManagerIO.queue.sync { return self._locationUpdatePromise }
+            return FLLocationManager.ioQueue.sync { return self._locationUpdatePromise }
         }
         set {
-            LocationManagerIO.queue.sync { self._locationUpdatePromise = newValue }
+            FLLocationManager.ioQueue.sync { self._locationUpdatePromise = newValue }
         }
     }
 
     private var deferredLocationUpdatePromise: Promise<Void>? {
         get {
-            return LocationManagerIO.queue.sync { return self._deferredLocationUpdatePromise}
+            return FLLocationManager.ioQueue.sync { return self._deferredLocationUpdatePromise}
         }
         set {
-            LocationManagerIO.queue.sync { self._deferredLocationUpdatePromise = newValue }
+            FLLocationManager.ioQueue.sync { self._deferredLocationUpdatePromise = newValue }
         }
     }
 
     private var requestLocationPromise: Promise<[CLLocation]>? {
         get {
-            return LocationManagerIO.queue.sync { return self._requestLocationPromise }
+            return FLLocationManager.ioQueue.sync { return self._requestLocationPromise }
         }
         set {
-            LocationManagerIO.queue.sync { self._requestLocationPromise = newValue }
+            FLLocationManager.ioQueue.sync { self._requestLocationPromise = newValue }
         }
     }
 
     private var authorizationStatusChangedPromise: Promise<CLAuthorizationStatus>? {
         get {
-            return LocationManagerIO.queue.sync { return self._authorizationStatusChangedPromise }
+            return FLLocationManager.ioQueue.sync { return self._authorizationStatusChangedPromise }
         }
         set {
-            LocationManagerIO.queue.sync { self._authorizationStatusChangedPromise = newValue }
+            FLLocationManager.ioQueue.sync { self._authorizationStatusChangedPromise = newValue }
         }
     }
 
     private var updating: Bool {
         get {
-            return LocationManagerIO.queue.sync { return self._updating }
+            return FLLocationManager.ioQueue.sync { return self._updating }
         }
         set {
-            LocationManagerIO.queue.sync { self._updating = newValue }
+            FLLocationManager.ioQueue.sync { self._updating = newValue }
         }
     }
 
@@ -284,7 +282,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
 
     public func reverseGeocodeLocation()  -> Future<[CLPlacemark]>  {
         if let location = self.location {
-            return LocationManager.reverseGeocodeLocation(location)
+            return FLLocationManager.reverseGeocodeLocation(location)
         } else {
             let promise = Promise<[CLPlacemark]>()
             promise.failure(FLError.locationUpdateFailed)

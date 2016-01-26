@@ -21,8 +21,8 @@ public protocol CLBeaconInjectable {
 
 extension CLBeacon: CLBeaconInjectable {}
 
-// MARK: - Beacon -
-public class Beacon {
+// MARK: - FLBeacon -
+public class FLBeacon {
     
     private let clBeacon : CLBeaconInjectable
     private let _discoveredAt = NSDate()

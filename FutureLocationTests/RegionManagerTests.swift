@@ -16,13 +16,13 @@ class RegionManagerTests: XCTestCase {
     let testCLRegion = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 37.760412, longitude: -122.414602),
                                         radius: 100.0, identifier: "Test Region")
 
-    var testRegion: Region!
+    var testRegion: FLRegion!
     var mock: CLLocationManagerMock!
     var regionManager: RegionManagerUT!
 
     override func setUp() {
         super.setUp()
-        self.testRegion = Region(region: self.testCLRegion)
+        self.testRegion = FLRegion(region: self.testCLRegion)
         self.mock = CLLocationManagerMock()
         self.regionManager = RegionManagerUT(clLocationManager: self.mock)
     }

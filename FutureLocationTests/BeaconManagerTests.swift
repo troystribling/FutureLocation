@@ -17,13 +17,13 @@ class BeaconManagerTests: XCTestCase {
     let testCLBeacons = [
         CLBeaconMock(proximityUUID: NSUUID(), major: 1, minor: 2, proximity: .Immediate, accuracy: kCLLocationAccuracyBest, rssi: -45), CLBeaconMock(proximityUUID: NSUUID(), major: 1, minor: 2, proximity: .Far, accuracy: kCLLocationAccuracyBest, rssi: -85)]
 
-    var testBeaconRegion: BeaconRegion!
+    var testBeaconRegion: FLBeaconRegion!
     var mock: CLLocationManagerMock!
     var beaconManager: BeaconManagerUT!
 
     override func setUp() {
         super.setUp()
-        self.testBeaconRegion = BeaconRegion(region: self.testCLBeaconRegion)
+        self.testBeaconRegion = FLBeaconRegion(region: self.testCLBeaconRegion)
         self.mock = CLLocationManagerMock()
         self.beaconManager = BeaconManagerUT(clLocationManager: self.mock)
     }

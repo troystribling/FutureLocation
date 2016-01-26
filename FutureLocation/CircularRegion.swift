@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class CircularRegion : Region {
+public class FLCircularRegion : FLRegion {
 
     internal let clCircularRegion : CLCircularRegion
     

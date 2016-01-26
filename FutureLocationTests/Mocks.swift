@@ -148,14 +148,14 @@ class CLLocationManagerMock : CLLocationManagerInjectable {
 }
 
 // MARK: - Test Classes -
-class LocationManagerUT : LocationManager {
+class LocationManagerUT : FLLocationManager {
 
     override func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManagerMock.authorizationStatus()
     }
 }
 
-class RegionManagerUT : RegionManager {
+class RegionManagerUT : FLRegionManager {
 
     override func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManagerMock.authorizationStatus()
@@ -163,7 +163,7 @@ class RegionManagerUT : RegionManager {
 
 }
 
-class BeaconManagerUT : BeaconManager {
+class BeaconManagerUT : FLBeaconManager {
 
     override func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManagerMock.authorizationStatus()

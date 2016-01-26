@@ -9,22 +9,22 @@
 import Foundation
 import CoreLocation
 
-// MARK - BeaconManager -
-public class BeaconManager : RegionManager {
+// MARK - FLBeaconManager -
+public class FLBeaconManager : FLRegionManager {
 
     // MARK: Properties
-    private var regionRangingStatus = SerialIODictionary<String, Bool>(LocationManagerIO.queue)
-    internal var configuredBeaconRegions = SerialIODictionary<String, BeaconRegion>(LocationManagerIO.queue)
+    private var regionRangingStatus = SerialIODictionary<String, Bool>(FLLocationManager.ioQueue)
+    internal var configuredBeaconRegions = SerialIODictionary<String, FLBeaconRegion>(FLLocationManager.ioQueue)
 
     public func isRangingAvailable() -> Bool {
         return CLLocationManager.isRangingAvailable()
     }
 
-    public var beaconRegions: [BeaconRegion] {
+    public var beaconRegions: [FLBeaconRegion] {
         return self.configuredBeaconRegions.values
     }
 
-    public func beaconRegion(identifier: String) -> BeaconRegion? {
+    public func beaconRegion(identifier: String) -> FLBeaconRegion? {
         return self.configuredBeaconRegions[identifier]
     }
 
@@ -46,7 +46,7 @@ public class BeaconManager : RegionManager {
         return self.regionRangingStatus[identifier] ?? false
     }
 
-    public func startRangingBeaconsInRegion(beaconRegion: BeaconRegion, context: ExecutionContext = QueueContext.main) -> FutureStream<[Beacon]> {
+    public func startRangingBeaconsInRegion(beaconRegion: FLBeaconRegion, context: ExecutionContext = QueueContext.main) -> FutureStream<[FLBeacon]> {
         let authoriztaionFuture = self.authorize(CLAuthorizationStatus.AuthorizedAlways)
         authoriztaionFuture.onSuccess(context) {status in
             Logger.debug("authorization status: \(status)")
@@ -62,7 +62,7 @@ public class BeaconManager : RegionManager {
 
     }
 
-    public func stopRangingBeaconsInRegion(beaconRegion: BeaconRegion) {
+    public func stopRangingBeaconsInRegion(beaconRegion: FLBeaconRegion) {
         self.configuredBeaconRegions.removeValueForKey(beaconRegion.identifier)
         self.regionRangingStatus[beaconRegion.identifier] = false
         self.configuredRegions.removeValueForKey(beaconRegion.identifier)
@@ -87,7 +87,7 @@ public class BeaconManager : RegionManager {
     public func didRangeBeacons(beacons: [CLBeaconInjectable], inRegion region: CLBeaconRegion) {
         Logger.debug("region identifier \(region.identifier)")
         if let beaconRegion = self.configuredBeaconRegions[region.identifier] {
-            let flBeacons = beacons.map{Beacon(clBeacon:$0)}
+            let flBeacons = beacons.map{FLBeacon(clBeacon:$0)}
             beaconRegion._beacons = flBeacons
             beaconRegion.beaconPromise.success(flBeacons)
         }

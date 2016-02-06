@@ -18,19 +18,19 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet var startMonitoringSwitch: UISwitch!
     @IBOutlet var startMonitoringLabel: UILabel!
     
-    var beaconRegion: BeaconRegion
+    var beaconRegion: FLBeaconRegion
 
     var progressView    = ProgressView()
     var isRanging       = false
     
-    let beaconManager   = BeaconManager()
+    let beaconManager   = FLBeaconManager()
     let estimoteUUID    = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
     
     required init?(coder aDecoder: NSCoder) {
         if let uuid = BeaconStore.getBeacon() {
-            self.beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
+            self.beaconRegion = FLBeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
         } else {
-            self.beaconRegion = BeaconRegion(proximityUUID: self.estimoteUUID, identifier: "Example Beacon")
+            self.beaconRegion = FLBeaconRegion(proximityUUID: self.estimoteUUID, identifier: "Example Beacon")
             BeaconStore.setBeacon(self.estimoteUUID)
         }
         super.init(coder: aDecoder)
@@ -78,7 +78,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     func startMonitoring() {
         self.progressView.show()
         self.uuidTextField.enabled = false
-        let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization: .AuthorizedAlways).flatmap{ state -> FutureStream<[Beacon]> in
+        let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization: .AuthorizedAlways).flatmap{ [unowned self] state -> FutureStream<[FLBeacon]> in
             self.progressView.remove()
             switch state {
             case .Start:
@@ -91,19 +91,19 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                     self.isRanging = true
                     return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
                 } else {
-                    let errorPromise = StreamPromise<[Beacon]>()
+                    let errorPromise = StreamPromise<[FLBeacon]>()
                     errorPromise.failure(AppErrors.rangingBeacons)
                     return errorPromise.future
                 }
             case .Outside:
                 self.setOutsideRegion()
                 self.beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
-                let errorPromise = StreamPromise<[Beacon]>()
+                let errorPromise = StreamPromise<[FLBeacon]>()
                 errorPromise.failure(AppErrors.outOfRegion)
                 return errorPromise.future
             }
         }
-        beaconFuture.onSuccess { beacons in
+        beaconFuture.onSuccess { [unowned self] beacons in
             if self.isRanging {
                 if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
                     NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object: self.beaconRegion)
@@ -112,7 +112,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 self.beaconsLabel.text = "\(beacons.count)"
             }
         }
-        beaconFuture.onFailure { error in
+        beaconFuture.onFailure { [unowned self]  error in
             self.progressView.remove()
             if error.domain != AppErrors.domain {
                 Notify.withMessage("Error: '\(error.localizedDescription)'")
@@ -125,7 +125,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if let newValue = self.uuidTextField.text {
             if let uuid = NSUUID(UUIDString: newValue) {
-                self.beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
+                self.beaconRegion = FLBeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
                 BeaconStore.setBeacon(uuid)
                 self.uuidTextField.resignFirstResponder()
                 return true

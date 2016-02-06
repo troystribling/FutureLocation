@@ -21,8 +21,8 @@ class ViewController: UITableViewController {
     @IBOutlet var startUpdatesSwitch: UISwitch!
     @IBOutlet var startUpdatesLabel: UILabel!
     
-    let locationManager = LocationManager()
-    let addressManager  = LocationManager()
+    let locationManager = FLLocationManager()
+    let addressManager  = FLLocationManager()
     
     let addressProgressView = ProgressView()
     let locationProgressView = ProgressView()
@@ -63,13 +63,13 @@ class ViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
-    @IBAction func getAddress(sender:AnyObject) {
+    @IBAction func getAddress(sender: AnyObject) {
         self.addressProgressView.show()
-        let addressFuture = self.addressManager.startUpdatingLocation(10, authorization:.AuthorizedWhenInUse).flatmap { _ -> Future<[CLPlacemark]> in
+        let addressFuture = self.addressManager.startUpdatingLocation(10, authorization: .AuthorizedWhenInUse).flatmap { [unowned self]  _ -> Future<[CLPlacemark]> in
                                  self.addressManager.stopUpdatingLocation()
                                  return self.addressManager.reverseGeocodeLocation()
                              }
-        addressFuture.onSuccess { placemarks in
+        addressFuture.onSuccess { [unowned self] placemarks in
             if let placemark = placemarks.first {
                 self.addressProgressView.remove()
                 if let subThoroughfare = placemark.subThoroughfare, thoroughfare = placemark.thoroughfare {
@@ -83,7 +83,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        addressFuture.onFailure { error in
+        addressFuture.onFailure { [unowned self] error in
             self.addressProgressView.remove()
             self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
         }

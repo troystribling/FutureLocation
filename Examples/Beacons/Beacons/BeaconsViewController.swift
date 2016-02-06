@@ -12,14 +12,14 @@ import FutureLocation
 
 class BeaconsViewController: UITableViewController {
     
-    var beaconRegion    : BeaconRegion?
+    var beaconRegion: FLBeaconRegion?
     
     struct MainStoryBoard {
         static let beaconCell   = "BeaconCell"
     }
     
-    required init?(coder aDecoder:NSCoder) {
-        super.init(coder:aDecoder)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
         
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class BeaconsViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateBeacons", name:AppNotification.didUpdateBeacon, object:self.beaconRegion)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBeacons", name: AppNotification.didUpdateBeacon, object: self.beaconRegion)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -37,15 +37,15 @@ class BeaconsViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    override func prepareForSegue(segue:UIStoryboardSegue, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     }
     
     func updateBeacons() {
         self.tableView.reloadData()
     }
     
-    func sortedBeacons(beaconRegion:BeaconRegion) -> [Beacon] {
-        return  beaconRegion.beacons.sort {(b1:Beacon, b2:Beacon) -> Bool in
+    func sortedBeacons(beaconRegion: FLBeaconRegion) -> [FLBeacon] {
+        return  beaconRegion.beacons.sort {(b1: FLBeacon, b2: FLBeacon) -> Bool in
             if b1.major > b2.major {
                 return true
             } else if b1.major == b2.major && b1.minor > b2.minor {
@@ -58,7 +58,7 @@ class BeaconsViewController: UITableViewController {
     
     
     // UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView:UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     

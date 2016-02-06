@@ -22,10 +22,10 @@ class ViewController: UITableViewController {
     @IBOutlet var startMonitoringLabel: UILabel!
     @IBOutlet var createRegionButton: UIButton!
     
-    var region: CircularRegion?
+    var region: FLCircularRegion?
 
-    let locationManager = LocationManager()
-    let regionManager   = RegionManager()
+    let locationManager = FLLocationManager()
+    let regionManager   = FLRegionManager()
     
     let progressView    = ProgressView()
 
@@ -44,7 +44,7 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if !CircularRegion.isMonitoringAvailableForClass() || !self.regionManager.locationServicesEnabled() || self.regionManager.authorizationStatus() == .Denied {
+        if !FLCircularRegion.isMonitoringAvailableForClass() || !self.regionManager.locationServicesEnabled() || self.regionManager.authorizationStatus() == .Denied {
             self.createRegionButton.enabled = false
             self.createRegionButton.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
             var message = "Region monitoring not availble"
@@ -63,16 +63,16 @@ class ViewController: UITableViewController {
 
     @IBAction func createRegion(sender: AnyObject) {
         self.progressView.show()
-        let addressFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedAlways).flatmap { locations -> Future<[CLPlacemark]> in
+        let addressFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedAlways).flatmap { [unowned self] locations -> Future<[CLPlacemark]> in
             self.locationManager.stopUpdatingLocation()
             if let location = locations.first {
                 self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
                 self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
-                self.region = CircularRegion(center: location.coordinate, radius: 50.0, identifier: "FutureLocation Region", capacity: 10)
+                self.region = FLCircularRegion(center: location.coordinate, radius: 50.0, identifier: "FutureLocation Region", capacity: 10)
             }
             return self.locationManager.reverseGeocodeLocation()
         }
-        addressFuture.onSuccess { placemarks in
+        addressFuture.onSuccess { [unowned self] placemarks in
             if let placemark = placemarks.first {
                 self.startMonitoringSwitch.enabled = true
                 self.startMonitoringLabel.textColor = UIColor.blackColor()
@@ -88,7 +88,7 @@ class ViewController: UITableViewController {
                 }
             }
         }
-        addressFuture.onFailure { error in
+        addressFuture.onFailure { [unowned self] error in
             self.progressView.remove()
             self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
         }
@@ -105,7 +105,7 @@ class ViewController: UITableViewController {
         }
     }
     
-    func startMonitoring(region: CircularRegion) {
+    func startMonitoring(region: FLCircularRegion) {
         let regionFuture = self.regionManager.startMonitoringForRegion(region, authorization: .AuthorizedAlways)
         regionFuture.onSuccess { state in
             Notify.withMessage("region Event '\(region.identifier)'")
@@ -127,7 +127,7 @@ class ViewController: UITableViewController {
         }
     }
     
-    func locationInRegion(region: CircularRegion) {
+    func locationInRegion(region: FLCircularRegion) {
         let locationFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedAlways)
         locationFuture.onSuccess { locations in
             if let location = locations.first {
@@ -145,25 +145,25 @@ class ViewController: UITableViewController {
 
     }
     
-    func setNotMonitoring(region: CircularRegion) {
+    func setNotMonitoring(region: FLCircularRegion) {
         self.stateLabel.text = "Not Monitoring"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Not Monitoring '\(region.identifier)'")
     }
 
-    func setStartedMonitoring(region: CircularRegion) {
+    func setStartedMonitoring(region: FLCircularRegion) {
         self.stateLabel.text = "Started Monitoring"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.4, blue: 0.6, alpha: 1.0)
         Notify.withMessage("Started monitoring region '\(region.identifier)'")
     }
 
-    func setInsideRegion(region: CircularRegion) {
+    func setInsideRegion(region: FLCircularRegion) {
         self.stateLabel.text = "Inside Region"
         self.stateLabel.textColor = UIColor(red: 0.0, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Entered region '\(region.identifier)'")
     }
 
-    func setOutsideRegion(region: CircularRegion) {
+    func setOutsideRegion(region: FLCircularRegion) {
         self.stateLabel.text = "Outside Region"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Exited region '\(region.identifier)'")

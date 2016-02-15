@@ -63,6 +63,10 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         beaconsViewController.beaconRegion = self.beaconRegion
     }
 
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        return self.beaconRegion.beacons.count > 0
+    }
+
     @IBAction func toggleMonitoring(sender: AnyObject) {
         if self.beaconManager.isMonitoring {
             self.beaconManager.stopRangingAllBeacons()

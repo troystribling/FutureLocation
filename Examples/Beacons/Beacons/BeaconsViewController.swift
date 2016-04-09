@@ -28,7 +28,7 @@ class BeaconsViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBeacons", name: AppNotification.didUpdateBeacon, object: self.beaconRegion)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BeaconsViewController.updateBeacons), name: AppNotification.didUpdateBeacon, object: self.beaconRegion)
     }
     
     override func viewWillDisappear(animated: Bool) {

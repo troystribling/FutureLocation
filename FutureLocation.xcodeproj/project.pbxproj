@@ -10,7 +10,6 @@
 		05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF11AC889AD00861D0A /* RegionManagerTests.swift */; };
 		05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF31AC8949300861D0A /* BeaconManagerTests.swift */; };
 		05415EE81C55A9B50005B68E /* FLSerialIODictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */; };
-		0553BC241C4ED80500DBF416 /* SimpleFutures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553BC231C4ED80500DBF416 /* SimpleFutures.swift */; };
 		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
 		0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +23,7 @@
 		05BAEAC71A9AA212003C0C1C /* FLRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */; };
 		05BAEACB1A9AA2F1003C0C1C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */; };
 		05BAEAF11A9AA59A003C0C1C /* FLLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */; };
+		05E9B2471CF25D61003AF75D /* SimpleFutures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9B2461CF25D61003AF75D /* SimpleFutures.swift */; };
 		05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAD67A1ADB583500DCCBB7 /* Mocks.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +41,6 @@
 		05250BF11AC889AD00861D0A /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManagerTests.swift; sourceTree = "<group>"; };
 		05250BF31AC8949300861D0A /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManagerTests.swift; sourceTree = "<group>"; };
 		05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLSerialIODictionary.swift; sourceTree = "<group>"; };
-		0553BC231C4ED80500DBF416 /* SimpleFutures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleFutures.swift; sourceTree = "<group>"; };
 		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLProximityExtension.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +57,7 @@
 		05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLRegionManager.swift; sourceTree = "<group>"; };
 		05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLLogger.swift; sourceTree = "<group>"; };
+		05E9B2461CF25D61003AF75D /* SimpleFutures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleFutures.swift; path = External/SimpleFutures/SimpleFutures.swift; sourceTree = SOURCE_ROOT; };
 		05EAD67A1ADB583500DCCBB7 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +103,7 @@
 		05BAEA9E1A9AA045003C0C1C /* FutureLocation */ = {
 			isa = PBXGroup;
 			children = (
+				05E9B2481CF25DE9003AF75D /* External */,
 				05BAEAA11A9AA045003C0C1C /* FutureLocation.h */,
 				05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */,
 				05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */,
@@ -114,7 +115,6 @@
 				05BAEABE1A9AA212003C0C1C /* FLRegion.swift */,
 				05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */,
 				05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */,
-				05BAEACC1A9AA31A003C0C1C /* External */,
 				05BAEA9F1A9AA045003C0C1C /* Supporting Files */,
 			);
 			path = FutureLocation;
@@ -148,22 +148,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		05BAEACC1A9AA31A003C0C1C /* External */ = {
+		05E9B2481CF25DE9003AF75D /* External */ = {
 			isa = PBXGroup;
 			children = (
-				05BAEACD1A9AA331003C0C1C /* SimpleFutures */,
+				05E9B2491CF25DF9003AF75D /* SimpleFutures */,
 			);
 			name = External;
 			sourceTree = "<group>";
 		};
-		05BAEACD1A9AA331003C0C1C /* SimpleFutures */ = {
+		05E9B2491CF25DF9003AF75D /* SimpleFutures */ = {
 			isa = PBXGroup;
 			children = (
-				0553BC231C4ED80500DBF416 /* SimpleFutures.swift */,
+				05E9B2461CF25D61003AF75D /* SimpleFutures.swift */,
 			);
 			name = SimpleFutures;
-			path = External/SimpleFutures;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -278,8 +277,8 @@
 				05BAEAC01A9AA212003C0C1C /* FLBeacon.swift in Sources */,
 				05415EE81C55A9B50005B68E /* FLSerialIODictionary.swift in Sources */,
 				05BAEAC51A9AA212003C0C1C /* FLLocationManager.swift in Sources */,
+				05E9B2471CF25D61003AF75D /* SimpleFutures.swift in Sources */,
 				0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */,
-				0553BC241C4ED80500DBF416 /* SimpleFutures.swift in Sources */,
 				05BAEAC11A9AA212003C0C1C /* FLBeaconManager.swift in Sources */,
 				05BAEAC61A9AA212003C0C1C /* FLRegion.swift in Sources */,
 				05BAEAC71A9AA212003C0C1C /* FLRegionManager.swift in Sources */,

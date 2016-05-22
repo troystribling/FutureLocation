@@ -58,7 +58,6 @@ public class FLBeaconManager : FLRegionManager {
         authoriztaionFuture.onSuccess(context) {status in
             FLLogger.debug("authorization status: \(status)")
             self.configuredBeaconRegions[beaconRegion.identifier] = beaconRegion
-            self.configuredRegions[beaconRegion.identifier] = beaconRegion
             self.clLocationManager.startRangingBeaconsInRegion(beaconRegion.clBeaconRegion)
         }
         authoriztaionFuture.onFailure(context) {error in
@@ -70,7 +69,6 @@ public class FLBeaconManager : FLRegionManager {
 
     public func stopRangingBeaconsInRegion(beaconRegion: FLBeaconRegion) {
         self.configuredBeaconRegions.removeValueForKey(beaconRegion.identifier)
-        self.configuredRegions.removeValueForKey(beaconRegion.identifier)
         self.regionRangingStatus.removeValueForKey(beaconRegion.identifier)
         self.updateIsRanging(false)
         self.clLocationManager.stopRangingBeaconsInRegion(beaconRegion.clBeaconRegion)
@@ -84,7 +82,7 @@ public class FLBeaconManager : FLRegionManager {
     
     // MARK: CLLocationManagerDelegate
     public func locationManager(_: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-        self.didRangeBeacons(beacons.map{$0 as CLBeaconInjectable}, inRegion: region)
+        self.didRangeBeacons(beacons.map { $0 as CLBeaconInjectable }, inRegion: region)
     }
     
     public func locationManager(_: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
@@ -96,7 +94,7 @@ public class FLBeaconManager : FLRegionManager {
         if let beaconRegion = self.configuredBeaconRegions[region.identifier] {
             self.regionRangingStatus[beaconRegion.identifier] = true
             self.updateIsRanging(true)
-            let flBeacons = beacons.map{FLBeacon(clBeacon:$0)}
+            let flBeacons = beacons.map { FLBeacon(clBeacon:$0) }
             beaconRegion._beacons = flBeacons
             beaconRegion.beaconPromise.success(flBeacons)
         }

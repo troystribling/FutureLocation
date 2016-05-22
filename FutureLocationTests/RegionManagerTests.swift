@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 import CoreLocation
-import FutureLocation
+@testable import FutureLocation
 
 class RegionManagerTests: XCTestCase {
 

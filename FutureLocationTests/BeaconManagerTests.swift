@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 import CoreLocation
-import FutureLocation
+@testable import FutureLocation
 
 class BeaconManagerTests: XCTestCase {
 
@@ -46,7 +46,6 @@ class BeaconManagerTests: XCTestCase {
         future.onSuccess(context) { beacons in
             XCTAssertEqual(beacons.count, 2, "Beacon count invalid")
             XCTAssertEqual(self.beaconManager.beaconRegions.count, 1, "BeaconRegion count invalid")
-            XCTAssertEqual(self.beaconManager.regions.count, 1, "Region count invalid")
             XCTAssertEqual(self.testBeaconRegion.beacons.count, 2, "Region Beacon count invalid")
             XCTAssert(self.beaconManager.isRanging, "isRanging invalid")
             XCTAssert(self.mock.startRangingBeaconsInRegionCalled, "startRangingBeaconsInRegion not called")

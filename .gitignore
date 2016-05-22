@@ -1,13 +1,4 @@
-*.xcuserstate
-*.xcscheme
-*.xcbkptlist
-FutureLocation.xcodeproj/xcuserdata/*
-FutureLocation.xcodeproj/project.xcworkspace/xcuserdata/*
-FutureLocation.xcodeproj/project.xcworkspace/xcshareddata/*
-Examples/Location/Location.xcodeproj/xcuserdata/*
-Examples/Location/Location.xcodeproj/project.xcworkspace/xcuserdata/*
-Examples/Location/Location.xcodeproj/project.xcworkspace/xcshareddata/*
-Examples/Region/Region.xcodeproj/xcuserdata/*
-Examples/Region/Region.xcodeproj/project.xcworkspace/xcuserdata/*
-Examples/Region/Region.xcodeproj/project.xcworkspace/xcshareddata/*
+**/xcuserdata
+Pods/
+build/
 .DS_Store

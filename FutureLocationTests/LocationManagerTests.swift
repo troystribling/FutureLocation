@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 import CoreLocation
-import FutureLocation
+@testable import FutureLocation
 
 class LocationManagerTests: XCTestCase {
 
@@ -152,7 +152,7 @@ class LocationManagerTests: XCTestCase {
         future.onFailure(context) {error in
             XCTAssert(self.mock.startUpdatingLocationCalled, "startUpdatingLocation not called")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
+            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didFailWithError(TestFailure.error)
@@ -226,7 +226,7 @@ class LocationManagerTests: XCTestCase {
         future.onFailure(context) {error in
             XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled, "startUpdatingLocation called")
             XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
+            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
             expectation.fulfill()
         }
         self.locationManager.didFailWithError(TestFailure.error)

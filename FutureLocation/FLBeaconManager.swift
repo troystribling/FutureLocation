@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import SimpleFutures
 
 // MARK - FLBeaconManager -
 public class FLBeaconManager : FLRegionManager {

@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF11AC889AD00861D0A /* RegionManagerTests.swift */; };
-		05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05250BF31AC8949300861D0A /* BeaconManagerTests.swift */; };
 		05415EE81C55A9B50005B68E /* FLSerialIODictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */; };
-		0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */; };
 		0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */; };
 		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */; };
 		05BAEAC01A9AA212003C0C1C /* FLBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */; };
 		05BAEAC11A9AA212003C0C1C /* FLBeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */; };
 		05BAEAC21A9AA212003C0C1C /* FLBeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABA1A9AA212003C0C1C /* FLBeaconRegion.swift */; };
@@ -23,31 +19,15 @@
 		05BAEAC71A9AA212003C0C1C /* FLRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */; };
 		05BAEACB1A9AA2F1003C0C1C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */; };
 		05BAEAF11A9AA59A003C0C1C /* FLLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */; };
-		05E9B2471CF25D61003AF75D /* SimpleFutures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9B2461CF25D61003AF75D /* SimpleFutures.swift */; };
-		05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAD67A1ADB583500DCCBB7 /* Mocks.swift */; };
+		05EB01FE1CF4A1920048391F /* SimpleFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05EB01FD1CF4A1920048391F /* SimpleFutures.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		05BAEAA91A9AA045003C0C1C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 05BAEA931A9AA045003C0C1C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
-			remoteInfo = FutureLocation;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		05250BF11AC889AD00861D0A /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionManagerTests.swift; sourceTree = "<group>"; };
-		05250BF31AC8949300861D0A /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManagerTests.swift; sourceTree = "<group>"; };
 		05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLSerialIODictionary.swift; sourceTree = "<group>"; };
-		0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLProximityExtension.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05BAEAA11A9AA045003C0C1C /* FutureLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FutureLocation.h; sourceTree = "<group>"; };
-		05BAEAA71A9AA045003C0C1C /* FutureLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		05BAEAAD1A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeacon.swift; sourceTree = "<group>"; };
 		05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeaconManager.swift; sourceTree = "<group>"; };
 		05BAEABA1A9AA212003C0C1C /* FLBeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeaconRegion.swift; sourceTree = "<group>"; };
@@ -57,8 +37,7 @@
 		05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLRegionManager.swift; sourceTree = "<group>"; };
 		05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLLogger.swift; sourceTree = "<group>"; };
-		05E9B2461CF25D61003AF75D /* SimpleFutures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleFutures.swift; path = External/SimpleFutures/SimpleFutures.swift; sourceTree = SOURCE_ROOT; };
-		05EAD67A1ADB583500DCCBB7 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		05EB01FD1CF4A1920048391F /* SimpleFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleFutures.framework; path = Carthage/Build/iOS/SimpleFutures.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,14 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BAEACB1A9AA2F1003C0C1C /* CoreLocation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		05BAEAA41A9AA045003C0C1C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				05BAEAA81A9AA045003C0C1C /* FutureLocation.framework in Frameworks */,
+				05EB01FE1CF4A1920048391F /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,9 +56,9 @@
 		05BAEA921A9AA045003C0C1C = {
 			isa = PBXGroup;
 			children = (
+				05EB01FD1CF4A1920048391F /* SimpleFutures.framework */,
 				05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */,
 				05BAEA9E1A9AA045003C0C1C /* FutureLocation */,
-				05BAEAAB1A9AA045003C0C1C /* FutureLocationTests */,
 				05BAEA9D1A9AA045003C0C1C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */,
-				05BAEAA71A9AA045003C0C1C /* FutureLocationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,7 +74,6 @@
 		05BAEA9E1A9AA045003C0C1C /* FutureLocation */ = {
 			isa = PBXGroup;
 			children = (
-				05E9B2481CF25DE9003AF75D /* External */,
 				05BAEAA11A9AA045003C0C1C /* FutureLocation.h */,
 				05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */,
 				05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */,
@@ -126,42 +96,6 @@
 				05BAEAA01A9AA045003C0C1C /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		05BAEAAB1A9AA045003C0C1C /* FutureLocationTests */ = {
-			isa = PBXGroup;
-			children = (
-				05BAEAAC1A9AA045003C0C1C /* Supporting Files */,
-				0574F54E1AC7799A003F65B0 /* LocationManagerTests.swift */,
-				05250BF11AC889AD00861D0A /* RegionManagerTests.swift */,
-				05250BF31AC8949300861D0A /* BeaconManagerTests.swift */,
-				05EAD67A1ADB583500DCCBB7 /* Mocks.swift */,
-			);
-			path = FutureLocationTests;
-			sourceTree = "<group>";
-		};
-		05BAEAAC1A9AA045003C0C1C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				05BAEAAD1A9AA045003C0C1C /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		05E9B2481CF25DE9003AF75D /* External */ = {
-			isa = PBXGroup;
-			children = (
-				05E9B2491CF25DF9003AF75D /* SimpleFutures */,
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
-		05E9B2491CF25DF9003AF75D /* SimpleFutures */ = {
-			isa = PBXGroup;
-			children = (
-				05E9B2461CF25D61003AF75D /* SimpleFutures.swift */,
-			);
-			name = SimpleFutures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,24 +130,6 @@
 			productReference = 05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		05BAEAA61A9AA045003C0C1C /* FutureLocationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 05BAEAB51A9AA045003C0C1C /* Build configuration list for PBXNativeTarget "FutureLocationTests" */;
-			buildPhases = (
-				05BAEAA31A9AA045003C0C1C /* Sources */,
-				05BAEAA41A9AA045003C0C1C /* Frameworks */,
-				05BAEAA51A9AA045003C0C1C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				05BAEAAA1A9AA045003C0C1C /* PBXTargetDependency */,
-			);
-			name = FutureLocationTests;
-			productName = FutureLocationTests;
-			productReference = 05BAEAA71A9AA045003C0C1C /* FutureLocationTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -227,9 +143,6 @@
 					05BAEA9B1A9AA045003C0C1C = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = HZEX459C37;
-					};
-					05BAEAA61A9AA045003C0C1C = {
-						CreatedOnToolsVersion = 6.3;
 					};
 				};
 			};
@@ -246,20 +159,12 @@
 			projectRoot = "";
 			targets = (
 				05BAEA9B1A9AA045003C0C1C /* FutureLocation */,
-				05BAEAA61A9AA045003C0C1C /* FutureLocationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		05BAEA9A1A9AA045003C0C1C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		05BAEAA51A9AA045003C0C1C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -277,7 +182,6 @@
 				05BAEAC01A9AA212003C0C1C /* FLBeacon.swift in Sources */,
 				05415EE81C55A9B50005B68E /* FLSerialIODictionary.swift in Sources */,
 				05BAEAC51A9AA212003C0C1C /* FLLocationManager.swift in Sources */,
-				05E9B2471CF25D61003AF75D /* SimpleFutures.swift in Sources */,
 				0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */,
 				05BAEAC11A9AA212003C0C1C /* FLBeaconManager.swift in Sources */,
 				05BAEAC61A9AA212003C0C1C /* FLRegion.swift in Sources */,
@@ -287,26 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		05BAEAA31A9AA045003C0C1C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				05250BF41AC8949300861D0A /* BeaconManagerTests.swift in Sources */,
-				0574F54F1AC7799A003F65B0 /* LocationManagerTests.swift in Sources */,
-				05250BF21AC889AD00861D0A /* RegionManagerTests.swift in Sources */,
-				05EAD67B1ADB583500DCCBB7 /* Mocks.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		05BAEAAA1A9AA045003C0C1C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 05BAEA9B1A9AA045003C0C1C /* FutureLocation */;
-			targetProxy = 05BAEAA91A9AA045003C0C1C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		05BAEAB01A9AA045003C0C1C /* Debug */ = {
@@ -406,6 +291,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FutureLocation/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -427,6 +316,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FutureLocation/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -435,32 +328,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		05BAEAB61A9AA045003C0C1C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = FutureLocationTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		05BAEAB71A9AA045003C0C1C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = FutureLocationTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -481,15 +348,6 @@
 			buildConfigurations = (
 				05BAEAB31A9AA045003C0C1C /* Debug */,
 				05BAEAB41A9AA045003C0C1C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		05BAEAB51A9AA045003C0C1C /* Build configuration list for PBXNativeTarget "FutureLocationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				05BAEAB61A9AA045003C0C1C /* Debug */,
-				05BAEAB71A9AA045003C0C1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

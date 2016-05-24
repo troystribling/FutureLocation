@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import SimpleFutures
 
 let DEFAULT_REGION_RADIUS = 100.0
 

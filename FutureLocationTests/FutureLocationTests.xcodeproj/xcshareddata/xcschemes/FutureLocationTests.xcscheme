@@ -16,10 +16,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "05BAEAA61A9AA045003C0C1C"
+               BlueprintIdentifier = "05E9B2811CF2CCFF003AF75D"
                BuildableName = "FutureLocationTests.xctest"
                BlueprintName = "FutureLocationTests"
-               ReferencedContainer = "container:FutureLocation.xcodeproj">
+               ReferencedContainer = "container:FutureLocationTests.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

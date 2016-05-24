@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import SimpleFutures
 
 // MARK: - FLRegionManager -
 public class FLRegionManager : FLLocationManager {

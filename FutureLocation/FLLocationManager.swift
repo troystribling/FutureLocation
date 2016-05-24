@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import SimpleFutures
 
 // MARK: - Errors -
 public enum FLErrorCode : Int {

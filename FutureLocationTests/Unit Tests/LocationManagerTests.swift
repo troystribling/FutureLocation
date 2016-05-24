@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import CoreLocation
+import SimpleFutures
 @testable import FutureLocation
 
 class LocationManagerTests: XCTestCase {

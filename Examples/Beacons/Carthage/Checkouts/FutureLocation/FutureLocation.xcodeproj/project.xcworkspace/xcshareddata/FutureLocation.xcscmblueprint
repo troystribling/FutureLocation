@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1B46E2EB4238C0978F01FFF9E8C1390836A3DFD9" : 0,
+    "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "094FC425-6225-44B1-906C-0822BCC68471",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1B46E2EB4238C0978F01FFF9E8C1390836A3DFD9" : "BlueCap",
+    "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB" : "FutureLocation"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "FutureLocation",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "FutureLocation.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:troystribling\/BlueCap.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1B46E2EB4238C0978F01FFF9E8C1390836A3DFD9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:troystribling\/FutureLocation.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB"
+    }
+  ]
+}

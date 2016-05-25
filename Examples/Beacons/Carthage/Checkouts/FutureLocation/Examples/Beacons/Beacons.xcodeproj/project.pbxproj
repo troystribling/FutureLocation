@@ -14,15 +14,13 @@
 		050353781AD20CCB006AE6FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 050353761AD20CCB006AE6FB /* LaunchScreen.xib */; };
 		050353841AD20CCB006AE6FB /* BeaconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353831AD20CCB006AE6FB /* BeaconsTests.swift */; };
 		0503539E1AD20E0E006AE6FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0503539D1AD20E0E006AE6FB /* CoreLocation.framework */; };
+		050353A01AD20FC2006AE6FB /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050353941AD20D6F006AE6FB /* FutureLocation.framework */; };
+		050353A11AD20FC2006AE6FB /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050353941AD20D6F006AE6FB /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		050353AD1AD2DF64006AE6FB /* BeaconsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */; };
 		050353B01AD2DFAA006AE6FB /* BeaconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */; };
 		050353B41AD2E232006AE6FB /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353B21AD2E232006AE6FB /* Notify.swift */; };
 		050353B51AD2E232006AE6FB /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */; };
 		050353BD1AD57DB0006AE6FB /* BeaconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353BC1AD57DB0006AE6FB /* BeaconStore.swift */; };
-		05F0EB6F1CF5FE5C00468FC9 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB6D1CF5FE5C00468FC9 /* FutureLocation.framework */; };
-		05F0EB701CF5FE5C00468FC9 /* SimpleFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */; };
-		05F0EB711CF5FE6500468FC9 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB6D1CF5FE5C00468FC9 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		05F0EB721CF5FE6500468FC9 /* SimpleFutures.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F5B2821AD9B31E00432393 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F5B2811AD9B31E00432393 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +32,34 @@
 			remoteGlobalIDString = 050353671AD20CCB006AE6FB;
 			remoteInfo = Beacons;
 		};
+		050353931AD20D6F006AE6FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05BAEA9C1A9AA045003C0C1C;
+			remoteInfo = FutureLocation;
+		};
+		050353951AD20D6F006AE6FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05BAEAA71A9AA045003C0C1C;
+			remoteInfo = FutureLocationTests;
+		};
+		0503539A1AD20DFD006AE6FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
+			remoteInfo = FutureLocation;
+		};
+		050353A21AD20FC2006AE6FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
+			remoteInfo = FutureLocation;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,8 +69,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				05F0EB711CF5FE6500468FC9 /* FutureLocation.framework in Embed Frameworks */,
-				05F0EB721CF5FE6500468FC9 /* SimpleFutures.framework in Embed Frameworks */,
+				050353A11AD20FC2006AE6FB /* FutureLocation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,14 +87,13 @@
 		0503537D1AD20CCB006AE6FB /* BeaconsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		050353821AD20CCB006AE6FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		050353831AD20CCB006AE6FB /* BeaconsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsTests.swift; sourceTree = "<group>"; };
+		0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FutureLocation.xcodeproj; path = ../../FutureLocation.xcodeproj; sourceTree = "<group>"; };
 		0503539D1AD20E0E006AE6FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconsViewController.swift; sourceTree = "<group>"; };
 		050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCell.swift; sourceTree = "<group>"; };
 		050353B21AD2E232006AE6FB /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		050353B31AD2E232006AE6FB /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		050353BC1AD57DB0006AE6FB /* BeaconStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconStore.swift; sourceTree = "<group>"; };
-		05F0EB6D1CF5FE5C00468FC9 /* FutureLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FutureLocation.framework; path = Carthage/Build/iOS/FutureLocation.framework; sourceTree = "<group>"; };
-		05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleFutures.framework; path = Carthage/Build/iOS/SimpleFutures.framework; sourceTree = "<group>"; };
 		05F5B2811AD9B31E00432393 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,9 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05F0EB6F1CF5FE5C00468FC9 /* FutureLocation.framework in Frameworks */,
+				050353A01AD20FC2006AE6FB /* FutureLocation.framework in Frameworks */,
 				0503539E1AD20E0E006AE6FB /* CoreLocation.framework in Frameworks */,
-				05F0EB701CF5FE5C00468FC9 /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,9 +120,8 @@
 		0503535F1AD20CCB006AE6FB = {
 			isa = PBXGroup;
 			children = (
-				05F0EB6D1CF5FE5C00468FC9 /* FutureLocation.framework */,
-				05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */,
 				0503539D1AD20E0E006AE6FB /* CoreLocation.framework */,
+				0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */,
 				0503536A1AD20CCB006AE6FB /* Beacons */,
 				050353801AD20CCB006AE6FB /* BeaconsTests */,
 				050353691AD20CCB006AE6FB /* Products */,
@@ -159,6 +181,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0503538F1AD20D6F006AE6FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				050353941AD20D6F006AE6FB /* FutureLocation.framework */,
+				050353961AD20D6F006AE6FB /* FutureLocationTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -170,11 +201,12 @@
 				050353651AD20CCB006AE6FB /* Frameworks */,
 				050353661AD20CCB006AE6FB /* Resources */,
 				050353A41AD20FC2006AE6FB /* Embed Frameworks */,
-				05F0EB6C1CF5FE0F00468FC9 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0503539B1AD20DFD006AE6FB /* PBXTargetDependency */,
+				050353A31AD20FC2006AE6FB /* PBXTargetDependency */,
 			);
 			name = Beacons;
 			productName = Beacons;
@@ -234,6 +266,12 @@
 			mainGroup = 0503535F1AD20CCB006AE6FB;
 			productRefGroup = 050353691AD20CCB006AE6FB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0503538F1AD20D6F006AE6FB /* Products */;
+					ProjectRef = 0503538E1AD20D6F006AE6FB /* FutureLocation.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				050353671AD20CCB006AE6FB /* Beacons */,
@@ -241,6 +279,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		050353941AD20D6F006AE6FB /* FutureLocation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FutureLocation.framework;
+			remoteRef = 050353931AD20D6F006AE6FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		050353961AD20D6F006AE6FB /* FutureLocationTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FutureLocationTests.xctest;
+			remoteRef = 050353951AD20D6F006AE6FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		050353661AD20CCB006AE6FB /* Resources */ = {
@@ -261,24 +316,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		05F0EB6C1CF5FE0F00468FC9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SimpleFutures.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FutureLocation.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		050353641AD20CCB006AE6FB /* Sources */ = {
@@ -311,6 +348,16 @@
 			isa = PBXTargetDependency;
 			target = 050353671AD20CCB006AE6FB /* Beacons */;
 			targetProxy = 0503537E1AD20CCB006AE6FB /* PBXContainerItemProxy */;
+		};
+		0503539B1AD20DFD006AE6FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FutureLocation;
+			targetProxy = 0503539A1AD20DFD006AE6FB /* PBXContainerItemProxy */;
+		};
+		050353A31AD20FC2006AE6FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FutureLocation;
+			targetProxy = 050353A21AD20FC2006AE6FB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -420,10 +467,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Beacons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -437,10 +480,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Beacons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";

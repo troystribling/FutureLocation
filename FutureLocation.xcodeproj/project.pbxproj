@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		05415EE81C55A9B50005B68E /* FLSerialIODictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05415EE71C55A9B50005B68E /* FLSerialIODictionary.swift */; };
 		0595F31C1B40BD8900EBB270 /* CLProximityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */; };
-		05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BAEAA11A9AA045003C0C1C /* FutureLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05BAEAC01A9AA212003C0C1C /* FLBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */; };
 		05BAEAC11A9AA212003C0C1C /* FLBeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */; };
 		05BAEAC21A9AA212003C0C1C /* FLBeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABA1A9AA212003C0C1C /* FLBeaconRegion.swift */; };
@@ -19,7 +18,6 @@
 		05BAEAC71A9AA212003C0C1C /* FLRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */; };
 		05BAEACB1A9AA2F1003C0C1C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */; };
 		05BAEAF11A9AA59A003C0C1C /* FLLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */; };
-		05EB01FE1CF4A1920048391F /* SimpleFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05EB01FD1CF4A1920048391F /* SimpleFutures.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +25,6 @@
 		0595F31B1B40BD8900EBB270 /* CLProximityExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLProximityExtension.swift; sourceTree = "<group>"; };
 		05BAEA9C1A9AA045003C0C1C /* FutureLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FutureLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BAEAA01A9AA045003C0C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		05BAEAA11A9AA045003C0C1C /* FutureLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FutureLocation.h; sourceTree = "<group>"; };
 		05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeacon.swift; sourceTree = "<group>"; };
 		05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeaconManager.swift; sourceTree = "<group>"; };
 		05BAEABA1A9AA212003C0C1C /* FLBeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLBeaconRegion.swift; sourceTree = "<group>"; };
@@ -37,7 +34,6 @@
 		05BAEABF1A9AA212003C0C1C /* FLRegionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLRegionManager.swift; sourceTree = "<group>"; };
 		05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		05BAEAF01A9AA59A003C0C1C /* FLLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLLogger.swift; sourceTree = "<group>"; };
-		05EB01FD1CF4A1920048391F /* SimpleFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleFutures.framework; path = Carthage/Build/iOS/SimpleFutures.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +42,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05BAEACB1A9AA2F1003C0C1C /* CoreLocation.framework in Frameworks */,
-				05EB01FE1CF4A1920048391F /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +51,6 @@
 		05BAEA921A9AA045003C0C1C = {
 			isa = PBXGroup;
 			children = (
-				05EB01FD1CF4A1920048391F /* SimpleFutures.framework */,
 				05BAEACA1A9AA2F1003C0C1C /* CoreLocation.framework */,
 				05BAEA9E1A9AA045003C0C1C /* FutureLocation */,
 				05BAEA9D1A9AA045003C0C1C /* Products */,
@@ -74,7 +68,6 @@
 		05BAEA9E1A9AA045003C0C1C /* FutureLocation */ = {
 			isa = PBXGroup;
 			children = (
-				05BAEAA11A9AA045003C0C1C /* FutureLocation.h */,
 				05BAEAB81A9AA212003C0C1C /* FLBeacon.swift */,
 				05BAEAB91A9AA212003C0C1C /* FLBeaconManager.swift */,
 				05BAEABA1A9AA212003C0C1C /* FLBeaconRegion.swift */,
@@ -105,7 +98,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05BAEAA21A9AA045003C0C1C /* FutureLocation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

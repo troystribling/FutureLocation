@@ -1,0 +1,10 @@
+framework module SimpleFutures {
+  umbrella header "SimpleFutures.h"
+
+  export *
+  module * { export * }
+}
+
+module SimpleFutures.Swift {
+    header "SimpleFutures-Swift.h"
+}

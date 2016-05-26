@@ -1,5 +1,4 @@
 **/xcuserdata
 Pods/
-build/
-Carthage/Checkouts/
+Checkouts/
 .DS_Store

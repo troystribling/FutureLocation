@@ -14,10 +14,12 @@
 		054C3E4F1ACEEAE200FC8602 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E4D1ACEEAE200FC8602 /* LaunchScreen.xib */; };
 		054C3E5B1ACEEAE200FC8602 /* RegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E5A1ACEEAE200FC8602 /* RegionTests.swift */; };
 		054C3E731ACEECDC00FC8602 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E721ACEECDC00FC8602 /* CoreLocation.framework */; };
-		054C3E741ACEECE800FC8602 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */; };
-		054C3E751ACEECE800FC8602 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		054C3E801ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */; };
 		054C3E831AD0AE4B00FC8602 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E821AD0AE4B00FC8602 /* Notify.swift */; };
+		05F0EB751CF6B44E00468FC9 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */; };
+		05F0EB771CF6B45C00468FC9 /* SimpleFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */; };
+		05F0EB781CF6B54E00468FC9 /* SimpleFutures.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05F0EB791CF6B54E00468FC9 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F3F03E1AD99CE800E3FBB1 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3F03D1AD99CE800E3FBB1 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,34 +31,6 @@
 			remoteGlobalIDString = 054C3E3E1ACEEAE200FC8602;
 			remoteInfo = Region;
 		};
-		054C3E691ACEEB2B00FC8602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05BAEA9C1A9AA045003C0C1C;
-			remoteInfo = FutureLocation;
-		};
-		054C3E6B1ACEEB2B00FC8602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05BAEAA71A9AA045003C0C1C;
-			remoteInfo = FutureLocationTests;
-		};
-		054C3E6F1ACEECC900FC8602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
-			remoteInfo = FutureLocation;
-		};
-		054C3E761ACEECE800FC8602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 05BAEA9B1A9AA045003C0C1C;
-			remoteInfo = FutureLocation;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,7 +40,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				054C3E751ACEECE800FC8602 /* FutureLocation.framework in Embed Frameworks */,
+				05F0EB781CF6B54E00468FC9 /* SimpleFutures.framework in Embed Frameworks */,
+				05F0EB791CF6B54E00468FC9 /* FutureLocation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,10 +59,11 @@
 		054C3E541ACEEAE200FC8602 /* RegionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		054C3E591ACEEAE200FC8602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		054C3E5A1ACEEAE200FC8602 /* RegionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTests.swift; sourceTree = "<group>"; };
-		054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FutureLocation.xcodeproj; path = ../../FutureLocation.xcodeproj; sourceTree = "<group>"; };
 		054C3E721ACEECDC00FC8602 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		054C3E821AD0AE4B00FC8602 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FutureLocation.framework; path = Carthage/Build/iOS/FutureLocation.framework; sourceTree = "<group>"; };
+		05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleFutures.framework; path = Carthage/Build/iOS/SimpleFutures.framework; sourceTree = "<group>"; };
 		05F3F03D1AD99CE800E3FBB1 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,8 +72,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054C3E741ACEECE800FC8602 /* FutureLocation.framework in Frameworks */,
+				05F0EB751CF6B44E00468FC9 /* FutureLocation.framework in Frameworks */,
 				054C3E731ACEECDC00FC8602 /* CoreLocation.framework in Frameworks */,
+				05F0EB771CF6B45C00468FC9 /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,8 +91,9 @@
 		054C3E361ACEEAE200FC8602 = {
 			isa = PBXGroup;
 			children = (
+				05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */,
+				05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */,
 				054C3E721ACEECDC00FC8602 /* CoreLocation.framework */,
-				054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */,
 				054C3E411ACEEAE200FC8602 /* Region */,
 				054C3E571ACEEAE200FC8602 /* RegionTests */,
 				054C3E401ACEEAE200FC8602 /* Products */,
@@ -172,15 +150,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		054C3E651ACEEB2B00FC8602 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */,
-				054C3E6C1ACEEB2B00FC8602 /* FutureLocationTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,12 +161,11 @@
 				054C3E3C1ACEEAE200FC8602 /* Frameworks */,
 				054C3E3D1ACEEAE200FC8602 /* Resources */,
 				054C3E781ACEECE800FC8602 /* Embed Frameworks */,
+				05F0EB7A1CF6B55900468FC9 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				054C3E701ACEECC900FC8602 /* PBXTargetDependency */,
-				054C3E771ACEECE800FC8602 /* PBXTargetDependency */,
 			);
 			name = Region;
 			productName = Region;
@@ -257,12 +225,6 @@
 			mainGroup = 054C3E361ACEEAE200FC8602;
 			productRefGroup = 054C3E401ACEEAE200FC8602 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 054C3E651ACEEB2B00FC8602 /* Products */;
-					ProjectRef = 054C3E641ACEEB2B00FC8602 /* FutureLocation.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				054C3E3E1ACEEAE200FC8602 /* Region */,
@@ -270,23 +232,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		054C3E6A1ACEEB2B00FC8602 /* FutureLocation.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = FutureLocation.framework;
-			remoteRef = 054C3E691ACEEB2B00FC8602 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		054C3E6C1ACEEB2B00FC8602 /* FutureLocationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = FutureLocationTests.xctest;
-			remoteRef = 054C3E6B1ACEEB2B00FC8602 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		054C3E3D1ACEEAE200FC8602 /* Resources */ = {
@@ -307,6 +252,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		05F0EB7A1CF6B55900468FC9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SimpleFutures.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FutureLocation.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		054C3E3B1ACEEAE200FC8602 /* Sources */ = {
@@ -336,16 +299,6 @@
 			isa = PBXTargetDependency;
 			target = 054C3E3E1ACEEAE200FC8602 /* Region */;
 			targetProxy = 054C3E551ACEEAE200FC8602 /* PBXContainerItemProxy */;
-		};
-		054C3E701ACEECC900FC8602 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FutureLocation;
-			targetProxy = 054C3E6F1ACEECC900FC8602 /* PBXContainerItemProxy */;
-		};
-		054C3E771ACEECE800FC8602 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FutureLocation;
-			targetProxy = 054C3E761ACEECE800FC8602 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -456,6 +409,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Region/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -469,6 +426,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Region/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";

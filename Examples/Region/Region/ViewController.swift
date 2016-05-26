@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import FutureLocation
+import SimpleFutures
 
 class ViewController: UITableViewController {
 

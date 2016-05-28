@@ -1,6 +1,9 @@
 platform :ios, '8.0'
 use_frameworks!
 
+workspace '../FutureLocation'
+
 target 'FutureLocationTests' do
+  project 'FutureLocationTests'
   pod 'FutureLocation', :path => '../'
 end

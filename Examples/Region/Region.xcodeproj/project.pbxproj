@@ -12,7 +12,6 @@
 		054C3E4A1ACEEAE200FC8602 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E481ACEEAE200FC8602 /* Main.storyboard */; };
 		054C3E4C1ACEEAE200FC8602 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E4B1ACEEAE200FC8602 /* Images.xcassets */; };
 		054C3E4F1ACEEAE200FC8602 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E4D1ACEEAE200FC8602 /* LaunchScreen.xib */; };
-		054C3E5B1ACEEAE200FC8602 /* RegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E5A1ACEEAE200FC8602 /* RegionTests.swift */; };
 		054C3E731ACEECDC00FC8602 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E721ACEECDC00FC8602 /* CoreLocation.framework */; };
 		054C3E801ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */; };
 		054C3E831AD0AE4B00FC8602 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E821AD0AE4B00FC8602 /* Notify.swift */; };
@@ -22,16 +21,6 @@
 		05F0EB791CF6B54E00468FC9 /* FutureLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F3F03E1AD99CE800E3FBB1 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3F03D1AD99CE800E3FBB1 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		054C3E551ACEEAE200FC8602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 054C3E371ACEEAE200FC8602 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 054C3E3E1ACEEAE200FC8602;
-			remoteInfo = Region;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		054C3E781ACEECE800FC8602 /* Embed Frameworks */ = {
@@ -56,9 +45,6 @@
 		054C3E491ACEEAE200FC8602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		054C3E4B1ACEEAE200FC8602 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		054C3E4E1ACEEAE200FC8602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		054C3E541ACEEAE200FC8602 /* RegionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		054C3E591ACEEAE200FC8602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		054C3E5A1ACEEAE200FC8602 /* RegionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTests.swift; sourceTree = "<group>"; };
 		054C3E721ACEECDC00FC8602 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		054C3E821AD0AE4B00FC8602 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
@@ -78,13 +64,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		054C3E511ACEEAE200FC8602 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -95,7 +74,6 @@
 				05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */,
 				054C3E721ACEECDC00FC8602 /* CoreLocation.framework */,
 				054C3E411ACEEAE200FC8602 /* Region */,
-				054C3E571ACEEAE200FC8602 /* RegionTests */,
 				054C3E401ACEEAE200FC8602 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				054C3E3F1ACEEAE200FC8602 /* Region.app */,
-				054C3E541ACEEAE200FC8602 /* RegionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,23 +110,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		054C3E571ACEEAE200FC8602 /* RegionTests */ = {
-			isa = PBXGroup;
-			children = (
-				054C3E5A1ACEEAE200FC8602 /* RegionTests.swift */,
-				054C3E581ACEEAE200FC8602 /* Supporting Files */,
-			);
-			path = RegionTests;
-			sourceTree = "<group>";
-		};
-		054C3E581ACEEAE200FC8602 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				054C3E591ACEEAE200FC8602 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -172,24 +132,6 @@
 			productReference = 054C3E3F1ACEEAE200FC8602 /* Region.app */;
 			productType = "com.apple.product-type.application";
 		};
-		054C3E531ACEEAE200FC8602 /* RegionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 054C3E611ACEEAE200FC8602 /* Build configuration list for PBXNativeTarget "RegionTests" */;
-			buildPhases = (
-				054C3E501ACEEAE200FC8602 /* Sources */,
-				054C3E511ACEEAE200FC8602 /* Frameworks */,
-				054C3E521ACEEAE200FC8602 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				054C3E561ACEEAE200FC8602 /* PBXTargetDependency */,
-			);
-			name = RegionTests;
-			productName = RegionTests;
-			productReference = 054C3E541ACEEAE200FC8602 /* RegionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -208,10 +150,6 @@
 							};
 						};
 					};
-					054C3E531ACEEAE200FC8602 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 054C3E3E1ACEEAE200FC8602;
-					};
 				};
 			};
 			buildConfigurationList = 054C3E3A1ACEEAE200FC8602 /* Build configuration list for PBXProject "Region" */;
@@ -228,7 +166,6 @@
 			projectRoot = "";
 			targets = (
 				054C3E3E1ACEEAE200FC8602 /* Region */,
-				054C3E531ACEEAE200FC8602 /* RegionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,13 +178,6 @@
 				054C3E4A1ACEEAE200FC8602 /* Main.storyboard in Resources */,
 				054C3E4F1ACEEAE200FC8602 /* LaunchScreen.xib in Resources */,
 				054C3E4C1ACEEAE200FC8602 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		054C3E521ACEEAE200FC8602 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,23 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		054C3E501ACEEAE200FC8602 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				054C3E5B1ACEEAE200FC8602 /* RegionTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		054C3E561ACEEAE200FC8602 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 054C3E3E1ACEEAE200FC8602 /* Region */;
-			targetProxy = 054C3E551ACEEAE200FC8602 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		054C3E481ACEEAE200FC8602 /* Main.storyboard */ = {
@@ -437,36 +351,6 @@
 			};
 			name = Release;
 		};
-		054C3E621ACEEAE200FC8602 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RegionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Region.app/Region";
-			};
-			name = Debug;
-		};
-		054C3E631ACEEAE200FC8602 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = RegionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Region.app/Region";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -484,15 +368,6 @@
 			buildConfigurations = (
 				054C3E5F1ACEEAE200FC8602 /* Debug */,
 				054C3E601ACEEAE200FC8602 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		054C3E611ACEEAE200FC8602 /* Build configuration list for PBXNativeTarget "RegionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				054C3E621ACEEAE200FC8602 /* Debug */,
-				054C3E631ACEEAE200FC8602 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

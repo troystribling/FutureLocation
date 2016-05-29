@@ -12,7 +12,6 @@
 		050353731AD20CCB006AE6FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 050353711AD20CCB006AE6FB /* Main.storyboard */; };
 		050353751AD20CCB006AE6FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050353741AD20CCB006AE6FB /* Images.xcassets */; };
 		050353781AD20CCB006AE6FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 050353761AD20CCB006AE6FB /* LaunchScreen.xib */; };
-		050353841AD20CCB006AE6FB /* BeaconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353831AD20CCB006AE6FB /* BeaconsTests.swift */; };
 		0503539E1AD20E0E006AE6FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0503539D1AD20E0E006AE6FB /* CoreLocation.framework */; };
 		050353AD1AD2DF64006AE6FB /* BeaconsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */; };
 		050353B01AD2DFAA006AE6FB /* BeaconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */; };
@@ -25,16 +24,6 @@
 		05F0EB721CF5FE6500468FC9 /* SimpleFutures.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F5B2821AD9B31E00432393 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F5B2811AD9B31E00432393 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0503537E1AD20CCB006AE6FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 050353601AD20CCB006AE6FB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 050353671AD20CCB006AE6FB;
-			remoteInfo = Beacons;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		050353A41AD20FC2006AE6FB /* Embed Frameworks */ = {
@@ -59,9 +48,6 @@
 		050353721AD20CCB006AE6FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		050353741AD20CCB006AE6FB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		050353771AD20CCB006AE6FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0503537D1AD20CCB006AE6FB /* BeaconsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		050353821AD20CCB006AE6FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		050353831AD20CCB006AE6FB /* BeaconsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsTests.swift; sourceTree = "<group>"; };
 		0503539D1AD20E0E006AE6FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconsViewController.swift; sourceTree = "<group>"; };
 		050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCell.swift; sourceTree = "<group>"; };
@@ -84,13 +70,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0503537A1AD20CCB006AE6FB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -101,7 +80,6 @@
 				05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */,
 				0503539D1AD20E0E006AE6FB /* CoreLocation.framework */,
 				0503536A1AD20CCB006AE6FB /* Beacons */,
-				050353801AD20CCB006AE6FB /* BeaconsTests */,
 				050353691AD20CCB006AE6FB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				050353681AD20CCB006AE6FB /* Beacons.app */,
-				0503537D1AD20CCB006AE6FB /* BeaconsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,23 +119,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		050353801AD20CCB006AE6FB /* BeaconsTests */ = {
-			isa = PBXGroup;
-			children = (
-				050353831AD20CCB006AE6FB /* BeaconsTests.swift */,
-				050353811AD20CCB006AE6FB /* Supporting Files */,
-			);
-			path = BeaconsTests;
-			sourceTree = "<group>";
-		};
-		050353811AD20CCB006AE6FB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				050353821AD20CCB006AE6FB /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,24 +141,6 @@
 			productReference = 050353681AD20CCB006AE6FB /* Beacons.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0503537C1AD20CCB006AE6FB /* BeaconsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0503538A1AD20CCB006AE6FB /* Build configuration list for PBXNativeTarget "BeaconsTests" */;
-			buildPhases = (
-				050353791AD20CCB006AE6FB /* Sources */,
-				0503537A1AD20CCB006AE6FB /* Frameworks */,
-				0503537B1AD20CCB006AE6FB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0503537F1AD20CCB006AE6FB /* PBXTargetDependency */,
-			);
-			name = BeaconsTests;
-			productName = BeaconsTests;
-			productReference = 0503537D1AD20CCB006AE6FB /* BeaconsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -217,10 +159,6 @@
 							};
 						};
 					};
-					0503537C1AD20CCB006AE6FB = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 050353671AD20CCB006AE6FB;
-					};
 				};
 			};
 			buildConfigurationList = 050353631AD20CCB006AE6FB /* Build configuration list for PBXProject "Beacons" */;
@@ -237,7 +175,6 @@
 			projectRoot = "";
 			targets = (
 				050353671AD20CCB006AE6FB /* Beacons */,
-				0503537C1AD20CCB006AE6FB /* BeaconsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -250,13 +187,6 @@
 				050353731AD20CCB006AE6FB /* Main.storyboard in Resources */,
 				050353781AD20CCB006AE6FB /* LaunchScreen.xib in Resources */,
 				050353751AD20CCB006AE6FB /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0503537B1AD20CCB006AE6FB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,23 +226,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		050353791AD20CCB006AE6FB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				050353841AD20CCB006AE6FB /* BeaconsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0503537F1AD20CCB006AE6FB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 050353671AD20CCB006AE6FB /* Beacons */;
-			targetProxy = 0503537E1AD20CCB006AE6FB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		050353711AD20CCB006AE6FB /* Main.storyboard */ = {
@@ -448,36 +362,6 @@
 			};
 			name = Release;
 		};
-		0503538B1AD20CCB006AE6FB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = BeaconsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Beacons.app/Beacons";
-			};
-			name = Debug;
-		};
-		0503538C1AD20CCB006AE6FB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = BeaconsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Beacons.app/Beacons";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -495,15 +379,6 @@
 			buildConfigurations = (
 				050353881AD20CCB006AE6FB /* Debug */,
 				050353891AD20CCB006AE6FB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0503538A1AD20CCB006AE6FB /* Build configuration list for PBXNativeTarget "BeaconsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0503538B1AD20CCB006AE6FB /* Debug */,
-				0503538C1AD20CCB006AE6FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

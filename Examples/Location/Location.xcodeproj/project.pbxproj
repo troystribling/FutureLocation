@@ -12,21 +12,10 @@
 		05BC8B121AC9A11D00F5B8A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05BC8B101AC9A11D00F5B8A4 /* Main.storyboard */; };
 		05BC8B141AC9A11D00F5B8A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05BC8B131AC9A11D00F5B8A4 /* Images.xcassets */; };
 		05BC8B171AC9A11D00F5B8A4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05BC8B151AC9A11D00F5B8A4 /* LaunchScreen.xib */; };
-		05BC8B231AC9A11D00F5B8A4 /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */; };
 		05BC8B411ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */; };
 		05F3F0421AD9AF6C00E3FBB1 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3F0411AD9AF6C00E3FBB1 /* ProgressView.swift */; };
 		54EBF4961995FA2BE5BFFE91 /* Pods_Location.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B549ADC588AE7582352DD6C3 /* Pods_Location.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		05BC8B1D1AC9A11D00F5B8A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 05BC8AFF1AC9A11D00F5B8A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 05BC8B061AC9A11D00F5B8A4;
-			remoteInfo = Location;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		05BC8B3F1ACA658000F5B8A4 /* Embed Frameworks */ = {
@@ -49,9 +38,6 @@
 		05BC8B111AC9A11D00F5B8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		05BC8B131AC9A11D00F5B8A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		05BC8B161AC9A11D00F5B8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		05BC8B1C1AC9A11D00F5B8A4 /* LocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		05BC8B211AC9A11D00F5B8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		05BC8B401ACABD0700F5B8A4 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		05F3F0411AD9AF6C00E3FBB1 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		0A944D5F0E66F413C0B358C2 /* Pods-Location.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Location.release.xcconfig"; path = "Pods/Target Support Files/Pods-Location/Pods-Location.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,13 +54,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		05BC8B191AC9A11D00F5B8A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,7 +61,6 @@
 			isa = PBXGroup;
 			children = (
 				05BC8B091AC9A11D00F5B8A4 /* Location */,
-				05BC8B1F1AC9A11D00F5B8A4 /* LocationTests */,
 				05BC8B081AC9A11D00F5B8A4 /* Products */,
 				8BB14800934267BD313F5083 /* Pods */,
 				ACCC7B9261B60C236BA56063 /* Frameworks */,
@@ -93,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				05BC8B071AC9A11D00F5B8A4 /* Location.app */,
-				05BC8B1C1AC9A11D00F5B8A4 /* LocationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,23 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				05BC8B0B1AC9A11D00F5B8A4 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		05BC8B1F1AC9A11D00F5B8A4 /* LocationTests */ = {
-			isa = PBXGroup;
-			children = (
-				05BC8B221AC9A11D00F5B8A4 /* LocationTests.swift */,
-				05BC8B201AC9A11D00F5B8A4 /* Supporting Files */,
-			);
-			path = LocationTests;
-			sourceTree = "<group>";
-		};
-		05BC8B201AC9A11D00F5B8A4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				05BC8B211AC9A11D00F5B8A4 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -179,24 +139,6 @@
 			productReference = 05BC8B071AC9A11D00F5B8A4 /* Location.app */;
 			productType = "com.apple.product-type.application";
 		};
-		05BC8B1B1AC9A11D00F5B8A4 /* LocationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 05BC8B291AC9A11D00F5B8A4 /* Build configuration list for PBXNativeTarget "LocationTests" */;
-			buildPhases = (
-				05BC8B181AC9A11D00F5B8A4 /* Sources */,
-				05BC8B191AC9A11D00F5B8A4 /* Frameworks */,
-				05BC8B1A1AC9A11D00F5B8A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				05BC8B1E1AC9A11D00F5B8A4 /* PBXTargetDependency */,
-			);
-			name = LocationTests;
-			productName = LocationTests;
-			productReference = 05BC8B1C1AC9A11D00F5B8A4 /* LocationTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -209,10 +151,6 @@
 				TargetAttributes = {
 					05BC8B061AC9A11D00F5B8A4 = {
 						CreatedOnToolsVersion = 6.3;
-					};
-					05BC8B1B1AC9A11D00F5B8A4 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 05BC8B061AC9A11D00F5B8A4;
 					};
 				};
 			};
@@ -230,7 +168,6 @@
 			projectRoot = "";
 			targets = (
 				05BC8B061AC9A11D00F5B8A4 /* Location */,
-				05BC8B1B1AC9A11D00F5B8A4 /* LocationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -243,13 +180,6 @@
 				05BC8B121AC9A11D00F5B8A4 /* Main.storyboard in Resources */,
 				05BC8B171AC9A11D00F5B8A4 /* LaunchScreen.xib in Resources */,
 				05BC8B141AC9A11D00F5B8A4 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		05BC8B1A1AC9A11D00F5B8A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,23 +245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		05BC8B181AC9A11D00F5B8A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				05BC8B231AC9A11D00F5B8A4 /* LocationTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		05BC8B1E1AC9A11D00F5B8A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 05BC8B061AC9A11D00F5B8A4 /* Location */;
-			targetProxy = 05BC8B1D1AC9A11D00F5B8A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		05BC8B101AC9A11D00F5B8A4 /* Main.storyboard */ = {
@@ -461,36 +375,6 @@
 			};
 			name = Release;
 		};
-		05BC8B2A1AC9A11D00F5B8A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LocationTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Location.app/Location";
-			};
-			name = Debug;
-		};
-		05BC8B2B1AC9A11D00F5B8A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = LocationTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "us.gnos.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Location.app/Location";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -508,15 +392,6 @@
 			buildConfigurations = (
 				05BC8B271AC9A11D00F5B8A4 /* Debug */,
 				05BC8B281AC9A11D00F5B8A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		05BC8B291AC9A11D00F5B8A4 /* Build configuration list for PBXNativeTarget "LocationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				05BC8B2A1AC9A11D00F5B8A4 /* Debug */,
-				05BC8B2B1AC9A11D00F5B8A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

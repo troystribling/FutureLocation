@@ -2,5 +2,5 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'Location' do
-  pod 'FutureLocation', :path => '../..'
+  pod 'FutureLocation', '~> 0.1'
 end

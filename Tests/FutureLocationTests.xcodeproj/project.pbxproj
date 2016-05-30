@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05BF91F41CFCA58B00B78B12 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF91F21CFCA58B00B78B12 /* TestHelper.swift */; };
+		05BF91F51CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF91F31CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift */; };
 		05F0EBA41CF74E3800468FC9 /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA01CF74E3800468FC9 /* BeaconManagerTests.swift */; };
 		05F0EBA51CF74E3800468FC9 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA11CF74E3800468FC9 /* LocationManagerTests.swift */; };
 		05F0EBA61CF74E3800468FC9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA21CF74E3800468FC9 /* Mocks.swift */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05BF91F21CFCA58B00B78B12 /* TestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelper.swift; path = Helpers/TestHelper.swift; sourceTree = "<group>"; };
+		05BF91F31CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "XCTTestCase+SimpleFuturesAssertions.swift"; path = "Helpers/XCTTestCase+SimpleFuturesAssertions.swift"; sourceTree = "<group>"; };
 		05E9B2821CF2CCFF003AF75D /* FutureLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EB02111CF4A9D10048391F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		05F0EBA01CF74E3800468FC9 /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeaconManagerTests.swift; path = FutureLocationTests/BeaconManagerTests.swift; sourceTree = SOURCE_ROOT; };
@@ -38,13 +42,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05BF91F11CFCA56E00B78B12 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				05BF91F21CFCA58B00B78B12 /* TestHelper.swift */,
+				05BF91F31CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		05E9B26E1CF2CCFF003AF75D = {
 			isa = PBXGroup;
 			children = (
-				05E9B2861CF2CCFF003AF75D /* FutureLocationTests */,
-				05E9B2791CF2CCFF003AF75D /* Products */,
-				1F290C033B1437A7275799D3 /* Pods */,
+				05EB02111CF4A9D10048391F /* Info.plist */,
 				A79FC736D2129F3A3EF76D93 /* Frameworks */,
+				05E9B2861CF2CCFF003AF75D /* FutureLocationTests */,
+				05BF91F11CFCA56E00B78B12 /* Helpers */,
+				1F290C033B1437A7275799D3 /* Pods */,
+				05E9B2791CF2CCFF003AF75D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,18 +78,9 @@
 				05F0EBA11CF74E3800468FC9 /* LocationManagerTests.swift */,
 				05F0EBA21CF74E3800468FC9 /* Mocks.swift */,
 				05F0EBA31CF74E3800468FC9 /* RegionManagerTests.swift */,
-				05E9B2EB1CF40F4B003AF75D /* Supporting Files */,
 			);
 			name = FutureLocationTests;
 			path = FutureLocationTestsTests;
-			sourceTree = "<group>";
-		};
-		05E9B2EB1CF40F4B003AF75D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				05EB02111CF4A9D10048391F /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		1F290C033B1437A7275799D3 /* Pods */ = {
@@ -213,7 +219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F0EBA51CF74E3800468FC9 /* LocationManagerTests.swift in Sources */,
+				05BF91F41CFCA58B00B78B12 /* TestHelper.swift in Sources */,
 				05F0EBA71CF74E3800468FC9 /* RegionManagerTests.swift in Sources */,
+				05BF91F51CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift in Sources */,
 				05F0EBA41CF74E3800468FC9 /* BeaconManagerTests.swift in Sources */,
 				05F0EBA61CF74E3800468FC9 /* Mocks.swift in Sources */,
 			);

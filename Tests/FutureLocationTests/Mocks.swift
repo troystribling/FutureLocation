@@ -10,11 +10,6 @@ import UIKit
 import CoreLocation
 import FutureLocation
 
-// MARK: Errors
-struct TestFailure {
-    static let error = NSError(domain:"Future Location Tests", code:100, userInfo:[NSLocalizedDescriptionKey:"Testing"])
-}
-
 // MARK: - CLLocationManagerMock -
 class CLLocationManagerMock : CLLocationManagerInjectable {
 

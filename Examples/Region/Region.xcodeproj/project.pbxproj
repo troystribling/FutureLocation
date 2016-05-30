@@ -12,7 +12,6 @@
 		054C3E4A1ACEEAE200FC8602 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E481ACEEAE200FC8602 /* Main.storyboard */; };
 		054C3E4C1ACEEAE200FC8602 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E4B1ACEEAE200FC8602 /* Images.xcassets */; };
 		054C3E4F1ACEEAE200FC8602 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054C3E4D1ACEEAE200FC8602 /* LaunchScreen.xib */; };
-		054C3E731ACEECDC00FC8602 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054C3E721ACEECDC00FC8602 /* CoreLocation.framework */; };
 		054C3E801ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */; };
 		054C3E831AD0AE4B00FC8602 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C3E821AD0AE4B00FC8602 /* Notify.swift */; };
 		05F0EB751CF6B44E00468FC9 /* FutureLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */; };
@@ -45,7 +44,6 @@
 		054C3E491ACEEAE200FC8602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		054C3E4B1ACEEAE200FC8602 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		054C3E4E1ACEEAE200FC8602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		054C3E721ACEECDC00FC8602 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		054C3E7F1ACEEF8D00FC8602 /* UIAlertControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtensions.swift; sourceTree = "<group>"; };
 		054C3E821AD0AE4B00FC8602 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FutureLocation.framework; path = Carthage/Build/iOS/FutureLocation.framework; sourceTree = "<group>"; };
@@ -59,7 +57,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F0EB751CF6B44E00468FC9 /* FutureLocation.framework in Frameworks */,
-				054C3E731ACEECDC00FC8602 /* CoreLocation.framework in Frameworks */,
 				05F0EB771CF6B45C00468FC9 /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +69,6 @@
 			children = (
 				05F0EB741CF6B44E00468FC9 /* FutureLocation.framework */,
 				05F0EB761CF6B45C00468FC9 /* SimpleFutures.framework */,
-				054C3E721ACEECDC00FC8602 /* CoreLocation.framework */,
 				054C3E411ACEEAE200FC8602 /* Region */,
 				054C3E401ACEEAE200FC8602 /* Products */,
 			);

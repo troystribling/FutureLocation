@@ -12,7 +12,6 @@
 		050353731AD20CCB006AE6FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 050353711AD20CCB006AE6FB /* Main.storyboard */; };
 		050353751AD20CCB006AE6FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050353741AD20CCB006AE6FB /* Images.xcassets */; };
 		050353781AD20CCB006AE6FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 050353761AD20CCB006AE6FB /* LaunchScreen.xib */; };
-		0503539E1AD20E0E006AE6FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0503539D1AD20E0E006AE6FB /* CoreLocation.framework */; };
 		050353AD1AD2DF64006AE6FB /* BeaconsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */; };
 		050353B01AD2DFAA006AE6FB /* BeaconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */; };
 		050353B41AD2E232006AE6FB /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050353B21AD2E232006AE6FB /* Notify.swift */; };
@@ -48,7 +47,6 @@
 		050353721AD20CCB006AE6FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		050353741AD20CCB006AE6FB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		050353771AD20CCB006AE6FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0503539D1AD20E0E006AE6FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		050353AC1AD2DF64006AE6FB /* BeaconsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconsViewController.swift; sourceTree = "<group>"; };
 		050353AF1AD2DFAA006AE6FB /* BeaconCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCell.swift; sourceTree = "<group>"; };
 		050353B21AD2E232006AE6FB /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F0EB6F1CF5FE5C00468FC9 /* FutureLocation.framework in Frameworks */,
-				0503539E1AD20E0E006AE6FB /* CoreLocation.framework in Frameworks */,
 				05F0EB701CF5FE5C00468FC9 /* SimpleFutures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,7 +75,6 @@
 			children = (
 				05F0EB6D1CF5FE5C00468FC9 /* FutureLocation.framework */,
 				05F0EB6E1CF5FE5C00468FC9 /* SimpleFutures.framework */,
-				0503539D1AD20E0E006AE6FB /* CoreLocation.framework */,
 				0503536A1AD20CCB006AE6FB /* Beacons */,
 				050353691AD20CCB006AE6FB /* Products */,
 			);

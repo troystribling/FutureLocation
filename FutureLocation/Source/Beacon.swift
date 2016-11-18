@@ -1,5 +1,5 @@
 //
-//  FLBeacon.swift
+//  Beacon.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 9/19/14.
@@ -11,7 +11,7 @@ import CoreLocation
 
 // MARK: - CLBeaconInjectable -
 public protocol CLBeaconInjectable {
-    var proximityUUID: NSUUID { get }
+    var proximityUUID: UUID { get }
     var major: NSNumber { get }
     var minor: NSNumber { get }
     var proximity: CLProximity { get }
@@ -21,11 +21,11 @@ public protocol CLBeaconInjectable {
 
 extension CLBeacon: CLBeaconInjectable {}
 
-// MARK: - FLBeacon -
-public class FLBeacon {
+// MARK: - Beacon -
+public class Beacon {
     
-    private let clBeacon : CLBeaconInjectable
-    private let _discoveredAt = NSDate()
+    fileprivate let clBeacon: CLBeaconInjectable
+    fileprivate let _discoveredAt = NSDate()
     
     public var discoveredAt : NSDate {
         return self._discoveredAt
@@ -36,14 +36,14 @@ public class FLBeacon {
     }
     
     public var major : Int {
-        return self.clBeacon.major.integerValue
+        return self.clBeacon.major.intValue
     }
     
     public var minor : Int {
-        return self.clBeacon.minor.integerValue
+        return self.clBeacon.minor.intValue
     }
     
-    public var proximityUUID : NSUUID {
+    public var proximityUUID : UUID {
         return self.clBeacon.proximityUUID
     }
     

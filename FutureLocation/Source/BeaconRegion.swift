@@ -1,42 +1,41 @@
 //
-//  FLBeaconRegion.swift
+//  BeaconRegion.swift
 //  BlueCap
 //
 //  Created by Troy Stribling on 9/14/14.
 //  Copyright (c) 2014 Troy Stribling. The MIT License (MIT).
 //
 
-import UIKit
+import Foundation
 import CoreLocation
-import SimpleFutures
 
-public class FLBeaconRegion : FLRegion {
+public class BeaconRegion : Region {
     
-    public let beaconPromise: StreamPromise<[FLBeacon]>
+    internal let beaconPromise: StreamPromise<[Beacon]>
     
-    internal var _beacons = [FLBeacon]()
-    internal  let clBeaconRegion: CLBeaconRegion
+    internal var _beacons = [Beacon]()
+    internal let clBeaconRegion: CLBeaconRegion
     
-    public var beacons: [FLBeacon] {
-        return self._beacons.sort() {(b1: FLBeacon, b2: FLBeacon) -> Bool in
-            switch b1.discoveredAt.compare(b2.discoveredAt) {
-            case .OrderedSame:
+    public var beacons: [Beacon] {
+        return self._beacons.sorted() {(b1: Beacon, b2: Beacon) -> Bool in
+            switch b1.discoveredAt.compare(b2.discoveredAt as Date) {
+            case .orderedSame:
                 return true
-            case .OrderedDescending:
+            case .orderedDescending:
                 return false
-            case .OrderedAscending:
+            case .orderedAscending:
                 return true
             }
         }
     }
     
-    public var proximityUUID: NSUUID? {
+    public var proximityUUID: UUID? {
         return self.clBeaconRegion.proximityUUID
     }
     
     public var major : Int? {
         if let _major = self.clBeaconRegion.major {
-            return _major.integerValue
+            return _major.intValue
         } else {
             return nil
         }
@@ -44,7 +43,7 @@ public class FLBeaconRegion : FLRegion {
     
     public var minor: Int? {
         if let _minor = self.clBeaconRegion.minor {
-            return _minor.integerValue
+            return _minor.intValue
         } else {
             return nil
         }
@@ -59,28 +58,24 @@ public class FLBeaconRegion : FLRegion {
         }
     }
     
-    public init(region: CLBeaconRegion, capacity: Int? = nil) {
+    public init(region: CLBeaconRegion, capacity: Int = Int.max) {
         self.clBeaconRegion = region
-        if let capacity = capacity {
-            self.beaconPromise = StreamPromise<[FLBeacon]>(capacity: capacity)
-        } else {
-            self.beaconPromise = StreamPromise<[FLBeacon]>()
-        }
-        super.init(region:region, capacity:capacity)
+        self.beaconPromise = StreamPromise<[Beacon]>(capacity: capacity)
+        super.init(region:region, capacity: capacity)
         self.notifyEntryStateOnDisplay = true
     }
     
-    public convenience init(proximityUUID: NSUUID, identifier: String, capacity: Int? = nil) {
+    public convenience init(proximityUUID: UUID, identifier: String, capacity: Int = Int.max) {
         self.init(region:CLBeaconRegion(proximityUUID: proximityUUID, identifier: identifier), capacity: capacity)
     }
 
-    public convenience init(proximityUUID: NSUUID, identifier: String, major: UInt16, capacity: Int? = nil) {
+    public convenience init(proximityUUID: UUID, identifier: String, major: UInt16, capacity: Int = Int.max) {
         let beaconMajor : CLBeaconMajorValue = major
         let beaconRegion = CLBeaconRegion(proximityUUID: proximityUUID, major: beaconMajor, identifier: identifier)
         self.init(region: beaconRegion, capacity: capacity)
     }
 
-    public convenience init(proximityUUID:NSUUID, identifier:String, major:UInt16, minor:UInt16, capacity:Int? = nil) {
+    public convenience init(proximityUUID:UUID, identifier:String, major:UInt16, minor:UInt16, capacity: Int = Int.max) {
         let beaconMinor : CLBeaconMinorValue = minor
         let beaconMajor : CLBeaconMajorValue = major
         let beaconRegion = CLBeaconRegion(proximityUUID:proximityUUID, major:beaconMajor, minor:beaconMinor, identifier:identifier)
@@ -88,20 +83,20 @@ public class FLBeaconRegion : FLRegion {
     }
     
     public override class func isMonitoringAvailableForClass() -> Bool {
-        return CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion)
+        return CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self)
     }
 
-    public func peripheralDataWithMeasuredPower(measuredPower: Int?) -> [String : AnyObject] {
+    public func peripheralDataWithMeasuredPower(_ measuredPower: Int?) -> [String : AnyObject] {
         let power: [NSObject : AnyObject]
         if let measuredPower = measuredPower {
-            power = self.clBeaconRegion.peripheralDataWithMeasuredPower(NSNumber(integer: measuredPower)) as [NSObject:AnyObject]
+            power = self.clBeaconRegion.peripheralData(withMeasuredPower: NSNumber(value: measuredPower)) as [NSObject:AnyObject]
         } else {
-            power = self.clBeaconRegion.peripheralDataWithMeasuredPower(nil) as [NSObject : AnyObject]
+            power = self.clBeaconRegion.peripheralData(withMeasuredPower: nil) as [NSObject : AnyObject]
         }
 
         var result = [String : AnyObject]()
         for key in power.keys {
-            if let keyPower = power[key], key = key as? String {
+            if let keyPower = power[key], let key = key as? String {
                 result[key] = keyPower
             }
         }

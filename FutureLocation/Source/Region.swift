@@ -8,17 +8,16 @@
 
 import Foundation
 import CoreLocation
-import SimpleFutures
 
 let DEFAULT_REGION_RADIUS = 100.0
 
-public enum FLRegionState {
-    case Start, Inside, Outside
+public enum RegionState {
+    case start, inside, outside
 }
 
-public class FLRegion {
+public class Region {
     
-    public var regionPromise  : StreamPromise<FLRegionState>
+    public let regionPromise  : StreamPromise<RegionState>
     
     public var identifier : String {
         return self.clRegion.identifier
@@ -44,17 +43,13 @@ public class FLRegion {
         }
     }
     
-    public init(region:CLRegion, capacity:Int? = nil) {
+    public init(region: CLRegion, capacity:Int = Int.max) {
         self.clRegion = region
-        if let capacity = capacity {
-            self.regionPromise = StreamPromise<FLRegionState>(capacity:capacity)
-        } else {
-            self.regionPromise = StreamPromise<FLRegionState>()
-        }
+        self.regionPromise = StreamPromise(capacity: capacity)
     }
 
     public class func isMonitoringAvailableForClass() -> Bool {
-        return CLLocationManager.isMonitoringAvailableForClass(CLRegion)
+        return CLLocationManager.isMonitoringAvailable(for: CLRegion.self)
     }
 
 }

@@ -1,19 +1,16 @@
 PODS:
-  - FutureLocation (0.1.0):
-    - SimpleFutures (~> 0.1)
-  - SimpleFutures (0.1.1)
+  - FutureLocation (0.2.0)
 
 DEPENDENCIES:
   - FutureLocation (from `../`)
 
 EXTERNAL SOURCES:
   FutureLocation:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  FutureLocation: 96216f277624713e21ae720ee75d6d8ad258cf93
-  SimpleFutures: 35203f5609915fbc5b63dde00f11eba5a5470ade
+  FutureLocation: 9856a7f0652e5073c3381955c377fe8a6f5cfe43
 
-PODFILE CHECKSUM: f3310e93ad0afd056f684029bd3fc9054df692e5
+PODFILE CHECKSUM: b31c2fcfa78b7d8c9ca0743af625dc91523e861e
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.1.1

@@ -8,27 +8,15 @@
 
 import UIKit
 import XCTest
-import SimpleFutures
+@testable import FutureLocation
 
-struct TestFailure {
-    static let error = NSError(domain:"SimpleFutures Tests", code:100, userInfo:[NSLocalizedDescriptionKey:"Testing"])
+public enum TestFailure: Int, Swift.Error {
+    case error
+    case recoveryError
+    case mappedError
 }
 
-func writeSuccesfulFutures<T>(promise:StreamPromise<T>, value:T, times:Int) {
-    for _ in (1...times) {
-        promise.success(value)
-    }
-}
-
-func writeSuccesfulFutures<T>(promise:StreamPromise<T>, values:[T]) {
-    for value in values {
-        promise.success(value)
-    }
-}
-
-func writeFailedFutures<T>(promise:StreamPromise<T>, times:Int) {
-    for _ in (1...times) {
-        promise.failure(TestFailure.error)
-    }
+struct TestContext {
+    static let immediate = ImmediateContext()
 }
 

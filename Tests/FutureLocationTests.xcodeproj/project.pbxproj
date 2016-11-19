@@ -9,25 +9,26 @@
 /* Begin PBXBuildFile section */
 		05BF91F41CFCA58B00B78B12 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF91F21CFCA58B00B78B12 /* TestHelper.swift */; };
 		05BF91F51CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF91F31CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift */; };
+		05D10C821DE115E4008D1D5E /* FLMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D10C811DE115E4008D1D5E /* FLMocks.swift */; };
 		05F0EBA41CF74E3800468FC9 /* BeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA01CF74E3800468FC9 /* BeaconManagerTests.swift */; };
 		05F0EBA51CF74E3800468FC9 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA11CF74E3800468FC9 /* LocationManagerTests.swift */; };
-		05F0EBA61CF74E3800468FC9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA21CF74E3800468FC9 /* Mocks.swift */; };
 		05F0EBA71CF74E3800468FC9 /* RegionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0EBA31CF74E3800468FC9 /* RegionManagerTests.swift */; };
-		3AD6B3AEF6559660067AD6F7 /* Pods_FutureLocationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3C1A2EFAAA8DBA90F615DA /* Pods_FutureLocationTests.framework */; };
+		E6EC89C3885A8686160A011F /* Pods_FutureLocationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0A47C72984F2315F31D279 /* Pods_FutureLocationTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05BF91F21CFCA58B00B78B12 /* TestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelper.swift; path = Helpers/TestHelper.swift; sourceTree = "<group>"; };
 		05BF91F31CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "XCTTestCase+SimpleFuturesAssertions.swift"; path = "Helpers/XCTTestCase+SimpleFuturesAssertions.swift"; sourceTree = "<group>"; };
+		05D10C811DE115E4008D1D5E /* FLMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FLMocks.swift; path = FutureLocationTests/FLMocks.swift; sourceTree = SOURCE_ROOT; };
+		05D10C831DE11B9D008D1D5E /* FutureLocationTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FutureLocationTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		05E9B2821CF2CCFF003AF75D /* FutureLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EB02111CF4A9D10048391F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		05F0EBA01CF74E3800468FC9 /* BeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeaconManagerTests.swift; path = FutureLocationTests/BeaconManagerTests.swift; sourceTree = SOURCE_ROOT; };
 		05F0EBA11CF74E3800468FC9 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManagerTests.swift; path = FutureLocationTests/LocationManagerTests.swift; sourceTree = SOURCE_ROOT; };
-		05F0EBA21CF74E3800468FC9 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mocks.swift; path = FutureLocationTests/Mocks.swift; sourceTree = SOURCE_ROOT; };
 		05F0EBA31CF74E3800468FC9 /* RegionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionManagerTests.swift; path = FutureLocationTests/RegionManagerTests.swift; sourceTree = SOURCE_ROOT; };
-		973FFBF3AA71DE728832F84E /* Pods-FutureLocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FutureLocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FutureLocationTests/Pods-FutureLocationTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DC3C1A2EFAAA8DBA90F615DA /* Pods_FutureLocationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FutureLocationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA9EC679F7CAA99159CB7E01 /* Pods-FutureLocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FutureLocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FutureLocationTests/Pods-FutureLocationTests.release.xcconfig"; sourceTree = "<group>"; };
+		2996F61C26366703538D8502 /* Pods-FutureLocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FutureLocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FutureLocationTests/Pods-FutureLocationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD0A47C72984F2315F31D279 /* Pods_FutureLocationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FutureLocationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7F945B9BAE76FE1567A46F5 /* Pods-FutureLocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FutureLocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FutureLocationTests/Pods-FutureLocationTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AD6B3AEF6559660067AD6F7 /* Pods_FutureLocationTests.framework in Frameworks */,
+				E6EC89C3885A8686160A011F /* Pods_FutureLocationTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,12 +55,13 @@
 		05E9B26E1CF2CCFF003AF75D = {
 			isa = PBXGroup;
 			children = (
+				05D10C831DE11B9D008D1D5E /* FutureLocationTests-Bridging-Header.h */,
 				05EB02111CF4A9D10048391F /* Info.plist */,
-				A79FC736D2129F3A3EF76D93 /* Frameworks */,
 				05E9B2861CF2CCFF003AF75D /* FutureLocationTests */,
 				05BF91F11CFCA56E00B78B12 /* Helpers */,
-				1F290C033B1437A7275799D3 /* Pods */,
 				05E9B2791CF2CCFF003AF75D /* Products */,
+				31D00696CF947CF22E049935 /* Pods */,
+				5C794A4FAA71C4805A05A20B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,27 +77,27 @@
 			isa = PBXGroup;
 			children = (
 				05F0EBA01CF74E3800468FC9 /* BeaconManagerTests.swift */,
+				05D10C811DE115E4008D1D5E /* FLMocks.swift */,
 				05F0EBA11CF74E3800468FC9 /* LocationManagerTests.swift */,
-				05F0EBA21CF74E3800468FC9 /* Mocks.swift */,
 				05F0EBA31CF74E3800468FC9 /* RegionManagerTests.swift */,
 			);
 			name = FutureLocationTests;
 			path = FutureLocationTestsTests;
 			sourceTree = "<group>";
 		};
-		1F290C033B1437A7275799D3 /* Pods */ = {
+		31D00696CF947CF22E049935 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				973FFBF3AA71DE728832F84E /* Pods-FutureLocationTests.debug.xcconfig */,
-				EA9EC679F7CAA99159CB7E01 /* Pods-FutureLocationTests.release.xcconfig */,
+				2996F61C26366703538D8502 /* Pods-FutureLocationTests.debug.xcconfig */,
+				B7F945B9BAE76FE1567A46F5 /* Pods-FutureLocationTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A79FC736D2129F3A3EF76D93 /* Frameworks */ = {
+		5C794A4FAA71C4805A05A20B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DC3C1A2EFAAA8DBA90F615DA /* Pods_FutureLocationTests.framework */,
+				AD0A47C72984F2315F31D279 /* Pods_FutureLocationTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,12 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 05E9B28F1CF2CCFF003AF75D /* Build configuration list for PBXNativeTarget "FutureLocationTests" */;
 			buildPhases = (
-				B60BA5B89EB0B691569D9769 /* 📦 Check Pods Manifest.lock */,
+				560688681B5ECD9B5E887ECA /* [CP] Check Pods Manifest.lock */,
 				05E9B27E1CF2CCFF003AF75D /* Sources */,
 				05E9B27F1CF2CCFF003AF75D /* Frameworks */,
 				05E9B2801CF2CCFF003AF75D /* Resources */,
-				497D44098F51C6E0193F1200 /* 📦 Embed Pods Frameworks */,
-				EAA0B2706A88E6603CA7D11D /* 📦 Copy Pods Resources */,
+				8D6D43881BBC7F775577D4C1 /* [CP] Embed Pods Frameworks */,
+				F8A2FEFD118ED921F6BAC36C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,11 +132,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Troy Stribling";
 				TargetAttributes = {
 					05E9B2811CF2CCFF003AF75D = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -166,14 +169,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		497D44098F51C6E0193F1200 /* 📦 Embed Pods Frameworks */ = {
+		560688681B5ECD9B5E887ECA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8D6D43881BBC7F775577D4C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,29 +199,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FutureLocationTests/Pods-FutureLocationTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B60BA5B89EB0B691569D9769 /* 📦 Check Pods Manifest.lock */ = {
+		F8A2FEFD118ED921F6BAC36C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		EAA0B2706A88E6603CA7D11D /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,7 +226,7 @@
 				05F0EBA71CF74E3800468FC9 /* RegionManagerTests.swift in Sources */,
 				05BF91F51CFCA58B00B78B12 /* XCTTestCase+SimpleFuturesAssertions.swift in Sources */,
 				05F0EBA41CF74E3800468FC9 /* BeaconManagerTests.swift in Sources */,
-				05F0EBA61CF74E3800468FC9 /* Mocks.swift in Sources */,
+				05D10C821DE115E4008D1D5E /* FLMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,8 +247,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -293,8 +298,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -314,6 +321,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -323,7 +331,7 @@
 		};
 		05E9B2901CF2CCFF003AF75D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 973FFBF3AA71DE728832F84E /* Pods-FutureLocationTests.debug.xcconfig */;
+			baseConfigurationReference = 2996F61C26366703538D8502 /* Pods-FutureLocationTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -331,13 +339,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gnos.us.FutureLocationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FutureLocationTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		05E9B2911CF2CCFF003AF75D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA9EC679F7CAA99159CB7E01 /* Pods-FutureLocationTests.release.xcconfig */;
+			baseConfigurationReference = B7F945B9BAE76FE1567A46F5 /* Pods-FutureLocationTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -345,6 +355,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gnos.us.FutureLocationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FutureLocationTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

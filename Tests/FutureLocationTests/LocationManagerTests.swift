@@ -9,7 +9,6 @@
 import UIKit
 import XCTest
 import CoreLocation
-import SimpleFutures
 @testable import FutureLocation
 
 class LocationManagerTests: XCTestCase {
@@ -28,295 +27,268 @@ class LocationManagerTests: XCTestCase {
         super.tearDown()
     }
 
-    func waitForExpectations(timeout: Double = 2.0) {
-        waitForExpectationsWithTimeout(timeout) { error in
-            XCTAssertNil(error, "\(error)")
+    // MARK: authorize
+    func testAuthorize_WhenAuthorizedAlwaysRequestedAndStatusIsAuthorizedAlways_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let future = self.locationManager.authorize(.authorizedAlways, context: TestContext.immediate)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssertFalse(self.mock.requestAlwaysAuthorizationCalled)
         }
     }
 
-    func testAuthorizedAlwaysWhenAuthorizedAlways() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedAlways)
-        future.onSuccess {
-            XCTAssertFalse(self.mock.requestAlwaysAuthorizationCalled, "requestAlwaysAuthorization called")
-            expectation.fulfill()
+    func testAuthorize_WhenAuthorizedAlwaysRequestedAndStatusIsNotDetermined_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future = self.locationManager.authorize(.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .authorizedAlways)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssertTrue(self.mock.requestAlwaysAuthorizationCalled)
         }
-        future.onFailure{error in
-            XCTAssert(false, "onFailure called")
-        }
-        waitForExpectations()
     }
 
-    func testAuthorizedAlwaysSuccess() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedAlways)
-        future.onSuccess {
-            XCTAssert(self.mock.requestAlwaysAuthorizationCalled, "requestAlwaysAuthorization not called")
-            expectation.fulfill()
+    func testAuthorize_WhenAuthorizedAlwaysRequestedAndStatusIsAuthorizedWhenInUse_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedWhenInUse
+        let future = self.locationManager.authorize(.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .authorizedAlways)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssertTrue(self.mock.requestAlwaysAuthorizationCalled)
         }
-        future.onFailure{error in
-            XCTAssert(false, "onFailure called")
-        }
-        self.locationManager.didChangeAuthorizationStatus(.AuthorizedAlways)
-        waitForExpectations()
     }
 
-    func testAuthorizedAlwaysFailure() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedAlways)
-        future.onSuccess {
-            XCTAssert(false, "onSuccess called")
+
+    func testAuthorize_WhenAuthorizedAlwaysRequestedAndRequestDenied_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future = self.locationManager.authorize(.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .denied)
+        XCTAssertFutureFails(future, context: TestContext.immediate) { error in
+            XCTAssert(self.mock.requestAlwaysAuthorizationCalled)
+            XCTAssertEqualErrors(error, LocationError.authorizationAlwaysFailed)
         }
-        future.onFailure{error in
-            XCTAssert(self.mock.requestAlwaysAuthorizationCalled, "requestAlwaysAuthorization not called")
-            expectation.fulfill()
-        }
-        self.locationManager.didChangeAuthorizationStatus(.Denied)
-        waitForExpectations()
     }
 
-    func testAuthorizedWhenInUseWhenAuthorizedWhenInUse() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedWhenInUse
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedWhenInUse)
-        future.onSuccess {
-            XCTAssertFalse(self.mock.requestWhenInUseAuthorizationCalled, "requestWhenInUseAuthorization called")
-            expectation.fulfill()
+    func testAuthorize_WhenAuthorizedWhenInUseRequestedAndStatusIsAuthorizedWhenInUse_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedWhenInUse
+        let future = self.locationManager.authorize(.authorizedWhenInUse, context: TestContext.immediate)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssertFalse(self.mock.requestWhenInUseAuthorizationCalled)
         }
-        future.onFailure{error in
-            XCTAssert(false, "onFailure called")
-        }
-        waitForExpectations()
     }
     
-    func testAuthorizedWhenInUseSuccess() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedWhenInUse)
-        future.onSuccess {
-            XCTAssert(self.mock.requestWhenInUseAuthorizationCalled, "requestWhenInUseAuthorization not called")
-            expectation.fulfill()
+    func testAuthorize_WhenAuthorizedWhenInUseRequestedAndStatusIsNotDetermined_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future = self.locationManager.authorize(.authorizedWhenInUse, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .authorizedWhenInUse)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssert(self.mock.requestWhenInUseAuthorizationCalled)
         }
-        future.onFailure{error in
-            XCTAssert(false, "onFailure called")
-        }
-        self.locationManager.didChangeAuthorizationStatus(.AuthorizedWhenInUse)
-        waitForExpectations()
     }
     
-    func testAuthorizedWhenInUseFailure() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = self.locationManager.authorize(.AuthorizedWhenInUse)
-        future.onSuccess {
-            XCTAssert(false, "onSuccess called")
+    func testAuthorize_WhenAuthorizedWhenInUseRequestedAndRequestDenied_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future = self.locationManager.authorize(.authorizedWhenInUse, context: TestContext.immediate)
+        locationManager.didChangeAuthorization(status: .denied)
+        XCTAssertFutureFails(future, context: TestContext.immediate) { error in
+            XCTAssert(self.mock.requestWhenInUseAuthorizationCalled)
+            XCTAssertEqualErrors(error, LocationError.authorizationWhenInUseFailed)
         }
-        future.onFailure{error in
-            XCTAssert(self.mock.requestWhenInUseAuthorizationCalled, "requestWhenInUseAuthorization not called")
-            XCTAssertEqual(error.code, FLError.authorizationWhenInUseFailed.code, "Error code invalid")
-            expectation.fulfill()
-        }
-        locationManager.didChangeAuthorizationStatus(.Denied)
-        waitForExpectations()
+    }
+
+    func testAuthorize_WhenRequestMadeBeforePreviousRequestCompletes_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future1 = self.locationManager.authorize(.authorizedWhenInUse, context: TestContext.immediate)
+        let future2 = self.locationManager.authorize(.authorizedWhenInUse, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .authorizedWhenInUse)
+        XCTAssertFutureSucceeds(future1, context: TestContext.immediate)
+        XCTAssertFutureSucceeds(future2, context: TestContext.immediate)
+    }
+
+    // MARK: startUpdatingLocation
+    func testStartUpdatingLocation_WhenAuthorizationSucceeds_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureStreamSucceeds(stream, context: TestContext.immediate, validations: [
+            { locations in
+                XCTAssert(locations.count == 2)
+                XCTAssert(self.mock.startUpdatingLocationCalled)
+                XCTAssert(self.locationManager.isUpdating)
+            }
+        ])
     }
     
-
-    func testUpdateLocationSuccess() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startUpdatingLocation(authorization: .AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(locations.count == 2, "locations count invalid")
-            XCTAssert(self.mock.startUpdatingLocationCalled, "startUpdatingLocation not called")
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        future.onFailure(context) {error in
-            XCTAssert(false, "onFailure called")
-        }
-        self.locationManager.didUpdateLocations(self.testLocations)
-        waitForExpectations()
-    }
-    
-    func testUpdateLocationFailure() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startUpdatingLocation(authorization: .AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(false, "onSuccess called")
-        }
-        future.onFailure(context) {error in
-            XCTAssert(self.mock.startUpdatingLocationCalled, "startUpdatingLocation not called")
-            XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
-            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        self.locationManager.didFailWithError(TestFailure.error)
-        waitForExpectations()
+    func testStartUpdatingLocation_WhenAuthorizedAndUpdateFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didFail(withError: TestFailure.error)
+        XCTAssertFutureStreamFails(stream, context: TestContext.immediate, validations: [
+            { error in
+                XCTAssert(self.mock.startUpdatingLocationCalled)
+                XCTAssertEqualErrors(error, TestFailure.error)
+                XCTAssertTrue(self.locationManager.isUpdating)
+            }
+        ])
     }
 
-    func testUpdateLocationAuthorizationFailure() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = self.locationManager.startUpdatingLocation(authorization: .AuthorizedAlways)
-        future.onSuccess {locations in
-            XCTAssert(false, "onSuccess called")
-        }
-        future.onFailure {error in
-            XCTAssertFalse(self.mock.startUpdatingLocationCalled, "startUpdatingLocation called")
-            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
-            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        self.locationManager.didChangeAuthorizationStatus(.Denied)
-        waitForExpectations()
+    func testStartUpdatingLocation_WhenAuthorizationFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let stream = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .denied)
+        XCTAssertFutureStreamFails(stream, context: TestContext.immediate, validations: [
+            { error in
+                XCTAssertFalse(self.mock.startUpdatingLocationCalled)
+                XCTAssertEqualErrors(error, LocationError.authorizationAlwaysFailed)
+                XCTAssertFalse(self.locationManager.isUpdating)
+            }
+        ])
     }
 
-    func testStopLocationUpdates() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startUpdatingLocation(authorization: .AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
-            XCTAssertFalse(self.mock.stopUpdatingLocationCalled, "stopUpdatingLocation not called")
-            expectation.fulfill()
+    func testStartUpdatingLocation_WhenAlreadyUpdating_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream1 = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        let stream2 = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureStreamSucceeds(stream1, context: TestContext.immediate)
+        XCTAssertFutureStreamSucceeds(stream2, context: TestContext.immediate)
+    }
+
+    // MARK: stopUpdatingLocation
+    func testStopUpdatingLocation_WhenLocationIsUpdating_StopsUpdating() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        stream.onSuccess(context: TestContext.immediate) { locations in
+            XCTFail()
         }
-        future.onFailure(context) {error in
-            XCTAssert(false, "onFailure called")
+        stream.onFailure(context: TestContext.immediate) { error in
+            XCTFail()
         }
-        self.locationManager.didUpdateLocations(self.testLocations)
         self.locationManager.stopUpdatingLocation()
-        XCTAssert(self.mock.stopUpdatingLocationCalled, "stopUpdatingLocation not called")
-        XCTAssertFalse(self.locationManager.isUpdating, "isUpdating is true")
-        self.locationManager.didUpdateLocations(self.testLocations)
-        waitForExpectations()
+        XCTAssert(self.mock.stopUpdatingLocationCalled)
+        XCTAssertFalse(self.locationManager.isUpdating)
+        self.locationManager.didUpdate(locations: testLocations)
     }
- 
-    func testUpdateSignificantLocationChangesSuccess() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.AuthorizedAlways, context: context)
-        future.onSuccess(context) { locations in
-            XCTAssert(locations.count == 2, "locations count invalid")
-            XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled, "startMonitoringSignificantLocationChanges called")
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        future.onFailure(context) {error in
-            XCTAssert(false, "onFailure called")
-        }
-        self.locationManager.didUpdateLocations(self.testLocations)
-        waitForExpectations()
+
+    // MARK: startMonitoringSignificantLocationChanges
+    func testStartMonitoringSignificantLocationChanges_WhenAuthorizedAlwaysAndUpdateSucceeds_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureStreamSucceeds(stream, context: TestContext.immediate, validations: [
+            { locations in
+                XCTAssert(locations.count == 2)
+                XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled)
+                XCTAssert(self.locationManager.isUpdating)
+            }
+        ])
     }
     
-    func testUpdateSignificantLocationChangesFailure() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(false, "onSuccess called")
-        }
-        future.onFailure(context) {error in
-            XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled, "startUpdatingLocation called")
-            XCTAssertEqual(error.code, TestFailure.error.code, "Error code invalid")
-            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        self.locationManager.didFailWithError(TestFailure.error)
-        waitForExpectations()
+    func testStartMonitoringSignificantLocationChanges_WhenAuthorizedAlwaysAndUpdateFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didFail(withError: TestFailure.error)
+        XCTAssertFutureStreamFails(stream, context: TestContext.immediate, validations: [
+            { error in
+                XCTAssert(self.mock.startMonitoringSignificantLocationChangesCalled)
+                XCTAssertEqualErrors(error, TestFailure.error)
+                XCTAssertTrue(self.locationManager.isUpdating)
+            }
+        ])
     }
 
-    func testStopSignificantLocationChangeUpdates() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.startMonitoringSignificantLocationChanges(authorization: .AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
+    func testStartMonitoringSignificantLocationChanges_WhenAuthorizationFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let stream = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .denied)
+        XCTAssertFutureStreamFails(stream, context: TestContext.immediate, validations: [
+            { error in
+                XCTAssertFalse(self.mock.startMonitoringSignificantLocationChangesCalled)
+                XCTAssertEqualErrors(error, LocationError.authorizationAlwaysFailed)
+                XCTAssertFalse(self.locationManager.isUpdating)
+            }
+        ])
+    }
+
+    func testStartMonitoringSignificantLocationChanges_WhenAlreadyUpdating_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream1 = self.locationManager.startMonitoringSignificantLocationChanges(authorization: .authorizedAlways, context: TestContext.immediate)
+        let stream2 = self.locationManager.startMonitoringSignificantLocationChanges(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureStreamSucceeds(stream1, context: TestContext.immediate)
+        XCTAssertFutureStreamSucceeds(stream2, context: TestContext.immediate)
+    }
+
+    // MARK: stopMonitoringSignificantLocationChanges
+    func testStopMonitoringSignificantLocationChanges_WhenLocationIsUpdating_StopsUpdating() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let stream = self.locationManager.startMonitoringSignificantLocationChanges(authorization: .authorizedAlways, context: TestContext.immediate)
+        stream.onSuccess(context: TestContext.immediate) { locations in
+            XCTFail()
         }
-        future.onFailure(context) {error in
-            XCTAssert(false, "onFailure called")
+        stream.onFailure(context: TestContext.immediate) { error in
+            XCTFail()
         }
-        self.locationManager.didUpdateLocations(self.testLocations)
         self.locationManager.stopMonitoringSignificantLocationChanges()
-        XCTAssert(self.mock.stopMonitoringSignificantLocationChangesCalled, "stopUpdatingLocation not called")
-        XCTAssertFalse(self.locationManager.isUpdating, "isUpdating is true")
-        self.locationManager.didUpdateLocations(self.testLocations)
-        waitForExpectations()
+        XCTAssert(self.mock.stopMonitoringSignificantLocationChangesCalled)
+        XCTAssertFalse(self.locationManager.isUpdating)
+        self.locationManager.didUpdate(locations: testLocations)
     }
 
-
-    func testUpdateSignificantLocationChangesAuthorizationFailure() {
-        CLLocationManagerMock._authorizationStatus = .NotDetermined
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let future = self.locationManager.startMonitoringSignificantLocationChanges(authorization:.AuthorizedAlways)
-        future.onSuccess {locations in
-            XCTAssert(false, "onSuccess called")
+    // MARK: requestLocation
+    func testRequestLocation_WhenAuthorizationSucceeds_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let future = self.locationManager.requestLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) { locations in
+            XCTAssert(locations.count == 2)
+            XCTAssert(self.mock.requestLocationCalled)
         }
-        future.onFailure {error in
-            XCTAssertFalse(self.mock.startMonitoringSignificantLocationChangesCalled, "startUpdatingLocation called")
-            XCTAssertEqual(error.code, FLError.authorizationAlwaysFailed.code, "Error code invalid")
-            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        self.locationManager.didChangeAuthorizationStatus(.Denied)
-        waitForExpectations()
     }
 
-    func testRequestLocationCastFailure() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
-        let context = ImmediateContext()
-        let future = self.locationManager.requestLocation(.AuthorizedAlways, context: context)
-        future.onSuccess(context) {locations in
-            XCTAssert(false, "onFailure called")
+    func testRequestLocation_WhenAuthorizedAndRequestFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let future = self.locationManager.requestLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didFail(withError: TestFailure.error)
+        XCTAssertFutureFails(future, context: TestContext.immediate) { error in
+            XCTAssert(self.mock.requestLocationCalled)
+            XCTAssertEqualErrors(error, TestFailure.error)
         }
-        future.onFailure(context) { error in
-            XCTAssertEqual(error.code, FLError.notSupportedForIOSVersion.code, "Error code invalid")
-            XCTAssertFalse(self.locationManager.isUpdating, "isUpdating value invalid")
-            expectation.fulfill()
-        }
-        waitForExpectations()
     }
 
-    func testDeferrLocationUpdatesSuccess() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onSuccess fulfilled for future")
+    func testRequestLocation_WhenAuthorizationFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .notDetermined
+        let future = self.locationManager.requestLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didChangeAuthorization(status: .denied)
+        XCTAssertFutureFails(future, context: TestContext.immediate) { error in
+            XCTAssertFalse(self.mock.requestLocationCalled)
+            XCTAssertEqualErrors(error, LocationError.authorizationAlwaysFailed)
+        }
+    }
+
+    func testRequestLocation_WhenRequestInProgress_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
+        let future1 = self.locationManager.requestLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        let future2 = self.locationManager.requestLocation(authorization: .authorizedAlways, context: TestContext.immediate)
+        self.locationManager.didUpdate(locations: testLocations)
+        XCTAssertFutureSucceeds(future1, context: TestContext.immediate)
+        XCTAssertFutureSucceeds(future2, context: TestContext.immediate)
+    }
+
+    // MARK: allowDeferredLocationUpdatesUntilTraveled
+    func testAllowDeferredLocationUpdatesUntilTraveled_WhenUpdateSucceeds_CompletesSuccessfully() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
         let future = self.locationManager.allowDeferredLocationUpdatesUntilTraveled(1000.0, timeout: 300.0)
-        future.onSuccess {
-            XCTAssert(self.mock.allowDeferredLocationUpdatesUntilTraveledCalled, "allowDeferredLocationUpdatesUntilTraveled not called")
-            expectation.fulfill()
+        self.locationManager.didFinishDeferredUpdates(withError: nil)
+        XCTAssertFutureSucceeds(future, context: TestContext.immediate) {
+            XCTAssert(self.mock.allowDeferredLocationUpdatesUntilTraveledCalled)
         }
-        future.onFailure { error in
-            XCTAssert(false, "onFailure calledf")
-        }
-        self.locationManager.didFinishDeferredUpdatesWithError(nil)
-        waitForExpectations()
     }
 
-    func testDeferrLocationUpdatesFailure() {
-        CLLocationManagerMock._authorizationStatus = .AuthorizedAlways
-        let expectation = expectationWithDescription("onFailure fulfilled for future")
+    func testAllowDeferredLocationUpdatesUntilTraveled_WhenUpdateFails_CompletesWithError() {
+        CLLocationManagerMock._authorizationStatus = .authorizedAlways
         let future = self.locationManager.allowDeferredLocationUpdatesUntilTraveled(1000.0, timeout: 300.0)
-        future.onSuccess {
-            XCTAssert(false, "onFailure calledf")
+        self.locationManager.didFinishDeferredUpdates(withError: TestFailure.error)
+        XCTAssertFutureFails(future, context: TestContext.immediate) { error in
+            XCTAssert(self.mock.allowDeferredLocationUpdatesUntilTraveledCalled)
+            XCTAssertEqualErrors(error, TestFailure.error)
         }
-        future.onFailure { error in
-            XCTAssert(self.mock.allowDeferredLocationUpdatesUntilTraveledCalled, "allowDeferredLocationUpdatesUntilTraveled not called")
-            XCTAssertEqual(error.code, TestFailure.error.code, "error code invalid")
-            expectation.fulfill()
-        }
-        self.locationManager.didFinishDeferredUpdatesWithError(TestFailure.error)
-        waitForExpectations()
     }
 
 }

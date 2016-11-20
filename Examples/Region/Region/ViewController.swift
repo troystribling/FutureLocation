@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import FutureLocation
 
 class ViewController: UITableViewController {
 
@@ -21,10 +22,10 @@ class ViewController: UITableViewController {
     @IBOutlet var startMonitoringLabel: UILabel!
     @IBOutlet var createRegionButton: UIButton!
     
-    var region: FLCircularRegion?
+    var region: CircularRegion?
 
-    let locationManager = FLLocationManager()
-    let regionManager   = FLRegionManager()
+    let locationManager = LocationManager()
+    let regionManager   = RegionManager()
     
     let progressView    = ProgressView()
 
@@ -34,22 +35,20 @@ class ViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if self.region == nil {
-            self.startMonitoringLabel.textColor = UIColor.lightGray
-            self.startMonitoringSwitch.isOn = false
-            self.startMonitoringSwitch.isEnabled = false
-        }
+        startMonitoringLabel.textColor = UIColor.lightGray
+        startMonitoringSwitch.isOn = false
+        startMonitoringSwitch.isEnabled = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !FLCircularRegion.isMonitoringAvailableForClass() || !self.regionManager.locationServicesEnabled() || self.regionManager.authorizationStatus() == .Denied {
-            self.createRegionButton.isEnabled = false
-            self.createRegionButton.setTitleColor(UIColor.lightGray, for: UIControlState())
+        if !CircularRegion.isMonitoringAvailableForClass() || !self.regionManager.locationServicesEnabled() || self.regionManager.authorizationStatus() == .denied {
+            createRegionButton.isEnabled = false
+            createRegionButton.setTitleColor(UIColor.lightGray, for: UIControlState())
             var message = "Region monitoring not availble"
-            if !self.regionManager.locationServicesEnabled() {
+            if !regionManager.locationServicesEnabled() {
                 message = "Location services not enabled"
-            } else if self.regionManager.authorizationStatus() == .Denied {
+            } else if regionManager.authorizationStatus() == .denied {
                 message = "Autorization status is denied"
             }
             self.present(UIAlertController.alertOnErrorWithMessage(message), animated: true, completion: nil)
@@ -62,19 +61,19 @@ class ViewController: UITableViewController {
 
     @IBAction func createRegion(_ sender: AnyObject) {
         self.progressView.show()
-        let addressFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedAlways).flatmap { [unowned self] locations -> Future<[CLPlacemark]> in
+        let addressFuture = locationManager.startUpdatingLocation(authorization: .authorizedAlways, capacity: 10).flatMap { [unowned self] locations -> Future<[CLPlacemark]> in
             self.locationManager.stopUpdatingLocation()
             if let location = locations.first {
                 self.latituteLabel.text = NSString(format: "%.6f", location.coordinate.latitude) as String
                 self.longitudeLabel.text = NSString(format: "%.6f", location.coordinate.longitude) as String
-                self.region = FLCircularRegion(center: location.coordinate, radius: 50.0, identifier: "FutureLocation Region", capacity: 10)
+                self.region = CircularRegion(center: location.coordinate, radius: 50.0, identifier: "FutureLocation Region", capacity: 10)
             }
             return self.locationManager.reverseGeocodeLocation()
         }
         addressFuture.onSuccess { [unowned self] placemarks in
             if let placemark = placemarks.first {
-                self.startMonitoringSwitch.enabled = true
-                self.startMonitoringLabel.textColor = UIColor.blackColor()
+                self.startMonitoringSwitch.isEnabled = true
+                self.startMonitoringLabel.textColor = UIColor.black
                 self.progressView.remove()
                 if let subThoroughfare = placemark.subThoroughfare, let thoroughfare = placemark.thoroughfare {
                     self.address1Label.text = "\(subThoroughfare) \(thoroughfare)"
@@ -89,7 +88,7 @@ class ViewController: UITableViewController {
         }
         addressFuture.onFailure { [unowned self] error in
             self.progressView.remove()
-            self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
+            self.present(UIAlertController.alertOnError(error), animated: true, completion: nil)
         }
     }
     
@@ -104,30 +103,30 @@ class ViewController: UITableViewController {
         }
     }
     
-    func startMonitoring(_ region: FLCircularRegion) {
-        let regionFuture = self.regionManager.startMonitoringForRegion(region, authorization: .AuthorizedAlways)
+    func startMonitoring(_ region: CircularRegion) {
+        let regionFuture = regionManager.startMonitoring(forRegion: region, authorization: .authorizedAlways)
         regionFuture.onSuccess { state in
             Notify.withMessage("region Event '\(region.identifier)'")
             switch state {
-            case .Start:
+            case .start:
                 self.setStartedMonitoring(region)
                 if let region = self.region {
                     self.locationInRegion(region)
                 }
-            case .Inside:
+            case .inside:
                 self.setInsideRegion(region)
-            case .Outside:
+            case .outside:
                 self.setOutsideRegion(region)
             }
         }
         regionFuture.onFailure { error in
-            self.startMonitoringSwitch.on = false
+            self.startMonitoringSwitch.isOn = false
             Notify.withMessage("Error: '\(error.localizedDescription)'")
         }
     }
     
-    func locationInRegion(_ region: FLCircularRegion) {
-        let locationFuture = self.locationManager.startUpdatingLocation(10, authorization: .AuthorizedAlways)
+    func locationInRegion(_ region: CircularRegion) {
+        let locationFuture = self.locationManager.startUpdatingLocation(authorization: .authorizedAlways, capacity: 10)
         locationFuture.onSuccess { locations in
             if let location = locations.first {
                 self.locationManager.stopUpdatingLocation()
@@ -139,30 +138,30 @@ class ViewController: UITableViewController {
             }
         }
         locationFuture.onFailure { error in
-            self.presentViewController(UIAlertController.alertOnError(error), animated: true, completion: nil)
+            self.present(UIAlertController.alertOnError(error), animated: true)
         }
 
     }
     
-    func setNotMonitoring(_ region: FLCircularRegion) {
+    func setNotMonitoring(_ region: CircularRegion) {
         self.stateLabel.text = "Not Monitoring"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Not Monitoring '\(region.identifier)'")
     }
 
-    func setStartedMonitoring(_ region: FLCircularRegion) {
+    func setStartedMonitoring(_ region: CircularRegion) {
         self.stateLabel.text = "Started Monitoring"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.4, blue: 0.6, alpha: 1.0)
         Notify.withMessage("Started monitoring region '\(region.identifier)'")
     }
 
-    func setInsideRegion(_ region: FLCircularRegion) {
+    func setInsideRegion(_ region: CircularRegion) {
         self.stateLabel.text = "Inside Region"
         self.stateLabel.textColor = UIColor(red: 0.0, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Entered region '\(region.identifier)'")
     }
 
-    func setOutsideRegion(_ region: FLCircularRegion) {
+    func setOutsideRegion(_ region: CircularRegion) {
         self.stateLabel.text = "Outside Region"
         self.stateLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Exited region '\(region.identifier)'")

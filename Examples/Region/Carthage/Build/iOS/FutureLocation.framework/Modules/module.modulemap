@@ -1,3 +1,0 @@
-framework module FutureLocation {
-    header "FutureLocation-Swift.h"
-}

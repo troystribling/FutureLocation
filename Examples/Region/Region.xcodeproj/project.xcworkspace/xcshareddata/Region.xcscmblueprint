@@ -9,11 +9,11 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F83E71DB-1501-44F6-8DA0-A69815494A4A",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "1B46E2EB4238C0978F01FFF9E8C1390836A3DFD9" : "BlueCap",
-    "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB" : "FutureLocation"
+    "1B46E2EB4238C0978F01FFF9E8C1390836A3DFD9" : "BlueCap\/",
+    "86649B0B03F5FFD58FADBDCBC3AC4B1905E325DB" : "FutureLocation\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Region",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples\/Region\/Region.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {

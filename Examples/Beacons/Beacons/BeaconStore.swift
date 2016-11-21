@@ -11,16 +11,12 @@ import FutureLocation
 
 class BeaconStore {
     
-    class func getBeacon() -> NSUUID? {
-        if let storedBeacon = NSUserDefaults.standardUserDefaults().stringForKey("beacon") {
-            return NSUUID(UUIDString:storedBeacon)
-        } else {
-            return nil
-        }
+    class func getBeacon() -> UUID? {
+        return UserDefaults.standard.string(forKey: "beacon").flatMap { UUID(uuidString: $0) }
     }
     
-    class func setBeacon(uuid:NSUUID) {
-        NSUserDefaults.standardUserDefaults().setObject(uuid.UUIDString, forKey:"beacon")
+    class func setBeacon(_ uuid: UUID) {
+        UserDefaults.standard.set(uuid.uuidString, forKey:"beacon")
     }
     
 }

@@ -12,7 +12,7 @@ import FutureLocation
 
 class BeaconsViewController: UITableViewController {
     
-    var beaconRegion: FLBeaconRegion?
+    var beaconRegion: BeaconRegion?
     
     struct MainStoryBoard {
         static let beaconCell   = "BeaconCell"
@@ -26,26 +26,26 @@ class BeaconsViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BeaconsViewController.updateBeacons), name: AppNotification.didUpdateBeacon, object: self.beaconRegion)
+        NotificationCenter.default.addObserver(self, selector: #selector(BeaconsViewController.updateBeacons), name: NSNotification.Name(rawValue: AppNotification.didUpdateBeacon), object: self.beaconRegion)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationItem.title = ""
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        navigationItem.title = ""
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
     }
     
     func updateBeacons() {
         self.tableView.reloadData()
     }
     
-    func sortedBeacons(beaconRegion: FLBeaconRegion) -> [FLBeacon] {
-        return  beaconRegion.beacons.sort {(b1: FLBeacon, b2: FLBeacon) -> Bool in
+    func sortedBeacons(_ beaconRegion: BeaconRegion) -> [Beacon] {
+        return  beaconRegion.beacons.sorted {(b1: Beacon, b2: Beacon) -> Bool in
             if b1.major > b2.major {
                 return true
             } else if b1.major == b2.major && b1.minor > b2.minor {
@@ -58,11 +58,11 @@ class BeaconsViewController: UITableViewController {
     
     
     // UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let beaconRegion = self.beaconRegion {
             return beaconRegion.beacons.count
         } else {
@@ -70,11 +70,11 @@ class BeaconsViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.beaconCell, forIndexPath: indexPath) as! BeaconCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MainStoryBoard.beaconCell, for: indexPath) as! BeaconCell
         if let beaconRegion = self.beaconRegion {
             let beacon = self.sortedBeacons(beaconRegion)[indexPath.row]
-            cell.proximityUUIDLabel.text = beacon.proximityUUID.UUIDString
+            cell.proximityUUIDLabel.text = beacon.proximityUUID.uuidString
             cell.majorLabel.text = "\(beacon.major)"
             cell.minorLabel.text = "\(beacon.minor)"
             cell.proximityLabel.text = beacon.proximity.stringValue

@@ -8,15 +8,9 @@
 
 import UIKit
 
-enum AppError : Int {
-    case rangingBeacons = 0
-    case outOfRegion    = 1
-}
-
-struct AppErrors {
-    static let domain = "BeaconExample"
-    static let rangingBeacons = NSError(domain:domain, code:AppError.rangingBeacons.rawValue, userInfo:[NSLocalizedDescriptionKey:"Ranging beacons"])
-    static let outOfRegion = NSError(domain:domain, code:AppError.outOfRegion.rawValue, userInfo:[NSLocalizedDescriptionKey:"Out of region"])
+enum AppError : Swift.Error {
+    case rangingBeacons
+    case outOfRegion
 }
 
 struct AppNotification {
@@ -29,26 +23,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    fileprivate func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any]?) -> Bool {
         application.registerUserNotificationSettings(
-            UIUserNotificationSettings(forTypes:[UIUserNotificationType.Alert, UIUserNotificationType.Sound, UIUserNotificationType.Badge], categories:nil))
+            UIUserNotificationSettings(types:[UIUserNotificationType.alert, UIUserNotificationType.sound, UIUserNotificationType.badge], categories:nil))
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         Notify.resetEventCount()
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
     }
 
 

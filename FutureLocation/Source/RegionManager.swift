@@ -46,33 +46,33 @@ public class RegionManager : LocationManager {
         return self.regionMonitorStatus[identifier] ?? false
     }
 
-    public func startMonitoring(forRegion region: Region, authorization: CLAuthorizationStatus = .authorizedWhenInUse, capacity: Int = Int.max, context: ExecutionContext = QueueContext.main) -> FutureStream<RegionState> {
+    public func startMonitoring(for region: Region, authorization: CLAuthorizationStatus = .authorizedWhenInUse, capacity: Int = Int.max, context: ExecutionContext = QueueContext.main) -> FutureStream<RegionState> {
         let authorizationFuture = self.authorize(authorization, context: context)
         authorizationFuture.onFailure { _ in self.updateIsMonitoring(false) }
         return authorizationFuture.flatMap(capacity: capacity, context: context) {
             self.updateIsMonitoring(true)
             self.configuredRegions[region.identifier] = region
-            self.clLocationManager.startMonitoringForRegion(region.clRegion)
+            self.clLocationManager.startMonitoring(for: region.clRegion)
             return region.regionPromise.stream
         }
     }
 
-    public func stopMonitoringForRegion(_ region: Region) {
+    public func stopMonitoring(for region: Region) {
         self.regionMonitorStatus.removeValue(forKey: region.identifier)
         self.configuredRegions.removeValue(forKey: region.identifier)
-        self.clLocationManager.stopMonitoringForRegion(region.clRegion)
+        self.clLocationManager.stopMonitoring(for: region.clRegion)
         self.updateIsMonitoring(false)
     }
 
     public func stopMonitoringAllRegions() {
         for region in self.regions {
-            self.stopMonitoringForRegion(region)
+            self.stopMonitoring(for: region)
         }
     }
 
-    public func requestState(forRegion region: Region) -> Future<CLRegionState> {
+    public func requestState(for region: Region) -> Future<CLRegionState> {
         self.requestStateForRegionPromises[region.identifier] = Promise<CLRegionState>()
-        self.clLocationManager.requestStateForRegion(region.clRegion)
+        self.clLocationManager.requestState(for: region.clRegion)
         return self.requestStateForRegionPromises[region.identifier]!.future
     }
 

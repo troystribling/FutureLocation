@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 import FutureLocation
-import SimpleFutures
 
 class ViewController: UITableViewController, UITextFieldDelegate {
 
@@ -19,19 +18,20 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet var startMonitoringSwitch: UISwitch!
     @IBOutlet var startMonitoringLabel: UILabel!
     
-    var beaconRegion: FLBeaconRegion
+    var beaconRegion: BeaconRegion
+    var beaconFuture: FutureStream<[Beacon]>?
 
-    var progressView    = ProgressView()
-    var isRanging       = false
+    var progressView = ProgressView()
+    var isRanging = false
     
-    let beaconManager   = FLBeaconManager()
-    let estimoteUUID    = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
+    let beaconManager = BeaconManager()
+    let estimoteUUID = UUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
     
     required init?(coder aDecoder: NSCoder) {
         if let uuid = BeaconStore.getBeacon() {
-            self.beaconRegion = FLBeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
+            beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
         } else {
-            self.beaconRegion = FLBeaconRegion(proximityUUID: self.estimoteUUID, identifier: "Example Beacon")
+            beaconRegion = BeaconRegion(proximityUUID: self.estimoteUUID, identifier: "Example Beacon")
             BeaconStore.setBeacon(self.estimoteUUID)
         }
         super.init(coder: aDecoder)
@@ -40,18 +40,18 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let uuid = BeaconStore.getBeacon() {
-            self.uuidTextField.text = uuid.UUIDString
+            uuidTextField.text = uuid.uuidString
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !self.beaconManager.isRangingAvailable() || !self.beaconManager.locationServicesEnabled() {
-            self.startMonitoringSwitch.enabled = false
-            self.uuidTextField.enabled = false
-            self.startMonitoringLabel.textColor = UIColor.lightGrayColor()
+        if !beaconManager.isRangingAvailable() || !self.beaconManager.locationServicesEnabled() {
+            startMonitoringSwitch.isEnabled = false
+            uuidTextField.isEnabled = false
+            startMonitoringLabel.textColor = UIColor.lightGray
             let message = self.beaconManager.locationServicesEnabled() ? "Beacon ranging not available" : "Location services not enabled"
-            self.presentViewController(UIAlertController.alertOnErrorWithMessage(message), animated: true, completion: nil)
+            present(UIAlertController.alertOnErrorWithMessage(message), animated: true, completion: nil)
         }
     }
     
@@ -59,83 +59,80 @@ class ViewController: UITableViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let beaconsViewController = segue.destinationViewController as! BeaconsViewController
-        beaconsViewController.beaconRegion = self.beaconRegion
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        let beaconsViewController = segue.destination as! BeaconsViewController
+        beaconsViewController.beaconRegion = beaconRegion
     }
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return self.beaconRegion.beacons.count > 0
     }
 
-    @IBAction func toggleMonitoring(sender: AnyObject) {
-        if self.beaconManager.isMonitoring {
-            self.beaconManager.stopRangingAllBeacons()
-            self.beaconManager.stopMonitoringAllRegions()
-            self.uuidTextField.enabled = true
-            self.isRanging = false
-            self.setNotMonitoring()                                 
-        } else {
-            self.startMonitoring()
+    @IBAction func toggleMonitoring(_ sender: AnyObject) {
+        guard !beaconManager.isMonitoring else {
+            startMonitoring()
+            return
         }
+        beaconManager.stopRangingAllBeacons()
+        beaconManager.stopMonitoringAllRegions()
+        uuidTextField.isEnabled = true
+        isRanging = false
+        setNotMonitoring()
     }
     
     func startMonitoring() {
         self.progressView.show()
-        self.uuidTextField.enabled = false
-        let beaconFuture = self.beaconManager.startMonitoringForRegion(self.beaconRegion, authorization: .AuthorizedAlways).flatmap{ [unowned self] state -> FutureStream<[FLBeacon]> in
+        self.uuidTextField.isEnabled = false
+        beaconFuture = self.beaconManager.startMonitoring(for: beaconRegion, authorization: .authorizedAlways).flatMap{ [unowned self] state -> FutureStream<[Beacon]> in
             self.progressView.remove()
             switch state {
-            case .Start:
+            case .start:
                 self.setStartedMonitoring()
                 self.isRanging = true
-                return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
-            case .Inside:
+                return self.beaconManager.startRangingBeacons(in: self.beaconRegion)
+            case .inside:
                 self.setInsideRegion()
-                if !self.beaconManager.isRangingRegion(self.beaconRegion.identifier) {
-                    self.isRanging = true
-                    return self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
-                } else {
-                    let errorPromise = StreamPromise<[FLBeacon]>()
-                    errorPromise.failure(AppErrors.rangingBeacons)
-                    return errorPromise.future
+                guard !self.beaconManager.isRangingRegion(identifier: self.beaconRegion.identifier) else {
+                    throw AppError.rangingBeacons
                 }
-            case .Outside:
+                self.isRanging = true
+                return self.beaconManager.startRangingBeacons(in: self.beaconRegion)
+            case .outside:
                 self.setOutsideRegion()
-                self.beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
-                let errorPromise = StreamPromise<[FLBeacon]>()
-                errorPromise.failure(AppErrors.outOfRegion)
-                return errorPromise.future
+                self.beaconManager.stopRangingBeacons(in: self.beaconRegion)
+                throw AppError.outOfRegion
             }
         }
-        beaconFuture.onSuccess { [unowned self] beacons in
-            if self.isRanging {
-                if UIApplication.sharedApplication().applicationState == .Active && beacons.count > 0 {
-                    NSNotificationCenter.defaultCenter().postNotificationName(AppNotification.didUpdateBeacon, object: self.beaconRegion)
-                    self.setInsideRegion()
-                }
-                self.beaconsLabel.text = "\(beacons.count)"
+        beaconFuture!.onSuccess { [unowned self] beacons in
+            guard !self.isRanging else {
+                return
             }
+            if UIApplication.shared.applicationState == .active && beacons.count > 0 {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppNotification.didUpdateBeacon), object: self.beaconRegion)
+                self.setInsideRegion()
+            }
+            self.beaconsLabel.text = "\(beacons.count)"
         }
-        beaconFuture.onFailure { [unowned self]  error in
+        beaconFuture!.onFailure { [unowned self]  error in
             self.progressView.remove()
-            if error.domain != AppErrors.domain {
-                Notify.withMessage("Error: '\(error.localizedDescription)'")
-                self.startMonitoringSwitch.on = false
+            if error is AppError {
+                return
             }
+            Notify.withMessage("Error: '\(error.localizedDescription)'")
+            self.startMonitoringSwitch.isOn = false
         }
     }
     
     // UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let newValue = self.uuidTextField.text {
-            if let uuid = NSUUID(UUIDString: newValue) {
-                self.beaconRegion = FLBeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
+            if let uuid = UUID(uuidString: newValue) {
+                self.beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
                 BeaconStore.setBeacon(uuid)
                 self.uuidTextField.resignFirstResponder()
                 return true
             } else {
-                self.presentViewController(UIAlertController.alertOnErrorWithMessage("UUID '\(newValue)' is Invalid"), animated: true, completion: nil)
+                self.present(UIAlertController.alertOnErrorWithMessage("UUID '\(newValue)' is Invalid"), animated: true, completion: nil)
                 return false
             }
 

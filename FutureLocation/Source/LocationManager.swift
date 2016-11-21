@@ -54,15 +54,16 @@ public protocol CLLocationManagerInjectable {
     // MARK: Region Monitoring
     var maximumRegionMonitoringDistance: CLLocationDistance { get }
     var monitoredRegions: Set<CLRegion> { get }
-    func startMonitoringForRegion(_ region: CLRegion)
-    func stopMonitoringForRegion(_ region: CLRegion)
+    func startMonitoring(for region: CLRegion)
+    func stopMonitoring(for region: CLRegion)
+    func requestState(for region: CLRegion)
 
     // MARK: Beacons
     static func isRangingAvailable() -> Bool
     var rangedRegions: Set<CLRegion> { get }
-    func startRangingBeaconsInRegion(_ region: CLBeaconRegion)
+    func startRangingBeacons(in region: CLBeaconRegion)
     func stopRangingBeaconsInRegion(_ region: CLBeaconRegion)
-    func requestStateForRegion(_ region: CLRegion)
+    func stopRangingBeacons(in region: CLBeaconRegion)
 }
 
 extension CLLocationManager : CLLocationManagerInjectable {}

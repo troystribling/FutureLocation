@@ -9,6 +9,20 @@
 import Foundation
 import CoreLocation
 
+extension CLRegionState: CustomStringConvertible {
+ 
+    public var description: String {
+        switch self {
+        case .unknown:
+            return "unknown"
+        case .inside:
+            return "inside"
+        case .outside:
+            return "outside"
+        }
+    }
+}
+
 // MARK: - RegionManager -
 public class RegionManager : LocationManager {
 
@@ -108,7 +122,7 @@ public class RegionManager : LocationManager {
     }
 
     public func didDetermine(state: CLRegionState, forRegion region: CLRegion) {
-        Logger.debug("region identifier \(region.identifier)")
+        Logger.debug("state '\(state)' region identifier '\(region.identifier)'")
         self.requestStateForRegionPromises[region.identifier]?.success(state)
         self.requestStateForRegionPromises.removeValue(forKey: region.identifier)
     }

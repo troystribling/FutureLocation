@@ -13,6 +13,8 @@ import FutureLocation
 class BeaconsViewController: UITableViewController {
     
     var beaconRegion: BeaconRegion?
+    var beaconRangingFuture: FutureStream<[Beacon]>?
+    let beaconRangingCancelToken = CancelToken()
     
     struct MainStoryBoard {
         static let beaconCell   = "BeaconCell"
@@ -28,20 +30,13 @@ class BeaconsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(BeaconsViewController.updateBeacons), name: NSNotification.Name(rawValue: AppNotification.didUpdateBeacon), object: self.beaconRegion)
+        beaconRangingFuture?.onSuccess(cancelToken: beaconRangingCancelToken) { [unowned self] _ in self.tableView.reloadData() }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationItem.title = ""
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-    }
-    
-    func updateBeacons() {
-        self.tableView.reloadData()
+        _ = beaconRangingFuture?.cancel(beaconRangingCancelToken)
     }
     
     func sortedBeacons(_ beaconRegion: BeaconRegion) -> [Beacon] {
@@ -72,16 +67,17 @@ class BeaconsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainStoryBoard.beaconCell, for: indexPath) as! BeaconCell
-        if let beaconRegion = self.beaconRegion {
-            let beacon = self.sortedBeacons(beaconRegion)[indexPath.row]
-            cell.proximityUUIDLabel.text = beacon.proximityUUID.uuidString
-            cell.majorLabel.text = "\(beacon.major)"
-            cell.minorLabel.text = "\(beacon.minor)"
-            cell.proximityLabel.text = beacon.proximity.stringValue
-            cell.rssiLabel.text = "\(beacon.rssi)"
-            let accuracy = NSString(format:"%.4f", beacon.accuracy)
-            cell.accuracyLabel.text = "\(accuracy)m"
+        guard let beaconRegion = self.beaconRegion else {
+            return cell
         }
+        let beacon = self.sortedBeacons(beaconRegion)[indexPath.row]
+        cell.proximityUUIDLabel.text = beacon.proximityUUID.uuidString
+        cell.majorLabel.text = "\(beacon.major)"
+        cell.minorLabel.text = "\(beacon.minor)"
+        cell.proximityLabel.text = beacon.proximity.stringValue
+        cell.rssiLabel.text = "\(beacon.rssi)"
+        let accuracy = NSString(format:"%.4f", beacon.accuracy)
+        cell.accuracyLabel.text = "\(accuracy)m"
         return cell
     }
     

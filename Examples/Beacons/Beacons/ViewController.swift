@@ -19,7 +19,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet var startMonitoringLabel: UILabel!
     
     var beaconRegion: BeaconRegion
-    var beaconFuture: FutureStream<[Beacon]>?
+    var beaconRangingFuture: FutureStream<[Beacon]>?
 
     var progressView = ProgressView()
     var isRanging = false
@@ -46,13 +46,13 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !beaconManager.isRangingAvailable() || !self.beaconManager.locationServicesEnabled() {
-            startMonitoringSwitch.isEnabled = false
-            uuidTextField.isEnabled = false
-            startMonitoringLabel.textColor = UIColor.lightGray
-            let message = self.beaconManager.locationServicesEnabled() ? "Beacon ranging not available" : "Location services not enabled"
-            present(UIAlertController.alertOnErrorWithMessage(message), animated: true, completion: nil)
+        guard !beaconManager.isRangingAvailable() else {
+            return
         }
+        startMonitoringSwitch.isEnabled = false
+        uuidTextField.isEnabled = false
+        startMonitoringLabel.textColor = UIColor.lightGray
+        present(UIAlertController.alertOnErrorWithMessage("Beacon ranging not available"), animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,8 +60,11 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        let beaconsViewController = segue.destination as! BeaconsViewController
+        guard let beaconsViewController = segue.destination as? BeaconsViewController else {
+            return
+        }
         beaconsViewController.beaconRegion = beaconRegion
+        beaconsViewController.beaconRangingFuture = beaconRangingFuture
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -69,7 +72,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     }
 
     @IBAction func toggleMonitoring(_ sender: AnyObject) {
-        guard !beaconManager.isMonitoring else {
+        guard beaconManager.isMonitoring else {
             startMonitoring()
             return
         }
@@ -83,7 +86,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     func startMonitoring() {
         self.progressView.show()
         self.uuidTextField.isEnabled = false
-        beaconFuture = self.beaconManager.startMonitoring(for: beaconRegion, authorization: .authorizedAlways).flatMap{ [unowned self] state -> FutureStream<[Beacon]> in
+        beaconRangingFuture = self.beaconManager.startMonitoring(for: beaconRegion, authorization: .authorizedAlways).flatMap{ [unowned self] state -> FutureStream<[Beacon]> in
             self.progressView.remove()
             switch state {
             case .start:
@@ -103,7 +106,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
                 throw AppError.outOfRegion
             }
         }
-        beaconFuture!.onSuccess { [unowned self] beacons in
+        beaconRangingFuture!.onSuccess { [unowned self] beacons in
             guard !self.isRanging else {
                 return
             }
@@ -113,7 +116,7 @@ class ViewController: UITableViewController, UITextFieldDelegate {
             }
             self.beaconsLabel.text = "\(beacons.count)"
         }
-        beaconFuture!.onFailure { [unowned self]  error in
+        beaconRangingFuture!.onFailure { [unowned self]  error in
             self.progressView.remove()
             if error is AppError {
                 return
@@ -125,46 +128,39 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     
     // UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let newValue = self.uuidTextField.text {
-            if let uuid = UUID(uuidString: newValue) {
-                self.beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
-                BeaconStore.setBeacon(uuid)
-                self.uuidTextField.resignFirstResponder()
-                return true
-            } else {
-                self.present(UIAlertController.alertOnErrorWithMessage("UUID '\(newValue)' is Invalid"), animated: true, completion: nil)
-                return false
-            }
-
-        } else {
+        guard let newValue = self.uuidTextField.text, let uuid = UUID(uuidString: newValue) else {
+            self.present(UIAlertController.alertOnErrorWithMessage("UUID is Invalid"), animated: true, completion: nil)
             return false
         }
+        self.beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
+        BeaconStore.setBeacon(uuid)
+        self.uuidTextField.resignFirstResponder()
+        return true
     }
 
     func setNotMonitoring() {
-        self.stateLabel.text = "Not Monitoring"
-        self.stateLabel.textColor = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
+        stateLabel.text = "Not Monitoring"
+        stateLabel.textColor = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Not Monitoring '\(self.beaconRegion.identifier)'")
-        self.beaconsLabel.text = "0"
+        beaconsLabel.text = "0"
     }
     
     func setStartedMonitoring() {
-        self.stateLabel.text = "Started Monitoring"
-        self.stateLabel.textColor = UIColor(red: 0.6, green: 0.4, blue: 0.6, alpha: 1.0)
+        stateLabel.text = "Started Monitoring"
+        stateLabel.textColor = UIColor(red: 0.6, green: 0.4, blue: 0.6, alpha: 1.0)
         Notify.withMessage("Started monitoring region '\(self.beaconRegion.identifier)'. Started ranging beacons.")
     }
     
     func setInsideRegion() {
-        self.stateLabel.text = "Inside Region"
-        self.stateLabel.textColor = UIColor(red: 0.0, green: 0.6, blue: 0.0, alpha: 1.0)
+        stateLabel.text = "Inside Region"
+        stateLabel.textColor = UIColor(red: 0.0, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Entered region '\(self.beaconRegion.identifier)'. Started ranging beacons.")
     }
     
     func setOutsideRegion() {
-        self.stateLabel.text = "Outside Region"
-        self.stateLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.0, alpha: 1.0)
+        stateLabel.text = "Outside Region"
+        stateLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.0, alpha: 1.0)
         Notify.withMessage("Exited region '\(self.beaconRegion.identifier). Stopped ranging beacons.'")
     }
-
 }
 

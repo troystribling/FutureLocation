@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>FutureLocation iBeacon example</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>FutureLocation iBeacon example</string>
 	<key>NSLocationUsageDescription</key>
 	<string>FutureLocation iBeacon example</string>
 	<key>UIBackgroundModes</key>

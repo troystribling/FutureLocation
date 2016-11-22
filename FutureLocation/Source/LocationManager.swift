@@ -62,7 +62,6 @@ public protocol CLLocationManagerInjectable {
     static func isRangingAvailable() -> Bool
     var rangedRegions: Set<CLRegion> { get }
     func startRangingBeacons(in region: CLBeaconRegion)
-    func stopRangingBeaconsInRegion(_ region: CLBeaconRegion)
     func stopRangingBeacons(in region: CLBeaconRegion)
 }
 

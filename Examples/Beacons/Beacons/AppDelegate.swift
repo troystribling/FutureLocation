@@ -9,8 +9,10 @@
 import UIKit
 
 enum AppError : Swift.Error {
-    case rangingBeacons
-    case outOfRegion
+    case rangingBeacon
+    case started
+    case outside
+    case unknownState
 }
 
 struct AppNotification {

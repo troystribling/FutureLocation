@@ -140,25 +140,25 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
     }
 
     fileprivate func requestWhenInUseAuthorization()  {
-        self.clLocationManager.requestWhenInUseAuthorization()
+        clLocationManager.requestWhenInUseAuthorization()
     }
 
     fileprivate func requestAlwaysAuthorization() {
-        self.clLocationManager.requestAlwaysAuthorization()
+        clLocationManager.requestAlwaysAuthorization()
     }
 
     public func authorize(_ authorization: CLAuthorizationStatus, context: ExecutionContext = QueueContext.main) -> Future<Void> {
         let currentAuthorization = self.authorizationStatus()
-        if currentAuthorization != authorization {
+        if currentAuthorization != authorization && currentAuthorization != .authorizedAlways {
             if let authorizationFuture = self.authorizationFuture, !authorizationFuture.completed {
                 return authorizationFuture
             }
-            self.authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
+            authorizationStatusChangedPromise = Promise<CLAuthorizationStatus>()
             switch authorization {
             case .authorizedAlways:
-                self.requestAlwaysAuthorization()
+                requestAlwaysAuthorization()
             case .authorizedWhenInUse:
-                self.requestWhenInUseAuthorization()
+                requestWhenInUseAuthorization()
             default:
                 Logger.debug("requested location authorization invalid")
                 return Future(error: LocationError.authroizationInvalid)
@@ -187,6 +187,7 @@ public class LocationManager : NSObject, CLLocationManagerDelegate {
             }
             return authorizationFuture!
         } else {
+            Logger.debug("requested authoriztation given: \(currentAuthorization)")
             return Future(value: ())
         }
     }

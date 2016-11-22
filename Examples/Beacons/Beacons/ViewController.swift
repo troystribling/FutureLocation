@@ -91,23 +91,24 @@ class ViewController: UITableViewController, UITextFieldDelegate {
             switch state {
             case .start:
                 self.setStartedMonitoring()
-                self.isRanging = true
-                return self.beaconManager.startRangingBeacons(in: self.beaconRegion)
+                throw AppError.started
             case .inside:
                 self.setInsideRegion()
                 guard !self.beaconManager.isRangingRegion(identifier: self.beaconRegion.identifier) else {
-                    throw AppError.rangingBeacons
+                    throw AppError.rangingBeacon
                 }
                 self.isRanging = true
                 return self.beaconManager.startRangingBeacons(in: self.beaconRegion)
             case .outside:
                 self.setOutsideRegion()
                 self.beaconManager.stopRangingBeacons(in: self.beaconRegion)
-                throw AppError.outOfRegion
+                throw AppError.outside
+            case .unknown:
+                throw AppError.unknownState
             }
         }
         beaconRangingFuture!.onSuccess { [unowned self] beacons in
-            guard !self.isRanging else {
+            guard self.isRanging else {
                 return
             }
             if UIApplication.shared.applicationState == .active && beacons.count > 0 {

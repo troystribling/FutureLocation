@@ -104,7 +104,7 @@ class ViewController: UITableViewController {
     }
     
     func startMonitoring(_ region: CircularRegion) {
-        let regionFuture = regionManager.startMonitoring(forRegion: region, authorization: .authorizedAlways)
+        let regionFuture = regionManager.startMonitoring(for: region, authorization: .authorizedAlways)
         regionFuture.onSuccess { state in
             Notify.withMessage("region Event '\(region.identifier)'")
             switch state {
@@ -117,6 +117,8 @@ class ViewController: UITableViewController {
                 self.setInsideRegion(region)
             case .outside:
                 self.setOutsideRegion(region)
+            case .unknown:
+                break
             }
         }
         regionFuture.onFailure { error in

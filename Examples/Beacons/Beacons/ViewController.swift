@@ -25,14 +25,14 @@ class ViewController: UITableViewController, UITextFieldDelegate {
     var isRanging = false
     
     let beaconManager = BeaconManager()
-    let estimoteUUID = UUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!
+    let defaultUUID = UUID(uuidString: "500E475A-ECEA-4837-83E3-6153A5029769")!
     
     required init?(coder aDecoder: NSCoder) {
         if let uuid = BeaconStore.getBeacon() {
             beaconRegion = BeaconRegion(proximityUUID: uuid, identifier: "Example Beacon")
         } else {
-            beaconRegion = BeaconRegion(proximityUUID: self.estimoteUUID, identifier: "Example Beacon")
-            BeaconStore.setBeacon(self.estimoteUUID)
+            beaconRegion = BeaconRegion(proximityUUID: defaultUUID, identifier: "Example Beacon")
+            BeaconStore.setBeacon(defaultUUID)
         }
         super.init(coder: aDecoder)
     }
